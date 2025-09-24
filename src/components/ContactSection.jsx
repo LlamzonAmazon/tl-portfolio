@@ -1,0 +1,27 @@
+import {
+  Linkedin,
+} from "lucide-react";
+
+export const ContactSection = () => {
+
+  return (
+    <section id="contact" className="py-24 px-4 relative bg-secondary/30">
+      <div className="container mx-auto max-w-5xl">
+
+        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+          <span className="text-primary"> Connect</span> with me
+        </h2>
+
+        <div className="flex justify-center">
+          <a
+            href="https://www.linkedin.com/in/thomasllamzon/"
+            target="_blank"
+            className="text-foreground/80 hover:text-primary transition-colors duration-300 group"
+          >
+            <Linkedin className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
