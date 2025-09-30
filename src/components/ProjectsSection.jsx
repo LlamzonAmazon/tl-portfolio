@@ -3,6 +3,18 @@ import { ArrowRight, Github } from "lucide-react";
 const projects = [
   {
     id: 1,
+    title: "Data Insights Dashboard (in-progress)",
+    description: 
+      "An interactive dashboard for PlanCatalyst's redesigned website for stakeholders to visualize and understand their global impact. \n\n" +
+      "I headed development of this project as the Project Manager of 5 full-stack student developers. \n\n" +
+      "This project is currently in development. \n\n",
+    image: "/PlanCatalyst.png",
+    tags: ["Python", "Pandas", "REST APIs", "Microsoft PowerBI", "GitHub"],
+    demoUrl: "https://plancatalyst.org",
+    githubUrl: "#https://https://github.com/LlamzonAmazon/PC-Data-Dash",
+  },
+  {
+    id: 2,
     title: "westernsalesclub.ca",
     description: 
       "The website for Western's first sales club, built to showcase the club's activities and mission. \n\n" +
@@ -14,7 +26,7 @@ const projects = [
     githubUrl: "#",
   },
   {
-    id: 2,
+    id: 3,
     title: "RheumAI",
     description:
       "A doctor-patient interaction summarizing tool to assist Rheumatologists address their patients' needs. \n\n" +
@@ -27,7 +39,7 @@ const projects = [
     githubUrl: "#",
   },
   {
-    id: 3,
+    id: 4,
     title: "More on the way!",
     description:
       "I am currently building projects with Western AI, Tech for Social Impact, and am completing my thesis. My hands are rather full as of the current moment. 😅 \n\n " + 

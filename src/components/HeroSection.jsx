@@ -17,7 +17,7 @@ export const HeroSection = () => {
           </h1>
 
           <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Fourth-year computer science student at <span className="text-primary">Western University</span>, growing towards a software engineering career with a focus on cybersecurity and cloud applications.
+            Fourth-year computer science student at <span className="text-primary">Western University</span>. Growing towards a software engineering career, interested in cybersecurity and cloud applications.
           </p>
         </div>
       </div>

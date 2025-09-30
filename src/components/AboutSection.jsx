@@ -12,26 +12,22 @@ export const AboutSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <p className="text-muted-foreground">
-              I am a very active person. In my free time, I enjoy weightlifting, running, and intramural hockey.
-              I also enjoy backpacking, hiking, and camping, as well as making electronic dance music (EDM) and DJ-ing.
+              I live a very balanced and full life. I am a student, software developer, project manager, mentor, athlete, and friend. 
             </p>
             
             <p className="text-muted-foreground">
-              In my professional endeavours, I am pursuing a career in software engineering, with a focus in cybersecurity and cloud applications, and AI.
+              In my professional endeavours, I am pursuing a career in software engineering, with a focus in cybersecurity and cloud applications, and machine learning.
+            </p>
+            
+            <p className="text-muted-foreground">
               I hope to leverage my social & active nature to achieve a well-rounded software-centric position where I can make a positive impact in the software field.
             </p>
+
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
               <a href="#contact" className="cosmic-button">
                 {" "}
-                Get In Touch
-              </a>
-
-              <a
-                href=""
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
-              >
-                Download CV
+                Connect with Me
               </a>
             </div>
           </div>
@@ -72,7 +68,7 @@ export const AboutSection = () => {
                 <div className="text-left">
                   <h4 className="font-semibold text-lg">Project Management</h4>
                   <p className="text-muted-foreground">
-                    Leading teams to deliver quality products.
+                    Leading teams to develop and deliver quality software products.
                   </p>
                 </div>
               </div>

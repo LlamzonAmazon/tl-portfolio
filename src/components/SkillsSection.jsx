@@ -8,44 +8,41 @@ const skills = [
   { name: "C", level: 95, category: "languages" },
   { name: "C++", level: 90, category: "languages" },
   { name: "SQL", level: 85, category: "languages" },
+  { name: "JavaScript", level: 80, category: "languages" },
+  { name: "HTML/CSS", level: 80, category: "languages" },
   { name: "PHP", level: 65, category: "languages" },
   { name: "Bash", level: 65, category: "languages" },
-  { name: "HTML/CSS", level: 80, category: "languages" },
-  { name: "JavaScript", level: 80, category: "languages" },
-  { name: "Prolog", level: 60, category: "languages" },
-  { name: "Scheme", level: 60, category: "languages" },
 
   // Tools & Frameworks
-  { name: "React.js", level: 90, category: "tools" },
-  { name: "Tailwind CSS", level: 90, category: "tools" },
+  { name: "Pandas", level: 70, category: "tools" },
+  { name: "NumPy", level: 70, category: "tools" },
+  { name: "PyTorch", level: 10, category: "tools" },
+  { name: "TensorFlow", level: 0, category: "tools" },
+  { name: "Scikit-Learn", level: 10, category: "tools" },
   { name: "Flask", level: 70, category: "tools" },
+  { name: "REST APIs", level: 70, category: "tools" },
   { name: "MySQL", level: 80, category: "tools" },
+  { name: "PostgreSQL", level: 80, category: "tools" },
+  { name: "React.js", level: 90, category: "tools" },
   { name: "Qt", level: 75, category: "tools" },
-  
-  { name: "Django", level: 50, category: "tools" },
-  { name: "Express.js", level: 40, category: "tools" },
-  { name: "Vue.js", level: 45, category: "tools" },
-  { name: "Node.js", level: 50, category: "tools" },
-  { name: "Next.js", level: 45, category: "tools" },
-  { name: "Bootstrap", level: 55, category: "tools" },
+  { name: "Tailwind CSS", level: 90, category: "tools" },
 
   // Cloud & DevOps
-  { name: "AWS", level: 70, category: "Cloud & DevOps" },
-  { name: "GCP", level: 75, category: "Cloud & DevOps" },
-  { name: "Firebase", level: 70, category: "Cloud & DevOps" },
-  { name: "Azure", level: 80, category: "Cloud & DevOps" },
-  { name: "Git", level: 85, category: "Cloud & DevOps" },
-  { name: "Atlassian SaaS", level: 60, category: "Cloud & DevOps" },
-  { name: "Docker", level: 50, category: "Cloud & DevOps" },
+  { name: "Amazon Web Services", level: 70, category: "Cloud & DevOps" },
+  { name: "Google Cloud Platform", level: 75, category: "Cloud & DevOps" },
+  { name: "Google Firebase", level: 70, category: "Cloud & DevOps" },
+  { name: "Microsoft Azure", level: 80, category: "Cloud & DevOps" },
+  { name: "GitHub", level: 85, category: "Cloud & DevOps" },
+  { name: "Atlassian Software", level: 60, category: "Cloud & DevOps" },
 ];
 
-const categories = ["all", "languages", "tools", "Cloud & DevOps"];
+const categories = ["languages", "tools", "Cloud & DevOps"];
 
 export const SkillsSection = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState("languages");
 
   const filteredSkills = skills.filter(
-    (skill) => activeCategory === "all" || skill.category === activeCategory
+    (skill) => skill.category === activeCategory
   );
   return (
     <section id="skills" className="py-24 px-4 relative bg-secondary/30">

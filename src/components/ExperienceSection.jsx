@@ -7,8 +7,9 @@ const projects = [
     organization: "Western AI",
     time: "June 2025 - Present",
     description:
-      "As VP Projects of Western AI, my role is overseeing the development of eight ML-focused projects. These projects are to be presented at the Canadian Undergraduate Conference on AI (CUCAI) in Toronto in March 2026 on behalf of Western AI. \n\n" +
-      "I conduct structured weekly meetings with the PM's to discuss progress, address challenges, and guide the direction of their projects. \n\n",
+      "I oversee the development of four machine-learning projects.\n\n" +
+      "I conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects. \n\n" +
+      "The projects include:\n• Driver-Drowsiness Detector (OpenCV)\n• Toronto Condominium-Affordability Predictor (scikit-learn)\n• Code-Similarity Detector (CodeBERT)\n• Video Virality Analyzer (CLIP, OpenL3) \n\n",
 
     tags: ["AI/ML Project Management", "Logistical & Documentation Support", "Technical Feasibility Analysis"],
     logo: "/WAI.jpeg",
@@ -20,7 +21,7 @@ const projects = [
     time: "January 2025 - Present",
     description:
       "In this role, I lead student-developer teams to create software solutions for local non-profit organizations. \n\n" +
-      "My first project with TSI was the website for Western Sales Club, who I personally pitched TSI's services to due to another client dropping out of the TSI program. \n\n" +
+      "My first project with TSI was the website for Western Sales Club, and now I am making an interactive data insights dashboard for PlanCatalyst (subsidiary of Plan International) on their redesigned website using Python (Pandas), PowerBI, and public APIs for live data visualization. \n\n" +
       "I continue to work with TSI as a Project Manager, and I continue making impactful solutions—not just for clubs at Western, but for real-world non-profit organizations as well. \n\n",
     tags: ["Project Management", "Software Development", "Client Relations", "Documentation"],
     logo: "/TSI.jpeg",
@@ -30,10 +31,12 @@ const projects = [
     title: "Security Operations Intern",
     organization: "CYBERWELL Solutions",
     time: "April 2025 - September 2025",
-    description: 
-    "I conducted SOC assessments using tools like Cortex XDR and Exabeam TDIR to prevent security breaches.\n\n" +
-    "I proposed SOC process improvements, including alert tuning logic and automation opportunities.",
-    tags: ["Cortex", "Exabeam", "Entra ID", "MITRE ATT&CK"],
+    description:
+      "I worked under the various parts of the blue-team security operations, including incident response, threat intelligence, and third-party risk management. " +
+      "My role involved:\n\n Performing SOC incident response measures using Exabeam TDIR & Cortex XDR to prevent security breaches in client environments.\n\n" +
+      "Updating alert logic with OSINT in Microsoft Defender with KQL to pre-emptively prepare client environments for potential attacks.\n\n" +
+      "Conducting Third-party risk management (TPRM) assessments to minimize legal and logistical risk associated with company vendors.\n\n",
+    tags: ["Cortex", "Exabeam", "Miccrosoft Entra ID", "MITRE ATT&CK"],
     logo: "/CYBERWELL.jpeg",
   },
   {
@@ -43,8 +46,9 @@ const projects = [
     time: "June 2024 - August 2024",
     description:
     "At Code Ninjas, I taught kids aged 7-14 how to code using Microsoft MakeCode Arcade, Scratch 3.0, Unity, and fun online games. \n\n" +
-    "I also developed the curriculum for Code Ninja's \"Future Minds\" summer camp that introduces children to how AI models learn using fun online resources such as ML 4 Kids powered by IBM Watson, Scratch 3.0, and more! \n\n",
-    tags: ["Microsoft MakeCode", "Scratch 3.0", "Unity", "ML 4 Kids with IBM Watson", "Curriculum Development"],
+    "I also developed the curriculum for Code Ninjas' first \"Future Minds\" summer camp that introduces children to how AI models learn using fun online resources such as ML 4 Kids powered by IBM Watson, Scratch 3.0, and more! \n\n" +
+    "Outside of the 7 weeks of summer camps I led, I also helped children as a coding tutor in the Code Ninjas classes.\n\n",
+    tags: ["Microsoft MakeCode", "Scratch 3.0", "Unity", "ML 4 Kids with IBM Watson", "Curriculum Development", "Teaching"],
     logo: "/CN.png",
 },
 {
@@ -53,9 +57,10 @@ const projects = [
     organization: "WELL Health Technologies",
     time: "May 2023 - September 2023",
     description:
-    "At WELL, I helped develop an agent that gathers device analytics & logs from devices in WELL subsidiaries. " +
-    "I also ensured software security compliance with standards like HIPAA and ISO/IEC 27001 to protect sensitive patient data.",
-    tags: ["Bash", "Azure"],
+    "At WELL, I worked under different teams within the IT team to learn and contribute to the company's growing digital infrastructure.\n\n" +
+    "I helped develop a Bash agent gathering WELL clinic device analytics and logs into Azure to centralize logs for device security and analysis.\n\n" +
+    "I also worked with the security compliance team to ensure the protection of sensitive patient information under industry standards & frameworks such as HIPAA and ISO/SEC 27001.\n\n",
+    tags: ["Bash", "Microsoft Azure"],
     logo: "/WELL.png",
 },
 ];
