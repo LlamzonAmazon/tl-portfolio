@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename="/tl-portfolio">
+      <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
           <Route path="*" element={<Err />} />
