@@ -1,29 +1,29 @@
-import { ArrowRight, Github } from "lucide-react";
+import { ArrowRight, ExternalLink, Github } from "lucide-react";
 
 const projects = [
   {
     id: 1,
-    title: "Data Insights Dashboard (in-progress)",
+    title: "PlanCatalyst Website Data Dashboard (in-progress)",
     description: 
-      "An interactive dashboard for PlanCatalyst's redesigned website for stakeholders to visualize and understand their global impact. \n\n" +
-      "I headed development of this project as the Project Manager of 5 full-stack student developers. \n\n" +
-      "This project is currently in development. \n\n",
+      "This project is currently in development.\n\n" +
+      "I am heading development of this project as the Project Manager of 5 full-stack student developers.\n\n" +
+      "This is an interactive dashboard for PlanCatalyst's redesigned website for stakeholders to visualize and understand the global impact their consultancy services have in areas such as gender equality, education, climate action, and health.\n\n",
     image: "/PlanCatalyst.png",
     tags: ["Python", "Pandas", "REST APIs", "Microsoft PowerBI", "GitHub"],
     demoUrl: "https://plancatalyst.org",
-    githubUrl: "#https://https://github.com/LlamzonAmazon/PC-Data-Dash",
+    githubUrl: "https://github.com/LlamzonAmazon/PC-Data-Dash",
   },
   {
     id: 2,
     title: "westernsalesclub.ca",
     description: 
       "The website for Western's first sales club, built to showcase the club's activities and mission. \n\n" +
-      "I headed development of this website as the Project Manager of 5 full-stack student developers. \n\n" +
+      "I am heading development of this website as the Project Manager of 5 full-stack student developers. \n\n" +
       "This website comes with a comprehensive GCP backend, the admin dashboard. Which allows the WSC executives to manage the dynamic content of the website such as the events, executives, and sponsors. \n\n",
     image: "/WSC.png",
     tags: ["React.js", "TailwindCSS",  "GCP", "MySQL", "Flask", "Firebase"],
     demoUrl: "https://westernsalesclub.ca",
-    githubUrl: "#",
+    githubUrl: "https://github.com/JXOHG/t4-frontend",
   },
   {
     id: 3,
@@ -36,18 +36,7 @@ const projects = [
     image: "/RheumAI.png",
     tags: ["C++", "Qt", "Google Speech", "OpenAI Whisper", "Google Gemini"],
     demoUrl: "https://github.com/CalThompson9/rheumAI",
-    githubUrl: "#",
-  },
-  {
-    id: 4,
-    title: "More on the way!",
-    description:
-      "I am currently building projects with Western AI, Tech for Social Impact, and am completing my thesis. My hands are rather full as of the current moment. 😅 \n\n " + 
-      "I do plan to take on more personal projects in the future.",
-    image: "/GitHub.png",
-    tags: ["🌍", "🚀", "🌖"],
-    demoUrl: "---",
-    githubUrl: "#",
+    githubUrl: "https://github.com/CalThompson9/rheumAI",
   },
 ];
 
@@ -61,7 +50,7 @@ export const ProjectsSection = () => {
         </h2>
 
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Here are some of my recent projects. I am currently focusing on attaining cloud & security certifications, and plan to take on more projects in the future.
+          Here are some of my projects. More projects coming soon! I am also working to attain some cybersecurity and cloud certifications in the near future.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -71,13 +60,11 @@ export const ProjectsSection = () => {
               className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover flex flex-col"
             >
               <div className="h-48 overflow-hidden">
-                <a href={project.demoUrl} noreferrer="noreferrer" target="_blank">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                 </a>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
               </div>
 
               <div className="p-6 flex flex-col flex-1">
@@ -97,11 +84,19 @@ export const ProjectsSection = () => {
 
                 <div className="flex items-center justify-between mt-auto">
                   <a
-                    className="cosmic-button w-fit flex items-center mx-auto gap-2"
+                    className="cosmic-button w-fit flex items-center mx-auto"
                     target="_blank"
                     href={project.githubUrl}
                   >
                     <Github size={16} />
+                  </a>
+
+                  <a
+                    className="cosmic-button w-fit flex items-center mx-auto"
+                    target="_blank"
+                    href={project.demoUrl}
+                  >
+                    <ExternalLink size={16} />
                   </a>
                 </div>
               </div>
@@ -113,7 +108,7 @@ export const ProjectsSection = () => {
           <a
             className="cosmic-button w-fit flex items-center mx-auto gap-2"
             target="_blank"
-            href="https://github.com/LlamzonAmazon?tab=stars"
+            href="https://github.com/LlamzonAmazon"
           >
             My projects on Github <ArrowRight size={16} />
           </a>
