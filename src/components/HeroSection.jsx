@@ -50,8 +50,8 @@ export const HeroSection = () => {
             <div>
               <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto">
                 Fourth-year computer science student at
-                <span className="text-primary text-glow"> Western University</span>.
-                Growing towards a software engineering career; interested in cybersecurity and cloud applications. 
+                <span className="text-primary text-glow"> Western University</span>,
+                growing towards a software engineering career and interested in cybersecurity and cloud applications. 
               </p>
             </div>
           </AnimatedContent>

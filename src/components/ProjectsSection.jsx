@@ -7,9 +7,9 @@ const projects = [
     id: 1,
     title: "PlanCatalyst Website Data Dashboard (in-progress)",
     description: 
-      "This project is currently in development.\n\n" +
-      "I am heading development of this project as the Project Manager of 5 full-stack student developers.\n\n" +
-      "This is an interactive dashboard for PlanCatalyst's redesigned website for stakeholders to visualize and understand the global impact their consultancy services have in areas such as gender equality, education, climate action, and health.\n\n",
+      "An interactive data insights dashboard for PlanCatalyst's redesigned website. \n\n" +
+      "The dashboard aims to showcase PlanCatalyst's capabilities in data-informed decision-making and to serve as a resource for development practitioners and partners. \n\n" +
+      "It is intended to offer publicly accessible, interactive insights into country-level indicators across key development themes—including SDG progress, demographic trends, climate vulnerability (ND-GAIN), financial inclusion, governance, and gender equity.\n\n",
     image: "/PlanCatalyst.png",
     tags: ["Python", "Pandas", "REST APIs", "Microsoft PowerBI", "GitHub"],
     demoUrl: "https://plancatalyst.org",
@@ -20,8 +20,8 @@ const projects = [
     title: "westernsalesclub.ca",
     description: 
       "The website for Western's first sales club, built to showcase the club's activities and mission. \n\n" +
-      "I am heading development of this website as the Project Manager of 5 full-stack student developers. \n\n" +
-      "This website comes with a comprehensive GCP backend, the admin dashboard. Which allows the WSC executives to manage the dynamic content of the website such as the events, executives, and sponsors. \n\n",
+      "This website is intended to increase the club's online engagement and establish them as a key player in the Western club community. \n\n" +
+      "This website also comes with a comprehensive GCP backend—the admin dashboard—which allows the WSC executives to manage the dynamic content of the website such as the events, executives, and sponsors. \n\n",
     image: "/WSC.png",
     tags: ["React.js", "TailwindCSS",  "GCP", "MySQL", "Flask", "Firebase"],
     demoUrl: "https://westernsalesclub.ca",

@@ -9,9 +9,9 @@ const projects = [
     organization: "Western AI",
     time: "June 2025 - Present",
     description:
-      "I oversee the development of four machine-learning projects.\n\n" +
-      "I conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects. \n\n" +
-      "The projects include:\n• Driver-Drowsiness Detector (OpenCV)\n• Toronto Condominium-Affordability Predictor (scikit-learn)\n• Code-Similarity Detector (CodeBERT)\n• Video Virality Analyzer (CLIP, OpenL3) \n\n",
+      "I oversee the development of four machine-learning projects. " +
+      "I manage all project timelines and conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects. " +
+      "The projects include:\n\n• Driver-Drowsiness Detector (OpenCV, YOLOv8n, PyTorch)\n\n• Toronto Condominium-Affordability Predictor (scikit-learn, LightGBM)\n\n• Code-Similarity Detector (CodeBERT, scikit-learn)\n\n• Video Virality Analyzer (CLIP, OpenL3, UMAP, LightGBM) \n\n",
 
     tags: ["AI/ML Project Management", "Logistical & Documentation Support", "Technical Feasibility Analysis"],
     logo: "/WAI.jpeg",
@@ -23,8 +23,9 @@ const projects = [
     time: "January 2025 - Present",
     description:
       "In this role, I lead student-developer teams to create software solutions for local non-profit organizations. \n\n" +
-      "My first project with TSI was the website for Western Sales Club, and now I am making an interactive data insights dashboard for PlanCatalyst (subsidiary of Plan International) on their redesigned website using Python (Pandas), PowerBI, and public APIs for live data visualization. \n\n" +
-      "I continue to work with TSI as a Project Manager, and I continue making impactful solutions—not just for clubs at Western, but for real-world non-profit organizations as well. \n\n",
+      "The first project I led was making the website for Western's sales club. The site increases their online engagement and establishes them as a key player in the Western club community.\n\n" +
+      "My current project is making an interactive data insights dashboard for PlanCatalyst's redesigned website. " +
+      "This dashboard will showcase PlanCatalyst’s analytical capabilities and support stakeholders by providing localized, policy-relevant data. \n\n",
     tags: ["Project Management", "Software Development", "Client Relations", "Documentation"],
     logo: "/TSI.jpeg",
   },
