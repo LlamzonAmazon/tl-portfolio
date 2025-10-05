@@ -49,7 +49,7 @@ export const ProjectsSection = () => {
       distance={300}
       direction="horizontal"
       reverse={false}
-      duration={1.8}
+      duration={2.4}
       ease="power3.out"
       initialOpacity={0.1}
       animateOpacity

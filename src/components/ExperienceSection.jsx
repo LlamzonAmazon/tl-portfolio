@@ -74,7 +74,7 @@ export const ExperienceSection = () => {
       distance={300}
       direction="horizontal"
       reverse={true}
-      duration={1.8}
+      duration={2.4}
       ease="power3.out"
       initialOpacity={0.1}
       animateOpacity

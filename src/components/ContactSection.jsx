@@ -9,7 +9,7 @@ export const ContactSection = () => {
       distance={150}
       direction="vertical"
       reverse={true}
-      duration={1.5}
+      duration={2.0}
       ease="power3.out"
       initialOpacity={0.1}
       animateOpacity
