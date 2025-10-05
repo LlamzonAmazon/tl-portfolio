@@ -14,7 +14,7 @@ export const ContactSection = () => {
       initialOpacity={0.1}
       animateOpacity
       scale={1.2}
-      threshold={0.2}
+      threshold={0.1}
       delay={0}
     >
 

@@ -1,8 +1,6 @@
 import { ArrowDown, University } from "lucide-react";
 import GradientText from "./Animations/GradientText";
-import { ShinyText } from "./Animations/ShinyText";
 import AnimatedContent from "./Animations/AnimatedContent";
-import Silk from "./Animations/Silk";
 
 export const HeroSection = () => {
   return (
