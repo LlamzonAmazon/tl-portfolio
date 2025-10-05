@@ -57,7 +57,7 @@ export const SkillsSection = () => {
       initialOpacity={0.1}
       animateOpacity
       scale={1.0}
-      threshold={0.2}
+      threshold={0.12}
       delay={0}
     >
 

@@ -15,7 +15,7 @@ export const HeroSection = () => {
             distance={50}
             direction="vertical"
             reverse={true}
-            duration={1.5}
+            duration={1.8}
             ease="power3.out"
             initialOpacity={0.1}
             animateOpacity
@@ -39,7 +39,7 @@ export const HeroSection = () => {
             distance={50}
             direction="vertical"
             reverse={false}
-            duration={2.5}
+            duration={2.8}
             ease="power3.out"
             initialOpacity={0.1}
             animateOpacity
