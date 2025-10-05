@@ -64,18 +64,6 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-
-    --card: 0 0% 100%;
-
-    --primary: 250 47% 60%;
-    --primary-foreground: 210 40% 98%;
-
-    --border: 214 32% 91%;
-  }
-
-  .dark {
     --background: 222 47% 4%;
     --foreground: 213 31% 91%;
 
@@ -138,6 +126,7 @@
   border: 1px solid transparent;
 }
 
+
 @utility cosmic-button {
   @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
          transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]
@@ -153,6 +142,40 @@
   @apply absolute bg-linear-to-r from-white via-white to-transparent rounded-full;
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
 }
+
+@layer utilities {
+  @keyframes shine {
+    0% {
+      background-position: 200% center;
+    }
+    100% {
+      background-position: -200% center;
+    }
+  }
+
+  .animate-shine {
+    animation: shine 3s linear infinite;
+  }
+}
+
+@layer utilities {
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s linear infinite;
+  }
+}
+
 
 #root {
   max-width: 100%;

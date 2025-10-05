@@ -1,4 +1,6 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { ShinyText } from "./Animations/ShinyText";
+import AnimatedContent from './Animations/AnimatedContent'
 
 const projects = [
   {
@@ -43,15 +45,31 @@ const projects = [
 export const ProjectsSection = () => {
   return (
     <section id="projects" className="py-24 px-4 relative">
+    <AnimatedContent
+      distance={300}
+      direction="horizontal"
+      reverse={false}
+      duration={1.8}
+      ease="power3.out"
+      initialOpacity={0.1}
+      animateOpacity
+      scale={1.0}
+      threshold={0.1}
+      delay={0}
+    >
+
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           {" "}
           Featured <span className="text-primary"> Projects </span>
         </h2>
-
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Here are some of my projects. More projects coming soon! I am also working to attain some cybersecurity and cloud certifications in the near future.
-        </p>
+        
+        <ShinyText
+          text="I am also working to attain cybersecurity and cloud service certifications!"
+          disabled={false}
+          speed={6}
+          className='text-center text-muted-foreground mb-12 text-sm md:text-base block mx-auto max-w-2xl'
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, key) => (
@@ -114,6 +132,8 @@ export const ProjectsSection = () => {
           </a>
         </div>
       </div>
+
+    </AnimatedContent>
     </section>
   );
 };

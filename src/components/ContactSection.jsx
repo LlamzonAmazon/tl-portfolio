@@ -1,11 +1,23 @@
-import {
-  Linkedin,
-} from "lucide-react";
+import { Linkedin } from "lucide-react";
+import AnimatedContent from './Animations/AnimatedContent'
 
 export const ContactSection = () => {
 
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
+    <AnimatedContent
+      distance={150}
+      direction="vertical"
+      reverse={true}
+      duration={1.5}
+      ease="power3.out"
+      initialOpacity={0.1}
+      animateOpacity
+      scale={1.2}
+      threshold={0.2}
+      delay={0}
+    >
+
       <div className="container mx-auto max-w-5xl">
 
         <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
@@ -18,10 +30,12 @@ export const ContactSection = () => {
             target="_blank"
             className="text-foreground/80 hover:text-primary transition-colors duration-300 group"
           >
-            <Linkedin className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+              <Linkedin className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
           </a>
         </div>
       </div>
+
+    </AnimatedContent>
     </section>
   );
 };

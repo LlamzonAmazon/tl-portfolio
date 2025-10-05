@@ -1,4 +1,8 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, University } from "lucide-react";
+import GradientText from "./Animations/GradientText";
+import { ShinyText } from "./Animations/ShinyText";
+import AnimatedContent from "./Animations/AnimatedContent";
+import Silk from "./Animations/Silk";
 
 export const HeroSection = () => {
   return (
@@ -8,17 +12,51 @@ export const HeroSection = () => {
     >
       <div className="container max-w-5xl mx-auto text-center z-10">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-9xl font-bold tracking-tight">
-            Thomas
-            <span className="text-primary opacity-0 animate-fade-in-delay-1">
-              {" "}
-              Llamzon
-            </span>
-          </h1>
 
-          <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Fourth-year computer science student at <span className="text-primary">Western University</span>. Growing towards a software engineering career, interested in cybersecurity and cloud applications.
-          </p>
+          <AnimatedContent
+            distance={50}
+            direction="vertical"
+            reverse={true}
+            duration={1.5}
+            ease="power3.out"
+            initialOpacity={0.1}
+            animateOpacity
+            scale={1.5}
+            threshold={0.2}
+            delay={0.1}
+          >
+            <h1 className="text-4xl sm:text-6xl md:text-9xl font-bold tracking-tight">
+              <GradientText
+                colors={["#b764ffff", "#5b00b5ff", "#c40031ff", "#7c00daff", "#2000beff"]}
+                animationSpeed={5}
+                showBorder={false}
+                className="custom-class"
+              >
+                Thomas Llamzon
+              </GradientText>
+            </h1>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={50}
+            direction="vertical"
+            reverse={false}
+            duration={2.5}
+            ease="power3.out"
+            initialOpacity={0.1}
+            animateOpacity
+            scale={0.7}
+            threshold={0.2}
+            delay={0.1}
+          >
+            <div>
+              <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+                Fourth-year computer science student at
+                <span className="text-primary text-glow"> Western University</span>.
+                Growing towards a software engineering career; interested in cybersecurity and cloud applications. 
+              </p>
+            </div>
+          </AnimatedContent>
         </div>
       </div>
 

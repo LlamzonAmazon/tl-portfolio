@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ShinyText } from "./Animations/ShinyText";
+import AnimatedContent from './Animations/AnimatedContent'
 
 const skills = [
   // Languages
@@ -46,14 +48,30 @@ export const SkillsSection = () => {
   );
   return (
     <section id="skills" className="py-24 px-4 relative bg-secondary/30">
+    <AnimatedContent
+      distance={400}
+      direction="horizontal"
+      reverse={true}
+      duration={1.6}
+      ease="power3.out"
+      initialOpacity={0.1}
+      animateOpacity
+      scale={1.0}
+      threshold={0.2}
+      delay={0}
+    >
+
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           My <span className="text-primary"> Skills</span>
         </h2>
 
-        <p className="text-center mb-12 max-w-2xl mx-auto">
-          Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning frameworks and tools.
-        </p>
+        <ShinyText
+          text="Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning frameworks and tools."
+          disabled={false}
+          speed={6}
+          className='text-center text-muted-foreground mb-12 text-sm md:text-base block mx-auto max-w-2xl'
+        />
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, key) => (
@@ -97,6 +115,8 @@ export const SkillsSection = () => {
           ))}
         </div>
       </div>
+
+    </AnimatedContent>
     </section>
   );
 };
