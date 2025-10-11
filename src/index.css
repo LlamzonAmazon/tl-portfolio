@@ -143,6 +143,61 @@
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
 }
 
+@utility liquid-glass-surface {
+  @apply relative overflow-hidden rounded-2xl p-6 border border-white/10 backdrop-blur-xl;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(124,9,255,0.08), transparent 65%),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.01), transparent 70%),
+    linear-gradient(135deg, rgba(0,0,0,0.18), rgba(67,67,67,0.06));
+  background-blend-mode: soft-light, screen, color-dodge;
+  backdrop-filter: blur(4px) saturate(180%) contrast(105%);
+  transform: perspective(600px) translateZ(0);
+  transition: all 0.5s ease;
+}
+
+.liquid-glass-surface::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: inherit;
+  background: 
+    radial-gradient(circle at 40% 40%, rgba(255, 0, 0, 0.11), rgba(0, 187, 255, 0.07) 40%, transparent 70%),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0, 0.1), transparent 60%);
+  mix-blend-mode: screen;
+  filter: blur(6px) brightness(1.2);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.liquid-glass-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 25%, transparent 80%);
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+  filter: blur(2px);
+  animation: refractionShift 2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes refractionShift {
+  0% {
+    background-position: 0% 0%;
+    filter: blur(1px) brightness(1);
+  }
+  50% {
+    background-position: 100% 100%;
+    filter: blur(1px) brightness(1.15);
+  }
+  100% {
+    background-position: 0% 0%;
+    filter: blur(1px) brightness(1);
+  }
+}
+
 @layer utilities {
   @keyframes shine {
     0% {
@@ -154,7 +209,7 @@
   }
 
   .animate-shine {
-    animation: shine 3s linear infinite;
+    animation: shine 1s linear infinite;
   }
 }
 

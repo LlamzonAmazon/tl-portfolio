@@ -51,7 +51,7 @@ export const ProjectsSection = () => {
       reverse={false}
       duration={2.4}
       ease="power3.out"
-      initialOpacity={0.1}
+      initialOpacity={0}
       animateOpacity
       scale={1.0}
       threshold={0.1}
@@ -59,17 +59,20 @@ export const ProjectsSection = () => {
     >
 
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          {" "}
-          Featured <span className="text-primary"> Projects </span>
-        </h2>
-        
-        <ShinyText
-          text="I am also working to attain cybersecurity and cloud service certifications!"
-          disabled={false}
-          speed={6}
-          className='text-center text-muted-foreground mb-12 text-sm md:text-base block mx-auto max-w-2xl'
-        />
+
+        <div className="liquid-glass-surface mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+            {" "}
+            Featured <span className="text-primary"> Projects </span>
+          </h2>
+          
+          <ShinyText
+            text="I am also working to attain cybersecurity and cloud service certifications!"
+            disabled={false}
+            speed={6}
+            className='text-center text-muted-foreground text-sm md:text-base block mx-auto max-w-2xl'
+          />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, key) => (

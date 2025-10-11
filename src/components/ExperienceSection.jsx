@@ -5,9 +5,23 @@ import AnimatedContent from './Animations/AnimatedContent'
 const projects = [
   {
     id: 1,
+    title: "Security Analyst",
+    organization: "CYBERWELL Solutions",
+    time: "Oct 2025 - Present",
+    description:
+      "I work with the SOC on a part-time basis alongside my studies.\n\n" +
+      "I monitor, investigate, and respond to security alerts promptly and effectively, ensuring rapid identification of potential threats.\n\n" +
+      "I triage and escalate incidents according to SOC procedures to the appropriate analysts.\n\n" +
+      "Additionally, I contribute to ongoing SOC knowledge-sharing initiatives, improving incident readiness with playbooks and documentation, maintaining a proactive approach to safeguarding client environments from emerging security risks.\n\n",
+
+    tags: ["Security Operations Center (SOC)", "Incident Response", "Threat Detection", "Team Knowledge Sharing"],
+    logo: "/CYBERWELL.jpeg",
+  },
+  {
+    id: 2,
     title: "Vice President, Projects",
     organization: "Western AI",
-    time: "June 2025 - Present",
+    time: "June 2025 - April 2026",
     description:
       "I oversee the development of four machine-learning projects. " +
       "I manage all project timelines and conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects. " +
@@ -17,10 +31,10 @@ const projects = [
     logo: "/WAI.jpeg",
   },
   {
-    id: 2,
+    id: 3,
     title: "Project Manager",
     organization: "Tech for Social Impact @ Western",
-    time: "January 2025 - Present",
+    time: "January 2025 - April 2026",
     description:
       "In this role, I lead student-developer teams to create software solutions for local non-profit organizations. \n\n" +
       "The first project I led was making the website for Western's sales club. The site increases their online engagement and establishes them as a key player in the Western club community.\n\n" +
@@ -30,7 +44,7 @@ const projects = [
     logo: "/TSI.jpeg",
   },
   {
-    id: 3,
+    id: 4,
     title: "Security Operations Intern",
     organization: "CYBERWELL Solutions",
     time: "April 2025 - September 2025",
@@ -43,7 +57,7 @@ const projects = [
     logo: "/CYBERWELL.jpeg",
   },
   {
-    id: 4,
+    id: 5,
     title: "Coding Tutor",
     organization: "Code Ninjas",
     time: "June 2024 - August 2024",
@@ -55,7 +69,7 @@ const projects = [
     logo: "/CN.png",
 },
 {
-    id: 5,
+    id: 6,
     title: "IT Intern",
     organization: "WELL Health Technologies",
     time: "May 2023 - September 2023",
@@ -77,7 +91,7 @@ export const ExperienceSection = () => {
       reverse={true}
       duration={2.4}
       ease="power3.out"
-      initialOpacity={0.1}
+      initialOpacity={0}
       animateOpacity
       scale={1.0}
       threshold={0.1}
@@ -85,17 +99,21 @@ export const ExperienceSection = () => {
     >
 
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          {" "}
-          My <span className="text-primary"> Experience </span>
-        </h2>
+        
+        <div className="liquid-glass-surface mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+            {" "}
+            My <span className="text-primary"> Experience </span>
+          </h2>
 
-        <ShinyText
-          text="These are the work and volunteer experiences that shape my skills in the software field."
-          disabled={false}
-          speed={6}
-          className='text-center mb-12 text-sm md:text-base block mx-auto max-w-2xl'
-        />
+          <ShinyText
+            text="These are the work and volunteer experiences that shape my skills in the software field."
+            disabled={false}
+            speed={6}
+            className='text-center text-sm md:text-base block mx-auto max-w-2xl'
+          />
+        </div>
+        
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (

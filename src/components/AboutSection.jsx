@@ -11,7 +11,7 @@ export const AboutSection = () => {
       reverse={false}
       duration={1.5}
       ease="power3.out"
-      initialOpacity={0.1}
+      initialOpacity={0}
       animateOpacity
       scale={1.0}
       threshold={0.08}
@@ -19,7 +19,8 @@ export const AboutSection = () => {
     >
 
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+
+        <h2 className="liquid-glass-surface text-3xl md:text-4xl font-bold mb-12 text-center">
           About <span className="text-primary"> Me</span>
         </h2>
 
@@ -64,19 +65,6 @@ export const AboutSection = () => {
             <div className="gradient-border p-6 card-hover">
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
-                  <User className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-left">
-                  <h4 className="font-semibold text-lg">Security and Cloud Computing</h4>
-                  <p className="text-muted-foreground text-gray-300">
-                    Passionate about cybersecurity and cloud applications, with a focus on AI.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-primary/10">
                   <Briefcase className="h-6 w-6 text-primary" />
                 </div>
 
@@ -84,6 +72,19 @@ export const AboutSection = () => {
                   <h4 className="font-semibold text-lg">Project Management</h4>
                   <p className="text-muted-foreground text-gray-300">
                     Leading teams to develop and deliver quality software products.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="gradient-border p-6 card-hover">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <User className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-left">
+                  <h4 className="font-semibold text-lg">Security and Cloud Computing</h4>
+                  <p className="text-muted-foreground text-gray-300">
+                    Passionate about cybersecurity and cloud applications, with a focus on AI.
                   </p>
                 </div>
               </div>

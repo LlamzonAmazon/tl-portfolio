@@ -17,7 +17,7 @@ export const HeroSection = () => {
             reverse={true}
             duration={1.8}
             ease="power3.out"
-            initialOpacity={0.1}
+            initialOpacity={0}
             animateOpacity
             scale={1.5}
             threshold={0.2}
@@ -28,7 +28,6 @@ export const HeroSection = () => {
                 colors={["#b764ffff", "#5b00b5ff", "#c40031ff", "#7c00daff", "#2000beff"]}
                 animationSpeed={5}
                 showBorder={false}
-                className="custom-class"
               >
                 Thomas Llamzon
               </GradientText>
@@ -41,14 +40,14 @@ export const HeroSection = () => {
             reverse={false}
             duration={2.8}
             ease="power3.out"
-            initialOpacity={0.1}
+            initialOpacity={0}
             animateOpacity
             scale={0.7}
             threshold={0.2}
             delay={0.1}
           >
             <div>
-              <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-sm sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
                 Fourth-year computer science student at
                 <span className="text-primary text-glow"> Western University</span>,
                 growing towards a software engineering career and interested in cybersecurity and cloud applications. 

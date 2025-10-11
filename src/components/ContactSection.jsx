@@ -11,7 +11,7 @@ export const ContactSection = () => {
       reverse={true}
       duration={2.0}
       ease="power3.out"
-      initialOpacity={0.1}
+      initialOpacity={0}
       animateOpacity
       scale={1.2}
       threshold={0.1}
@@ -20,9 +20,11 @@ export const ContactSection = () => {
 
       <div className="container mx-auto max-w-5xl">
 
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-          <span className="text-primary"> Connect</span> with me
-        </h2>
+        <div className="liquid-glass-surface mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center">
+            <span className="text-primary"> Connect</span> with me
+          </h2>
+        </div>
 
         <div className="flex justify-center">
           <a
@@ -30,8 +32,11 @@ export const ContactSection = () => {
             target="_blank"
             className="text-foreground/80 hover:text-primary transition-colors duration-300 group"
           >
-              <Linkedin className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+            <Linkedin
+              className="w-10 h-10 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+            />
           </a>
+
         </div>
       </div>
 

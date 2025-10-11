@@ -19,13 +19,13 @@ const skills = [
   { name: "Pandas", level: 70, category: "tools" },
   { name: "NumPy", level: 70, category: "tools" },
   { name: "PyTorch", level: 10, category: "tools" },
-  { name: "TensorFlow", level: 0, category: "tools" },
   { name: "Scikit-Learn", level: 10, category: "tools" },
   { name: "Flask", level: 70, category: "tools" },
   { name: "REST APIs", level: 70, category: "tools" },
   { name: "MySQL", level: 80, category: "tools" },
   { name: "PostgreSQL", level: 80, category: "tools" },
   { name: "React.js", level: 90, category: "tools" },
+  { name: "Node.js", level: 70, category: "tools" },
   { name: "Qt", level: 75, category: "tools" },
   { name: "Tailwind CSS", level: 90, category: "tools" },
 
@@ -34,6 +34,7 @@ const skills = [
   { name: "Google Cloud Platform", level: 75, category: "Cloud & DevOps" },
   { name: "Google Firebase", level: 70, category: "Cloud & DevOps" },
   { name: "Microsoft Azure", level: 80, category: "Cloud & DevOps" },
+  { name: "Neon PostgreSQL", level: 70, category: "Cloud & DevOps" },
   { name: "GitHub", level: 85, category: "Cloud & DevOps" },
   { name: "Atlassian Software", level: 60, category: "Cloud & DevOps" },
 ];
@@ -54,7 +55,7 @@ export const SkillsSection = () => {
       reverse={true}
       duration={1.6}
       ease="power3.out"
-      initialOpacity={0.1}
+      initialOpacity={0}
       animateOpacity
       scale={1.0}
       threshold={0.12}
@@ -62,16 +63,19 @@ export const SkillsSection = () => {
     >
 
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          My <span className="text-primary"> Skills</span>
-        </h2>
 
-        <ShinyText
-          text="Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning frameworks and tools."
-          disabled={false}
-          speed={6}
-          className='text-center text-muted-foreground mb-12 text-sm md:text-base block mx-auto max-w-2xl'
-        />
+        <div className="liquid-glass-surface mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+            My <span className="text-primary"> Skills</span>
+          </h2>
+
+          <ShinyText
+            text="Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning frameworks and tools."
+            disabled={false}
+            speed={6}
+            className='text-center text-muted-foreground text-sm md:text-base block mx-auto max-w-2xl'
+          />
+        </div>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, key) => (
@@ -81,8 +85,8 @@ export const SkillsSection = () => {
               className={cn(
                 "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
                 activeCategory === category
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary/70 text-forefround hover:bd-secondary"
+                  ? "bg-primary text-primary-foreground hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]"
+                  : "bg-secondary/70 text-foreground hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95; hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]"
               )}
             >
               {category}
