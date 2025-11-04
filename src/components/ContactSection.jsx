@@ -30,7 +30,7 @@ export const ContactSection = () => {
           <a
             href="https://www.linkedin.com/in/thomasllamzon/"
             target="_blank"
-            className="text-foreground/80 hover:text-primary transition-colors duration-300 group"
+            className="text-foreground/80 liquid-glass-surface p-6 hover:text-primary transition-colors duration-300 group"
           >
             <Linkedin
               className="w-10 h-10 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"

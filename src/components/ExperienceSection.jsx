@@ -19,9 +19,9 @@ const projects = [
   },
   {
     id: 2,
-    title: "Vice President, Projects",
+    title: "VP Projects",
     organization: "Western AI",
-    time: "June 2025 - April 2026",
+    time: "June 2025 - Present",
     description:
       "I oversee the development of four machine-learning projects. " +
       "I manage all project timelines and conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects. " +
@@ -34,7 +34,7 @@ const projects = [
     id: 3,
     title: "Project Manager",
     organization: "Tech for Social Impact @ Western",
-    time: "January 2025 - April 2026",
+    time: "January 2025 - Present",
     description:
       "In this role, I lead student-developer teams to create software solutions for local non-profit organizations. \n\n" +
       "The first project I led was making the website for Western's sales club. The site increases their online engagement and establishes them as a key player in the Western club community.\n\n" +
@@ -45,7 +45,7 @@ const projects = [
   },
   {
     id: 4,
-    title: "Security Operations Intern",
+    title: "SecOps Intern",
     organization: "CYBERWELL Solutions",
     time: "April 2025 - September 2025",
     description:
@@ -119,7 +119,7 @@ export const ExperienceSection = () => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group bg-card rounded-lg shadow-xs card-hover relative overflow-visible"
+              className="group liquid-glass-surface rounded-lg shadow-xs card-hover relative overflow-visible"
             >
 
                 {project.logo && (
@@ -129,7 +129,7 @@ export const ExperienceSection = () => {
                 )}
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-1"> {project.title}</h3>
+                <h3 className="text-2xl font-bold mb-1"> {project.title}</h3>
                 
                 <p className="text-sm font-bold">
                   {project.organization}
@@ -139,7 +139,7 @@ export const ExperienceSection = () => {
                   {project.time}
                 </p>
 
-                <p className="text-neutral-400 text-sm mb-4 whitespace-pre-line">
+                <p className="text-neutral-300 text-sm mb-4 whitespace-pre-line">
                   {project.description}
                 </p>
 
@@ -147,7 +147,7 @@ export const ExperienceSection = () => {
                   {project.tags.map((tag, index) => (
                     <span 
                       key={index}
-                      className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground"
+                      className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground text-neutral-300"
                     >
                       {tag}
                     </span>

@@ -5,44 +5,44 @@ import AnimatedContent from './Animations/AnimatedContent'
 
 const skills = [
   // Languages
-  { name: "Python", level: 95, category: "languages" },
-  { name: "Java", level: 95, category: "languages" },
-  { name: "C", level: 95, category: "languages" },
-  { name: "C++", level: 90, category: "languages" },
-  { name: "SQL", level: 85, category: "languages" },
-  { name: "JavaScript", level: 80, category: "languages" },
-  { name: "HTML/CSS", level: 80, category: "languages" },
-  { name: "PHP", level: 65, category: "languages" },
-  { name: "Bash", level: 65, category: "languages" },
+  { name: "Python", level: 95, category: "Languages" },
+  { name: "Java", level: 95, category: "Languages" },
+  { name: "C/C++", level: 90, category: "Languages" },
+  { name: "SQL", level: 85, category: "Languages" },
+  { name: "NoSQL", level: 70, category: "Languages" },
+  { name: "JavaScript", level: 80, category: "Languages" },
+  { name: "HTML/CSS", level: 80, category: "Languages" },
+  { name: "PHP", level: 65, category: "Languages" },
+  { name: "Bash", level: 65, category: "Languages" },
 
-  // Tools & Frameworks
-  { name: "Pandas", level: 70, category: "tools" },
-  { name: "NumPy", level: 70, category: "tools" },
-  { name: "PyTorch", level: 10, category: "tools" },
-  { name: "Scikit-Learn", level: 10, category: "tools" },
-  { name: "Flask", level: 70, category: "tools" },
-  { name: "REST APIs", level: 70, category: "tools" },
-  { name: "MySQL", level: 80, category: "tools" },
-  { name: "PostgreSQL", level: 80, category: "tools" },
-  { name: "React.js", level: 90, category: "tools" },
-  { name: "Node.js", level: 70, category: "tools" },
-  { name: "Qt", level: 75, category: "tools" },
-  { name: "Tailwind CSS", level: 90, category: "tools" },
+  // Frameworks
+  { name: "Flask", level: 70, category: "Frameworks" },
+  { name: "MySQL", level: 80, category: "Frameworks" },
+  { name: "PostgreSQL", level: 80, category: "Frameworks" },
+  { name: "MongoDB", level: 70, category: "Frameworks" },
+  { name: "RESTful APIs", level: 70, category: "Frameworks" },
+  { name: "React.js", level: 90, category: "Frameworks" },
+  { name: "Node.js", level: 70, category: "Frameworks" },
+  { name: "Tailwind CSS", level: 90, category: "Frameworks" },
 
-  // Cloud & DevOps
-  { name: "Amazon Web Services", level: 70, category: "Cloud & DevOps" },
-  { name: "Google Cloud Platform", level: 75, category: "Cloud & DevOps" },
-  { name: "Google Firebase", level: 70, category: "Cloud & DevOps" },
-  { name: "Microsoft Azure", level: 80, category: "Cloud & DevOps" },
-  { name: "Neon PostgreSQL", level: 70, category: "Cloud & DevOps" },
-  { name: "GitHub", level: 85, category: "Cloud & DevOps" },
-  { name: "Atlassian Software", level: 60, category: "Cloud & DevOps" },
+  // Tools
+  { name: "Git", level: 95, category: "Tools" },
+  { name: "Amazon Web Services", level: 70, category: "Tools" },
+  { name: "Google Cloud Platform", level: 75, category: "Tools" },
+  { name: "Microsoft Azure", level: 80, category: "Tools" },
+  { name: "Docker", level: 65, category: "Tools" },
+  { name: "Kubernetes", level: 65, category: "Tools" },
+
+  // Libraries
+  { name: "NumPy", level: 85, category: "Libraries" },
+  { name: "Pandas", level: 80, category: "Libraries" },
+  { name: "Qt", level: 75, category: "Libraries" },
 ];
 
-const categories = ["languages", "tools", "Cloud & DevOps"];
+const categories = ["Languages",  "Frameworks", "Tools", "Libraries"];
 
 export const SkillsSection = () => {
-  const [activeCategory, setActiveCategory] = useState("languages");
+  const [activeCategory, setActiveCategory] = useState("Languages");
 
   const filteredSkills = skills.filter(
     (skill) => skill.category === activeCategory
@@ -70,7 +70,7 @@ export const SkillsSection = () => {
           </h2>
 
           <ShinyText
-            text="Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning frameworks and tools."
+            text="Most of my technical skillset comes from projects and school. I am trying to gain more experience with data analysis and machine learning libraries."
             disabled={false}
             speed={6}
             className='text-center text-muted-foreground text-sm md:text-base block mx-auto max-w-2xl'
@@ -86,7 +86,7 @@ export const SkillsSection = () => {
                 "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
                 activeCategory === category
                   ? "bg-primary text-primary-foreground hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]"
-                  : "bg-secondary/70 text-foreground hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95; hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]"
+                  : "bg-secondary/70 text-foreground hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95;"
               )}
             >
               {category}

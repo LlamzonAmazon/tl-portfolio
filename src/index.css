@@ -64,15 +64,15 @@
 
 @layer base {
   :root {
-    --background: 222 47% 4%;
-    --foreground: 213 31% 91%;
+    --background: 0 0% 8%; /* Background Colour */
+    --foreground: 213 0% 91%;
 
-    --card: 222 47% 8%;
+    --card: 222 50% 10%; /* Card Background Colour */
 
-    --primary: 250 65% 65%;
-    --primary-foreground: 213 31% 91%;
+    --primary: 265 67% 60%; /* Button Background Colour */
+    --primary-foreground: 0 0% 100%; /* Button Text Colour */
 
-    --border: 217 33% 20%;
+    --border: 0 0% 25%; /* Border Colour */
   }
 
   * {
@@ -116,7 +116,7 @@
 }
 
 @utility card-hover {
-  @apply transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg;
+  @apply transition-transform duration-300 hover:shadow-lg;
 }
 
 @utility gradient-border {
@@ -144,7 +144,7 @@
 }
 
 @utility liquid-glass-surface {
-  @apply relative overflow-hidden rounded-2xl p-6 border border-white/10 backdrop-blur-xl;
+  @apply relative overflow-hidden rounded-2xl py-6 border border-white/10 backdrop-blur-xl;
   background:
     radial-gradient(circle at 30% 30%, rgba(124,9,255,0.08), transparent 65%),
     radial-gradient(circle at 70% 80%, rgba(0,0,0,0.01), transparent 70%),
@@ -164,7 +164,7 @@
     radial-gradient(circle at 40% 40%, rgba(255, 0, 0, 0.11), rgba(0, 187, 255, 0.07) 40%, transparent 70%),
     radial-gradient(circle at 70% 80%, rgba(0,0,0, 0.1), transparent 60%);
   mix-blend-mode: screen;
-  filter: blur(6px) brightness(1.2);
+  filter: blur(8px) brightness(0.8);
   opacity: 0.6;
   pointer-events: none;
 }
@@ -178,7 +178,7 @@
     radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 25%, transparent 80%);
   mix-blend-mode: overlay;
   opacity: 0.4;
-  filter: blur(2px);
+  filter: blur(6px);
   animation: refractionShift 2s ease-in-out infinite alternate;
   pointer-events: none;
 }

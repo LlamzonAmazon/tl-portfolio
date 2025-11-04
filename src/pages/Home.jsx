@@ -1,4 +1,3 @@
-import { StarBackground } from "../components/Animations/StarBackground";
 import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
@@ -12,9 +11,14 @@ export const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       
-      {/* Starry Background Effect */}
-      <StarBackground />
-      
+      {/* Starry Background Effect 
+      <StarBackground />*/}
+
+      <div
+        className="fixed inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/Vancouver.jpg')" }}
+      ></div>
+
       {/* Navbar */}
       <Navbar />
 

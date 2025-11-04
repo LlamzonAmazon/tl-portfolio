@@ -27,15 +27,15 @@ export const AboutSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
 
-            <p className="text-muted-foreground text-gray-300">
+            <p className="text-muted-foreground text-gray-200">
               I live a very balanced and full life. 
               I am a student, software developer, project manager, mentor, athlete, and friend. 
             </p>
-            <p className="text-muted-foreground text-gray-300">
+            <p className="text-muted-foreground text-gray-200">
               In my professional endeavours, I am pursuing a career in software engineering, with a focus in 
               cybersecurity and cloud applications, and machine learning.
             </p>
-            <p className="text-muted-foreground text-gray-300">
+            <p className="text-muted-foreground text-gray-200">
               I hope to leverage my social & active nature to achieve a well-rounded software-centric position where I can 
               make a positive impact in the software field.
             </p>
