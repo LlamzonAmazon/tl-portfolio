@@ -10,13 +10,13 @@ import { Footer } from "../components/Footer";
 export const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      
+
       {/* Starry Background Effect 
       <StarBackground />*/}
 
       <div
         className="fixed inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/Vancouver.jpg')" }}
+        style={{ backgroundImage: "url('/Vancouver.avif')" }}
       ></div>
 
       {/* Navbar */}

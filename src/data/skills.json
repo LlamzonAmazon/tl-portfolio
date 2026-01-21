@@ -1,0 +1,180 @@
+{
+    "skills": [
+        {
+            "name": "Java",
+            "level": 95,
+            "category": "Languages"
+        },
+        {
+            "name": "Python",
+            "level": 95,
+            "category": "Languages"
+        },
+        {
+            "name": "C/C++",
+            "level": 90,
+            "category": "Languages"
+        },
+        {
+            "name": "SQL",
+            "level": 85,
+            "category": "Languages"
+        },
+        {
+            "name": "NoSQL",
+            "level": 70,
+            "category": "Languages"
+        },
+        {
+            "name": "JavaScript",
+            "level": 80,
+            "category": "Languages"
+        },
+        {
+            "name": "HTML/CSS",
+            "level": 80,
+            "category": "Languages"
+        },
+        {
+            "name": "Bash",
+            "level": 70,
+            "category": "Languages"
+        },
+        {
+            "name": "R",
+            "level": 65,
+            "category": "Languages"
+        },
+        {
+            "name": "KQL",
+            "level": 75,
+            "category": "Languages"
+        },
+        {
+            "name": "PostgreSQL",
+            "level": 80,
+            "category": "Frameworks"
+        },
+        {
+            "name": "MySQL",
+            "level": 80,
+            "category": "Frameworks"
+        },
+        {
+            "name": "MongoDB",
+            "level": 70,
+            "category": "Frameworks"
+        },
+        {
+            "name": "TerraForm",
+            "level": 65,
+            "category": "Frameworks"
+        },
+        {
+            "name": "Flask",
+            "level": 75,
+            "category": "Frameworks"
+        },
+        {
+            "name": "FastAPI",
+            "level": 70,
+            "category": "Frameworks"
+        },
+        {
+            "name": "React",
+            "level": 85,
+            "category": "Frameworks"
+        },
+        {
+            "name": "Node.js",
+            "level": 70,
+            "category": "Frameworks"
+        },
+        {
+            "name": "RESTful APIs",
+            "level": 80,
+            "category": "Frameworks"
+        },
+        {
+            "name": "AWS",
+            "level": 70,
+            "category": "Tools"
+        },
+        {
+            "name": "GCP",
+            "level": 75,
+            "category": "Tools"
+        },
+        {
+            "name": "Microsoft Azure",
+            "level": 85,
+            "category": "Tools"
+        },
+        {
+            "name": "Docker",
+            "level": 70,
+            "category": "Tools"
+        },
+        {
+            "name": "Git",
+            "level": 95,
+            "category": "Tools"
+        },
+        {
+            "name": "Kubernetes",
+            "level": 65,
+            "category": "Tools"
+        },
+        {
+            "name": "Atlassian Software",
+            "level": 75,
+            "category": "Tools"
+        },
+        {
+            "name": "Pandas",
+            "level": 85,
+            "category": "Libraries"
+        },
+        {
+            "name": "NumPy",
+            "level": 85,
+            "category": "Libraries"
+        },
+        {
+            "name": "PyTorch",
+            "level": 75,
+            "category": "Libraries"
+        },
+        {
+            "name": "scikit-learn",
+            "level": 75,
+            "category": "Libraries"
+        },
+        {
+            "name": "Pydantic",
+            "level": 70,
+            "category": "Libraries"
+        },
+        {
+            "name": "Matplotlib",
+            "level": 75,
+            "category": "Libraries"
+        },
+        {
+            "name": "Seaborn",
+            "level": 70,
+            "category": "Libraries"
+        },
+        {
+            "name": "Qt",
+            "level": 75,
+            "category": "Libraries"
+        }
+    ],
+    "categories": [
+        "Languages",
+        "Frameworks",
+        "Tools",
+        "Libraries"
+    ]
+}
