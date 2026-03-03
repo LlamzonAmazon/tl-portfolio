@@ -1,46 +1,64 @@
-import { Linkedin } from "lucide-react";
-import AnimatedContent from './Animations/AnimatedContent'
+import { motion } from 'framer-motion'
+import { SectionLabel } from './ui/SectionLabel'
 
-export const ContactSection = () => {
+const ease = [0.16, 1, 0.3, 1]
 
-  return (
-    <section id="contact" className="py-24 px-4 relative bg-secondary/30">
-    <AnimatedContent
-      distance={150}
-      direction="vertical"
-      reverse={true}
-      duration={2.0}
-      ease="power3.out"
-      initialOpacity={0}
-      animateOpacity
-      scale={1.2}
-      threshold={0.1}
-      delay={0}
+const socials = [
+  { label: 'GITHUB',   href: 'https://github.com/LlamzonAmazon' },
+  { label: 'LINKEDIN', href: 'https://linkedin.com/in/thomas-llamzon' },
+]
+
+export const ContactSection = () => (
+  <section
+    id="contact"
+    style={{
+      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      minHeight: '85vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}
+  >
+    <SectionLabel index="06" label="CONTACT" />
+
+    {/* Large editorial CTA */}
+    <motion.h2
+      className="text-display"
+      initial={{ opacity: 0, y: 80 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 1.0, ease }}
+      style={{ color: 'var(--color-white)', marginTop: '3.5rem' }}
     >
+      Connect<br />with me.
+    </motion.h2>
 
-      <div className="container mx-auto max-w-5xl">
-
-        <div className="liquid-glass-surface mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center">
-            <span className="text-primary"> Connect</span> with me
-          </h2>
-        </div>
-
-        <div className="flex justify-center">
-          <a
-            href="https://www.linkedin.com/in/thomasllamzon/"
-            target="_blank"
-            className="text-foreground/80 liquid-glass-surface p-6 hover:text-primary transition-colors duration-300 group"
-          >
-            <Linkedin
-              className="w-10 h-10 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
-            />
-          </a>
-
-        </div>
-      </div>
-
-    </AnimatedContent>
-    </section>
-  );
-};
+    {/* Social links */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.65, duration: 0.8 }}
+      style={{
+        display: 'flex',
+        gap: '1rem',
+        marginTop: '3rem',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      {socials.map(({ label, href }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="contact-social-link text-label"
+        >
+          {label}
+          <span className="contact-social-arrow" aria-hidden>↗</span>
+        </a>
+      ))}
+    </motion.div>
+  </section>
+)

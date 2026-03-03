@@ -1,105 +1,213 @@
-import { ArrowRight, ExternalLink, Github } from "lucide-react";
-import { ShinyText } from "./Animations/ShinyText";
-import AnimatedContent from './Animations/AnimatedContent'
-import projectsData from '../data/projects.json';
+import { useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SectionLabel } from './ui/SectionLabel'
+import data from '../data/projects.json'
 
-const projects = projectsData.projects;
+gsap.registerPlugin(ScrollTrigger)
+
+// Per-slide dot-grid tint
+const palettes = [
+  { dot: 'rgba(192, 57,  79,  1)' },  // accent red
+  { dot: 'rgba(123, 63,  171, 1)' },  // accent purple
+  { dot: 'rgba( 30, 90,  180, 1)' },  // accent navy
+]
 
 export const ProjectsSection = () => {
+  const sectionRef = useRef(null)
+  const trackRef   = useRef(null)
+  const fillRef    = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current
+      const totalShift = track.scrollWidth - window.innerWidth
+
+      gsap.to(track, {
+        x: -totalShift,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start:  'top top',
+          end:    () => `+=${totalShift + window.innerHeight * 0.5}`,
+          pin:    true,
+          scrub:  1.2,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (fillRef.current) {
+              fillRef.current.style.width = `${self.progress * 100}%`
+            }
+          },
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="projects" className="py-24 px-4 relative">
-      <AnimatedContent
-        distance={300}
-        direction="horizontal"
-        reverse={false}
-        duration={2.4}
-        ease="power3.out"
-        initialOpacity={0}
-        animateOpacity
-        scale={1.0}
-        threshold={0.1}
-        delay={0}
+    <section
+      id="projects"
+      ref={sectionRef}
+      style={{ overflow: 'hidden', position: 'relative' }}
+    >
+      {/* Horizontal track */}
+      <div
+        ref={trackRef}
+        style={{
+          display: 'flex',
+          width: `${data.projects.length * 100}vw`,
+          height: '100vh',
+        }}
       >
-
-        <div className="container mx-auto max-w-5xl">
-
-          <div className="liquid-glass-surface mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-              {" "}
-              Featured <span className="text-primary"> Projects </span>
-            </h2>
-
-            <ShinyText
-              text="I am also working to attain cybersecurity and cloud service certifications!"
-              disabled={false}
-              speed={6}
-              className='text-center text-muted-foreground text-sm md:text-base block mx-auto max-w-2xl'
+        {data.projects.map((project, i) => {
+          const pal = palettes[i % palettes.length]
+          return (
+          <div
+            key={project.id}
+            style={{
+              width: '100vw',
+              height: '100vh',
+              position: 'relative',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              paddingLeft: 'var(--section-padding-x)',
+              paddingRight: 'var(--section-padding-x)',
+              paddingBottom: '10vh',
+            }}
+          >
+            {/* Dot-grid texture — repeating pattern blends seamlessly at all edges */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `radial-gradient(circle, ${pal.dot} 1.5px, transparent 1.5px)`,
+                backgroundSize: '32px 32px',
+              }}
             />
-          </div>
+            {/* Bottom vignette — fades grid out near text */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, var(--color-bg) 38%, transparent 100%)',
+              }}
+            />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, key) => (
-              <div
-                key={key}
-                className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover flex flex-col"
+            {/* Content */}
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              {/* Section label only on first slide */}
+              {i === 0 && (
+                <SectionLabel index="03" label="PROJECTS" />
+              )}
+              {i > 0 && (
+                <p className="text-label" style={{ marginBottom: '3.5rem', opacity: 0 }}>
+                  &nbsp;
+                </p>
+              )}
+
+              <span
+                className="text-label"
+                style={{ marginBottom: '1.25rem', display: 'block' }}
               >
-                <div className="h-48 overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
+                0{i + 1} / 0{data.projects.length}
+              </span>
 
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-xl font-semibold mb-4"> {project.title}</h3>
+              <h2
+                className="text-section-title"
+                style={{ color: 'var(--color-white)' }}
+              >
+                {project.title}
+              </h2>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground text-neutral-300">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+              <p
+                className="text-body"
+                style={{ maxWidth: '52ch', marginTop: '1.5rem' }}
+              >
+                {project.description.split('\n\n')[0]}
+              </p>
 
-                  <p className="text-muted-foreground text-sm mb-4 text-neutral-300 whitespace-pre-line">
-                    {project.description}
-                  </p>
-
-                  <div className="flex items-center justify-between mt-auto">
-                    <a
-                      className="cosmic-button w-fit flex items-center mx-auto"
-                      target="_blank"
-                      href={project.githubUrl}
-                    >
-                      <Github size={16} />
-                    </a>
-
-                    <a
-                      className="cosmic-button w-fit flex items-center mx-auto"
-                      target="_blank"
-                      href={project.demoUrl}
-                    >
-                      <ExternalLink size={16} />
-                    </a>
-                  </div>
-                </div>
+              {/* Tech tags — inline, no card */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '1.5rem',
+                  flexWrap: 'wrap',
+                  marginTop: '1.75rem',
+                  alignItems: 'center',
+                }}
+              >
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-label"
+                    style={{ color: 'var(--color-muted)' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="text-center mt-12">
-            <a
-              className="cosmic-button w-fit flex items-center mx-auto gap-2"
-              target="_blank"
-              href="https://github.com/LlamzonAmazon"
-            >
-              My projects on Github <ArrowRight size={16} />
-            </a>
+              {/* Links */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '2.5rem',
+                  marginTop: '2rem',
+                }}
+              >
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover-underline-red text-label"
+                  data-cursor-label="GITHUB →"
+                  style={{ color: 'var(--color-white)' }}
+                >
+                  GITHUB
+                </a>
+                {project.demoUrl !== project.githubUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover-underline-red text-label"
+                    data-cursor-label="VISIT →"
+                    style={{ color: 'var(--color-white)' }}
+                  >
+                    LIVE SITE
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        )})}
+      </div>
 
-      </AnimatedContent>
+      {/* Horizontal progress bar */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '2.5rem',
+          left: 'var(--section-padding-x)',
+          right: 'var(--section-padding-x)',
+          height: 1,
+          background: 'var(--color-border)',
+          zIndex: 10,
+        }}
+      >
+        <div
+          ref={fillRef}
+          style={{
+            height: '100%',
+            background: 'var(--color-accent-red)',
+            width: '0%',
+            transition: 'width 0.05s linear',
+          }}
+        />
+      </div>
     </section>
-  );
-};
+  )
+}

@@ -1,17 +1,18 @@
-import { ArrowUp } from "lucide-react";
-
-export const Footer = () => {
-  return (
-    <footer className="py-12 px-8 bg-card relative border-t border-border mt-12 pt-8 flex flex-wrap justify-between items-center">
-      <p className="text-sm text-muted-foreground">
-        A website by Thomas Llamzon. Built with React.js, Tailwind CSS, and Lucide Icons.
-      </p>
-      <a
-        href="#hero"
-        className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors"
-      >
-        <ArrowUp size={20} />
-      </a>
-    </footer>
-  );
-};
+export const Footer = () => (
+  <footer
+    style={{
+      padding: '2rem var(--section-padding-x)',
+      borderTop: '1px solid var(--color-border)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}
+  >
+    <p className="text-label" style={{ color: 'var(--color-muted)' }}>
+      © {new Date().getFullYear()} Thomas Llamzon
+    </p>
+    <p className="text-label" style={{ color: 'var(--color-muted)' }}>
+      Built with React &amp; Vite
+    </p>
+  </footer>
+)

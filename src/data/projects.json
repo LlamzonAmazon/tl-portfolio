@@ -35,7 +35,9 @@
             "image": "/WSC.avif",
             "tags": [
                 "React.js",
-                "TailwindCSS"
+                "TailwindCSS",
+                "Supabase",
+                "PostgreSQL"
             ],
             "demoUrl": "https://westernsalesclub.ca",
             "githubUrl": "https://github.com/TSITeam4/t4-frontend"

@@ -1,0 +1,19 @@
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, -60px) scale(1.05); }
+  66%       { transform: translate(-30px, 30px) scale(0.97); }
+}
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-50px, 40px) scale(1.08); }
+  70%       { transform: translate(30px, -20px) scale(0.95); }
+}
+@keyframes orb-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30%       { transform: translate(20px, 50px) scale(1.03); }
+  60%       { transform: translate(-40px, -30px) scale(1.06); }
+}
+
+.orb-a { animation: orb-drift-a 16s ease-in-out infinite; will-change: transform; }
+.orb-b { animation: orb-drift-b 20s ease-in-out infinite; will-change: transform; }
+.orb-c { animation: orb-drift-c 24s ease-in-out infinite; will-change: transform; }

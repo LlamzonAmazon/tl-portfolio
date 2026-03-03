@@ -1,89 +1,166 @@
-import { ArrowRight, ExternalLink, Github } from "lucide-react";
-import { ShinyText } from "./Animations/ShinyText";
-import AnimatedContent from './Animations/AnimatedContent'
-import experienceData from '../data/experience.json';
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { SectionLabel } from './ui/SectionLabel'
+import data from '../data/experience.json'
 
-const experiences = experienceData.experiences;
+const ease = [0.16, 1, 0.3, 1]
 
-export const ExperienceSection = () => {
+const ExperienceRow = ({ exp }) => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <section id="experience" className="py-24 px-4 relative">
-      <AnimatedContent
-        distance={300}
-        direction="horizontal"
-        reverse={true}
-        duration={2.4}
-        ease="power3.out"
-        initialOpacity={0}
-        animateOpacity
-        scale={1.0}
-        threshold={0.1}
-        delay={0}
+    <div>
+      {/* Animated hairline */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8, ease }}
+        style={{
+          height: 1,
+          background: 'var(--color-border)',
+          transformOrigin: 'left',
+        }}
+      />
+
+      {/* Role row — click to expand */}
+      <div
+        onClick={() => setOpen((o) => !o)}
+        data-cursor
+        data-cursor-label={open ? 'CLOSE' : 'READ →'}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          paddingTop: '2rem',
+          paddingBottom: open ? '1rem' : '2rem',
+        }}
       >
-
-        <div className="container mx-auto max-w-5xl">
-
-          <div className="liquid-glass-surface mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-              {" "}
-              My <span className="text-primary"> Experience </span>
-            </h2>
-
-            <ShinyText
-              text="These are the work and volunteer experiences that shape my skills in the software field."
-              disabled={false}
-              speed={6}
-              className='text-center text-sm md:text-base block mx-auto max-w-2xl'
-            />
-          </div>
-
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {experiences.map((project) => (
-              <div
-                key={project.id}
-                className="group liquid-glass-surface rounded-lg shadow-xs card-hover relative overflow-visible"
-              >
-
-                {project.logo && (
-                  <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full overflow-hidden border border-muted shadow-md bg-white">
-                    <img src={project.logo} alt={`${project.organization} logo`} className="w-full h-full object-contain" />
-                  </div>
-                )}
-
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-1"> {project.title}</h3>
-
-                  <p className="text-sm font-bold">
-                    {project.organization}
-                  </p>
-
-                  <p className="text-neutral-400 text-sm mb-4 font-bold">
-                    {project.time}
-                  </p>
-
-                  <p className="text-neutral-300 text-sm mb-4 whitespace-pre-line">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 text-xs font-medium border rounded-full bg-secondary text-secondary-foreground text-neutral-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                </div>
-              </div>
-            ))}
-          </div>
+        <div>
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease }}
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.6rem, 3.2vw, 2.6rem)',
+              fontWeight: 600,
+              color: 'var(--color-white)',
+              lineHeight: 1.05,
+            }}
+          >
+            {exp.title}
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-body"
+            style={{ marginTop: '0.3rem', fontSize: '0.95rem' }}
+          >
+            {exp.organization}&nbsp;&nbsp;·&nbsp;&nbsp;{exp.location}
+          </motion.p>
         </div>
 
-      </AnimatedContent>
-    </section>
-  );
-};
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-label"
+          style={{ whiteSpace: 'nowrap', paddingTop: '0.4rem', flexShrink: 0 }}
+        >
+          {exp.time}
+        </motion.p>
+      </div>
+
+      {/* Expandable description — no box, just text */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="desc"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div style={{ paddingBottom: '2.5rem', paddingTop: '0.5rem' }}>
+              {exp.description.split('\n\n').map((para, j) => (
+                <p
+                  key={j}
+                  className="text-body"
+                  style={{
+                    maxWidth: '72ch',
+                    marginTop: j > 0 ? '1rem' : 0,
+                  }}
+                >
+                  {para}
+                </p>
+              ))}
+              {/* Tags — inline, no badges */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '1.5rem',
+                  marginTop: '1.5rem',
+                }}
+              >
+                {exp.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-label"
+                    style={{ color: 'var(--color-muted)' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+export const ExperienceSection = () => (
+  <section
+    id="experience"
+    style={{ padding: 'var(--section-padding-y) var(--section-padding-x)' }}
+  >
+    <SectionLabel index="04" label="EXPERIENCE" />
+
+    <motion.h2
+      className="text-section-title"
+      style={{ color: 'var(--color-white)', marginBottom: '4rem' }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.9, ease }}
+    >
+      My experience.
+    </motion.h2>
+
+    <div>
+      {data.experiences.map((exp) => (
+        <ExperienceRow key={exp.id} exp={exp} />
+      ))}
+      {/* Final hairline */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8, ease }}
+        style={{
+          height: 1,
+          background: 'var(--color-border)',
+          transformOrigin: 'left',
+        }}
+      />
+    </div>
+  </section>
+)

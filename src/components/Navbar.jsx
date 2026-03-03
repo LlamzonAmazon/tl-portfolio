@@ -1,99 +1,73 @@
-import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
-const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
-];
+const links = ['About', 'Projects', 'Experience', 'Skills', 'Contact']
 
 export const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const fn = () => setScrolled(window.scrollY > 80)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
 
   return (
-    <>
-      <nav
-        className={cn(
-          "fixed w-full z-40 transition-all duration-300 py-6",
-          isScrolled && "bg-background/60 backdrop-blur-lg shadow-xs"
-        )}
+    <motion.header
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1.5rem var(--section-padding-x)',
+        backdropFilter: scrolled ? 'blur(18px)' : 'none',
+        background: scrolled ? 'rgba(0, 0, 0, 0.75)' : 'transparent',
+        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
+        transition: 'background 0.5s ease, backdrop-filter 0.5s ease, border-bottom 0.5s ease',
+      }}
+    >
+      <a
+        href="#home"
+        className="hover-underline-red"
+        onClick={(e) => {
+          e.preventDefault()
+          document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })
+        }}
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: '1.5rem',
+          fontWeight: 600,
+          color: 'var(--color-white)',
+          textDecoration: 'none',
+          letterSpacing: '0.02em',
+        }}
       >
-        <div className="container flex items-center justify-between">
+        T.L.
+      </a>
+
+      <nav style={{ display: 'flex', gap: '2.5rem' }}>
+        {links.map((link) => (
           <a
-            className="text-xl font-bold text-primary flex items-center"
-            href="#hero"
+            key={link}
+            href={`#${link.toLowerCase()}`}
+            className="hover-underline-red text-label"
+            style={{ color: 'var(--color-muted)' }}
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById(link.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+            }}
           >
-            <span className="relative z-10">
-              <span className="text-glow text-foreground"> Thomas </span>{" "}
-              Llamzon
-            </span>
+            {link}
           </a>
-
-          {/* desktop nav */}
-          <div className="hidden md:flex space-x-6 lg:space-x-8 pr-10">
-            {navItems.map((item, key) => (
-              <a
-                key={key}
-                href={item.href}
-                className="text-foreground/80 hover:text-primary hover:text-glow transition-colors duration-300"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-
-          {/* mobile hamburger button */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="md:hidden py-2 text-foreground z-50"
-            aria-label="Open Menu"
-          >
-            <Menu size={24} />
-          </button>
-        </div>
+        ))}
       </nav>
-
-      {/* mobile overlay */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-background/70 backdrop-blur-md z-50 flex flex-col items-center justify-center transition-all duration-300 md:hidden",
-          isMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        )}
-      >
-        <button
-          onClick={() => setIsMenuOpen(false)}
-          className="absolute top-6 right-7 py-2 text-foreground"
-          aria-label="Close Menu"
-        >
-          <X size={24} />
-        </button>
-
-        <div className="flex flex-col space-y-8 text-xl">
-          {navItems.map((item, key) => (
-            <a
-              key={key}
-              href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors duration-300"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-};
+    </motion.header>
+  )
+}

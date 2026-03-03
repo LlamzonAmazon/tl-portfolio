@@ -1,66 +1,104 @@
-import { ArrowDown, University } from "lucide-react";
-import GradientText from "./Animations/GradientText";
-import AnimatedContent from "./Animations/AnimatedContent";
+import { useRef } from 'react'
+import { motion } from 'framer-motion'
+import { ConstellationCanvas } from './ConstellationCanvas'
+
+const LINES     = ['THOMAS', 'LLAMZON']
+const lineDelay = [0.1, 0.46]
+
+const letterVariant = {
+  hidden:  { y: 110, x: 30, opacity: 0 },
+  visible: { y: 0,   x: 0,  opacity: 1 },
+}
 
 export const HeroSection = () => {
+  const sectionRef = useRef(null)
+
   return (
     <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4"
+      id="home"
+      ref={sectionRef}
+      style={{
+        height:         '100dvh',
+        position:       'relative',
+        overflow:       'hidden',
+        display:        'flex',
+        flexDirection:  'column',
+        justifyContent: 'flex-end',
+        paddingLeft:    'var(--section-padding-x)',
+        paddingRight:   'var(--section-padding-x)',
+        paddingBottom:  '12vh',
+        background:     '#000000',
+      }}
     >
-      <div className="container max-w-5xl mx-auto text-center z-10">
-        <div className="space-y-6">
+      {/* ── Constellation mesh ────────────────────────────────── */}
+      <ConstellationCanvas containerRef={sectionRef} />
 
-          <AnimatedContent
-            distance={50}
-            direction="vertical"
-            reverse={true}
-            duration={1.8}
-            ease="power3.out"
-            initialOpacity={0}
-            animateOpacity
-            scale={1.5}
-            threshold={0.2}
-            delay={0.1}
+      {/* ── Name ─────────────────────────────────────────────── */}
+      <div style={{ position: 'relative', zIndex: 3 }}>
+        {LINES.map((word, lineIdx) => (
+          <div
+            key={word}
+            style={{ display: 'flex', overflow: 'hidden', lineHeight: 0.88 }}
           >
-            <h1 className="text-4xl sm:text-6xl md:text-9xl font-bold tracking-tight">
-              <GradientText
-                colors={["#b764ffff", "#5b00b5ff", "#c40031ff", "#7c00daff", "#2000beff"]}
-                animationSpeed={5}
-                showBorder={false}
+            {[...word].map((letter, i) => (
+              <motion.span
+                key={i}
+                className="text-display"
+                style={{ display: 'block', color: 'var(--color-white)' }}
+                variants={letterVariant}
+                initial="hidden"
+                animate="visible"
+                transition={{
+                  delay:    lineDelay[lineIdx] + i * 0.045,
+                  ease:     [0.16, 1, 0.3, 1],
+                  duration: 0.9,
+                }}
               >
-                Thomas Llamzon
-              </GradientText>
-            </h1>
-          </AnimatedContent>
+                {letter}
+              </motion.span>
+            ))}
+          </div>
+        ))}
 
-          <AnimatedContent
-            distance={50}
-            direction="vertical"
-            reverse={false}
-            duration={2.8}
-            ease="power3.out"
-            initialOpacity={0}
-            animateOpacity
-            scale={0.7}
-            threshold={0.2}
-            delay={0.1}
-          >
-            <div>
-              <p className="text-sm sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-                Fourth-year computer science student at
-                <span className="text-primary"> Western University</span>,
-                growing towards a software engineering career and interested in cybersecurity and cloud applications. 
-              </p>
-            </div>
-          </AnimatedContent>
-        </div>
-      </div>
+        {/* ── Tagline ──────────────────────────────────────────── */}
+        <motion.p
+          className="text-body"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            marginTop:    '2.5rem',
+            fontSize:     'clamp(0.9rem, 1.4vw, 1.15rem)',
+            color:        'var(--color-muted)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Software Engineer&nbsp;&nbsp;·&nbsp;&nbsp;Security Analyst&nbsp;&nbsp;
+        </motion.p>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-sm text-muted-foreground mb-2"> Scroll </span>
-        <ArrowDown className="h-5 w-5 text-primary" />
+        {/* ── Scroll indicator ──────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.7, duration: 1 }}
+          style={{
+            marginTop:  '3.5rem',
+            display:    'flex',
+            alignItems: 'center',
+            gap:        '0.85rem',
+          }}
+        >
+          <div
+            style={{
+              width:      1,
+              height:     '3rem',
+              background: 'var(--color-muted)',
+              opacity:    0.5,
+            }}
+          />
+          <span className="text-label" style={{ opacity: 0.7 }}>SCROLL DOWN ↓</span>
+        </motion.div>
       </div>
     </section>
-  );
-};
+  )
+}
