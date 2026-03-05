@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionLabel } from './ui/SectionLabel'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import data from '../data/experience.json'
 
 const ease = [0.16, 1, 0.3, 1]
 
 const ExperienceRow = ({ exp }) => {
   const [open, setOpen] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
     <div>
@@ -30,10 +32,12 @@ const ExperienceRow = ({ exp }) => {
         data-cursor-label={open ? 'CLOSE' : 'READ →'}
         style={{
           display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           paddingTop: '2rem',
           paddingBottom: open ? '1rem' : '2rem',
+          gap: isMobile ? '0.5rem' : 0,
         }}
       >
         <div>
@@ -70,7 +74,11 @@ const ExperienceRow = ({ exp }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-label"
-          style={{ whiteSpace: 'nowrap', paddingTop: '0.4rem', flexShrink: 0 }}
+          style={{
+            whiteSpace: isMobile ? 'normal' : 'nowrap',
+            paddingTop: isMobile ? 0 : '0.4rem',
+            flexShrink: 0,
+          }}
         >
           {exp.time}
         </motion.p>

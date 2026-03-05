@@ -21,6 +21,11 @@ body {
 
 a, button, [role="button"] { cursor: none; }
 
+@media (pointer: coarse) {
+  body { cursor: auto; }
+  a, button, [role="button"] { cursor: auto; }
+}
+
 :focus-visible {
   outline: 1px solid var(--color-accent-red);
   outline-offset: 4px;

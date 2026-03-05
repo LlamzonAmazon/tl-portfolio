@@ -33,20 +33,6 @@
         },
         {
             "id": 3,
-            "title": "VP Projects",
-            "organization": "Western AI",
-            "time": "June 2025 - Present",
-            "location": "London, ON",
-            "description": "I oversee the development of four machine-learning projects.\n\nI manage all project timelines and conduct structured weekly meetings with the PM's to discuss progress, resolve logistical challenges, and guide the direction of their projects.\n\nThe projects include:\n\n• Driver-Drowsiness Detector (OpenCV, YOLOv8n, PyTorch)\n\n• Toronto Condominium-Affordability Predictor (scikit-learn, LightGBM)\n\n• Code-Similarity Detector (CodeBERT, scikit-learn)\n\n• Video Virality Analyzer (CLIP, OpenL3, UMAP, LightGBM)",
-            "tags": [
-                "AI/ML Project Management",
-                "Logistical & Documentation Support",
-                "Technical Feasibility Analysis"
-            ],
-            "logo": "/WAI.png"
-        },
-        {
-            "id": 4,
             "title": "Security Operations Intern",
             "organization": "CYBERWELL Solutions",
             "time": "Apr 2025 - Sep 2025",
@@ -61,7 +47,7 @@
             "logo": "/CYBERWELL.png"
         },
         {
-            "id": 5,
+            "id": 4,
             "title": "Coding Tutor",
             "organization": "Code Ninjas",
             "time": "June 2024 - August 2024",
@@ -78,7 +64,7 @@
             "logo": "/CN.png"
         },
         {
-            "id": 6,
+            "id": 5,
             "title": "IT Intern",
             "organization": "WELL Health Technologies",
             "time": "May 2023 - Sep 2023",

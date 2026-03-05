@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 export const Cursor = () => {
+  const isMobile = useMediaQuery('(max-width: 768px)')
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
   const [hovering, setHovering] = useState(false)
@@ -41,6 +43,8 @@ export const Cursor = () => {
       document.removeEventListener('mouseout', onLeave, true)
     }
   }, [mouseX, mouseY])
+
+  if (isMobile) return null
 
   const lineSize = hovering ? 32 : 22
   const lineOpacity = hovering ? 1 : 0.55

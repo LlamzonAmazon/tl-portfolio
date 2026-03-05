@@ -21,18 +21,19 @@ export const ProjectsSection = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const track = trackRef.current
-      const totalShift = track.scrollWidth - window.innerWidth
+      const getShift = () => track.scrollWidth - window.innerWidth
 
       gsap.to(track, {
-        x: -totalShift,
+        x: () => -getShift(),
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
           start:  'top top',
-          end:    () => `+=${totalShift + window.innerHeight * 0.5}`,
+          end:    () => `+=${getShift() + window.innerHeight * 0.12}`,
           pin:    true,
           scrub:  1.2,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             if (fillRef.current) {
               fillRef.current.style.width = `${self.progress * 100}%`

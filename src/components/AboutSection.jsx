@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { SectionLabel } from './ui/SectionLabel'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 const reveal = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }
 const vp = { once: true, margin: '-100px' }
@@ -20,7 +21,10 @@ const expertise = [
   },
 ]
 
-export const AboutSection = () => (
+export const AboutSection = () => {
+  const isMobile = useMediaQuery('(max-width: 768px)')
+
+  return (
   <section
     id="about"
     style={{ padding: 'var(--section-padding-y) var(--section-padding-x)', background: 'var(--color-bg)' }}
@@ -30,15 +34,19 @@ export const AboutSection = () => (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '8vw',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? '3rem' : '8vw',
         alignItems: 'start',
       }}
     >
       {/* Left — sticky editorial headline */}
       <motion.h2
         className="text-section-title"
-        style={{ color: 'var(--color-white)', position: 'sticky', top: '22vh' }}
+        style={{
+          color: 'var(--color-white)',
+          position: isMobile ? 'static' : 'sticky',
+          top: isMobile ? undefined : '22vh',
+        }}
         variants={reveal}
         initial="hidden"
         whileInView="visible"
@@ -141,4 +149,5 @@ export const AboutSection = () => (
       </div>
     </div>
   </section>
-)
+  )
+}
