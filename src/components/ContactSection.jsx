@@ -5,7 +5,7 @@ const ease = [0.16, 1, 0.3, 1]
 
 const socials = [
   { label: 'GITHUB',   href: 'https://github.com/LlamzonAmazon' },
-  { label: 'LINKEDIN', href: 'https://linkedin.com/in/thomas-llamzon' },
+  { label: 'LINKEDIN', href: 'https://linkedin.com/in/thomasllamzon' },
 ]
 
 export const ContactSection = () => (

@@ -3,13 +3,14 @@
         {
             "id": 1,
             "title": "Global Development Dashboard",
-            "description": "Using Azure Container Instances, Blob Storage, Logic Apps, and more to construct a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.\n\nConstructing composite indexes and predictive models with NumPy and predictive modelling with regression and Holt-Winters smoothing.\n\nUsing Power BI to deliver a compelling interactive frontend deployed on the organization's redesigned website.",
+            "description": "Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.",
             "image": "/PlanCatalyst.avif",
             "tags": [
-                "Azure",
+                "Azur (Blob Storage, Logic Apps, Container Instances)",
                 "Python",
                 "Pandas",
                 "NumPy",
+                "Docker",
                 "Power BI"
             ],
             "demoUrl": "https://plancatalyst.org",
@@ -18,9 +19,10 @@
         {
             "id": 2,
             "title": "Asynchronous Federated Learning Network",
-            "description": "Engineering an asynchronous federated learning system for distributed IoT healthcare devices using the PyTorch and Flower frameworks and the PTB-XL ECG dataset from PhysioNet.\n\nImplementing layer-wise parameter update scheduling to reduce network communication overhead while maintaining 75% ECG classification accuracy on 21K+ patient records.\n\nDesigned and deployed 1D CNN architecture with stratified shallow/deep layer separation for temporal pattern recognition in 12-lead ECG signals, optimizing model convergence through adaptive weight-update frequencies based on gradient magnitude analysis across distributed edge nodes.",
+            "description": "Engineering an optimized federated learning network for distributed IoT healthcare settings using an asynchronous layer-wise parameter update scheduler implemented with PyTorch and Flower.",
             "image": "/fl.avif",
             "tags": [
+                "Python",
                 "Flower",
                 "PyTorch",
                 "NumPy"
@@ -31,11 +33,11 @@
         {
             "id": 3,
             "title": "westernsalesclub.ca",
-            "description": "The website for Western's first sales club, built to showcase the club's activities and mission.\n\nThis platform establishes the Western Sales Club at the forefront of sales at Western and as a major player in the university's club community. It serves as a professional gateway that helps the club acquire sponsors and high-profile clients for events and activities.",
+            "description": "The website for Western's first sales club paired with backend content management dashboard allowing club executives to authenticate and manage the website's content.",
             "image": "/WSC.avif",
             "tags": [
                 "React.js",
-                "TailwindCSS",
+                "OAuth 2.0",
                 "Supabase",
                 "PostgreSQL"
             ],

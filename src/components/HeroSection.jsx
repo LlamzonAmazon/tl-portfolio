@@ -73,7 +73,7 @@ export const HeroSection = () => {
             letterSpacing: '0.01em',
           }}
         >
-          Software Engineer&nbsp;&nbsp;·&nbsp;&nbsp;Security Analyst&nbsp;&nbsp;
+          Software Engineering&nbsp;&nbsp;·&nbsp;&nbsp;Cybersecurity&nbsp;&nbsp;·&nbsp;&nbsp;Cloud Computing&nbsp;&nbsp;
         </motion.p>
 
         {/* ── Scroll indicator ──────────────────────────────────── */}
