@@ -2,6 +2,7 @@
 .cache/
 *.cache
 cache
+.playwright-cli/
 
 # Logs
 logs

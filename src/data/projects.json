@@ -3,8 +3,9 @@
         {
             "id": 1,
             "title": "Global Development Dashboard",
+            "category": "pro bono",
             "description": "Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.",
-            "image": "/PlanCatalyst.avif",
+            "image": "/preview-dash.png",
             "tags": [
                 "Azur (Blob Storage, Logic Apps, Container Instances)",
                 "Python",
@@ -19,8 +20,9 @@
         {
             "id": 2,
             "title": "Asynchronous Federated Learning Network",
+            "category": "thesis",
             "description": "Engineering an optimized federated learning network for distributed IoT healthcare settings using an asynchronous layer-wise parameter update scheduler implemented with PyTorch and Flower.",
-            "image": "/fl.avif",
+            "image": "/preview-async.png",
             "tags": [
                 "Python",
                 "Flower",
@@ -33,8 +35,9 @@
         {
             "id": 3,
             "title": "westernsalesclub.ca",
+            "category": "websites",
             "description": "The website for Western's first sales club paired with backend content management dashboard allowing club executives to authenticate and manage the website's content.",
-            "image": "/WSC.avif",
+            "image": "/preview-wsc.png",
             "tags": [
                 "React.js",
                 "OAuth 2.0",
