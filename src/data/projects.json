@@ -15,7 +15,7 @@
                 "Power BI"
             ],
             "demoUrl": "https://plancatalyst.org",
-            "githubUrl": "https://github.com/LlamzonAmazon/PC-Data-Dash"
+            "githubUrl": "https://github.com/PlanCatalyst/TSI-Data-Dashboard"
         },
         {
             "id": 2,
@@ -29,8 +29,8 @@
                 "PyTorch",
                 "NumPy"
             ],
-            "demoUrl": "https://github.com/LlamzonAmazon/asynchronous-federated-learning",
-            "githubUrl": "https://github.com/LlamzonAmazon/asynchronous-federated-learning"
+            "demoUrl": "https://",
+            "githubUrl": "https://github.com/LlamzonAmazon/asynchronous-fl"
         },
         {
             "id": 3,
@@ -45,7 +45,7 @@
                 "PostgreSQL"
             ],
             "demoUrl": "https://westernsalesclub.ca",
-            "githubUrl": "https://github.com/TSITeam4/t4-frontend"
+            "githubUrl": "https://github.com/UWO-TSI/wsc-website"
         }
     ]
 }
