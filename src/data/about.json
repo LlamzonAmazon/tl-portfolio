@@ -1,0 +1,26 @@
+{
+  "headlineLines": ["Building", "scalable and", "reliable solutions."],
+  "bio": [
+    "I'm a freelance solutions engineer building and improving software and workflows for local businesses.",
+    "I use AI throughout how I design and ship for faster iteration, clearer specs, and solutions that stay practical to run long after handoff.",
+    "My background spans cybersecurity, cloud computing, and full-stack development."
+  ],
+  "expertise": [
+    {
+      "title": "Solutions Engineering",
+      "body": "Scoping problems, shipping software, and improving operational systems. Building anything from customer-facing tools to backends that keep businesses running."
+    },
+    {
+      "title": "AI-Augmented Development",
+      "body": "Applying modern AI tooling to accelerate development, documentation, and troubleshooting without sacrificing maintainability or security."
+    },
+    {
+      "title": "Security & Cloud Computing",
+      "body": "Hands-on SOC operations, KQL threat detection, and infrastructure work across Azure, GCP, and AWS."
+    }
+  ],
+  "cta": {
+    "label": "CONNECT WITH ME →",
+    "href": "#contact"
+  }
+}
