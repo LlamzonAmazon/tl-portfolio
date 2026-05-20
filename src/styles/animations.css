@@ -17,3 +17,12 @@
 .orb-a { animation: orb-drift-a 16s ease-in-out infinite; will-change: transform; }
 .orb-b { animation: orb-drift-b 20s ease-in-out infinite; will-change: transform; }
 .orb-c { animation: orb-drift-c 24s ease-in-out infinite; will-change: transform; }
+
+@keyframes skeleton-pulse {
+  0%, 100% { background: rgba(255, 255, 255, 0.06); }
+  50%       { background: rgba(255, 255, 255, 0.14); }
+}
+
+.skeleton-pulse {
+  animation: skeleton-pulse 1.6s ease-in-out infinite both;
+}

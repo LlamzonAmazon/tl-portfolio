@@ -10,7 +10,7 @@ const letterVariant = {
   visible: { y: 0,   x: 0,  opacity: 1 },
 }
 
-export const HeroSection = () => {
+export const HeroSection = ({ shouldAnimate = false }) => {
   const sectionRef = useRef(null)
 
   return (
@@ -31,7 +31,7 @@ export const HeroSection = () => {
       }}
     >
       {/* ── Constellation mesh ────────────────────────────────── */}
-      <ConstellationCanvas containerRef={sectionRef} />
+      {shouldAnimate && <ConstellationCanvas containerRef={sectionRef} />}
 
       {/* ── Name ─────────────────────────────────────────────── */}
       <div style={{ position: 'relative', zIndex: 3 }}>
@@ -47,7 +47,7 @@ export const HeroSection = () => {
                 style={{ display: 'block', color: 'var(--color-white)' }}
                 variants={letterVariant}
                 initial="hidden"
-                animate="visible"
+                animate={shouldAnimate ? 'visible' : 'hidden'}
                 transition={{
                   delay:    lineDelay[lineIdx] + i * 0.045,
                   ease:     [0.16, 1, 0.3, 1],
@@ -64,7 +64,7 @@ export const HeroSection = () => {
         <motion.p
           className="text-body"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: 1.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{
             marginTop:    '2.5rem',
@@ -79,7 +79,7 @@ export const HeroSection = () => {
         {/* ── Scroll indicator ──────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
           transition={{ delay: 1.7, duration: 1 }}
           style={{
             marginTop:  '3.5rem',
