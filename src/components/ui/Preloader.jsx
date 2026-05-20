@@ -47,11 +47,6 @@ export const Preloader = ({ onComplete }) => {
   const onCompleteRef = useRef(onComplete)
 
   useEffect(() => {
-    document.documentElement.style.overflow = 'hidden'
-    return () => { document.documentElement.style.overflow = '' }
-  }, [])
-
-  useEffect(() => {
     const imgPromises = IMAGES.map(
       (src) => new Promise((res) => {
         const img = new Image()

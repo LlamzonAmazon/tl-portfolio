@@ -2,6 +2,25 @@
     "experiences": [
         {
             "id": 1,
+            "title": "Solutions Engineer",
+            "organization": "Freelance",
+            "time": "May 2026 - Present",
+            "location": "Remote",
+            "description": "Building scalable and secure software solutions for local businesses/organizations (CMS, automation, workflows, insights platforms, websites, etc.)",
+            "tags": [
+                "AWS",
+                "Azure",
+                "GCP",
+                "Cloudflare",
+                "GitHub",
+                "React",
+                "Node.js",
+                "Docker",
+                "Supabase"
+            ]
+        },
+        {
+            "id": 2,
             "title": "Lead Software Engineer",
             "organization": "PlanCatalyst (Pro Bono)",
             "time": "Sep 2025 - Apr 2026",
@@ -13,11 +32,10 @@
                 "Pandas",
                 "NumPy",
                 "Power BI"
-            ],
-            "logo": "/PlanCatalyst.png"
+            ]
         },
         {
-            "id": 2,
+            "id": 3,
             "title": "Security Analyst",
             "organization": "CYBERWELL Solutions",
             "time": "Sep 2025 - Apr 2026",
@@ -28,11 +46,10 @@
                 "Cortex XSOAR",
                 "KQL",
                 "OSINT"
-            ],
-            "logo": "/CYBERWELL.png"
+            ]
         },
         {
-            "id": 3,
+            "id": 4,
             "title": "Security Operations Intern",
             "organization": "CYBERWELL Solutions",
             "time": "May 2025 - Aug 2025",
@@ -43,11 +60,10 @@
                 "KQL",
                 "TPRM",
                 "Incident Response"
-            ],
-            "logo": "/CYBERWELL.png"
+            ]
         },
         {
-            "id": 4,
+            "id": 5,
             "title": "IT Intern",
             "organization": "WELL Health Technologies",
             "time": "May 2023 - Aug 2023",
@@ -58,8 +74,7 @@
                 "Azure (Endpoint Management, Compliance)",
                 "ISO 27001",
                 "SOC2"
-            ],
-            "logo": "/WELL.png"
+            ]
         }
     ]
 }
