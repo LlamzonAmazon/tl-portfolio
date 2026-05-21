@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const IMAGES = [
   '/preview-dash.png',
@@ -9,8 +8,6 @@ const IMAGES = [
   '/GitHub.png',
   '/tab-icon.png',
 ]
-
-const NAV_WIDTHS = ['2.9rem', '4.6rem', '5.8rem', '3.5rem', '4.1rem']
 
 const containerVariants = {
   show: { opacity: 1 },
@@ -43,7 +40,6 @@ const SkeletonBox = ({ style }) => (
 )
 
 export const Preloader = ({ onComplete }) => {
-  const isMobile = useMediaQuery('(max-width: 768px)')
   const onCompleteRef = useRef(onComplete)
 
   useEffect(() => {
@@ -71,34 +67,22 @@ export const Preloader = ({ onComplete }) => {
       <motion.div
         variants={navVariant}
         style={{
-          position:       'absolute',
-          top:            0,
-          left:           0,
-          right:          0,
-          display:        'flex',
-          justifyContent: 'space-between',
-          alignItems:     'center',
-          padding:        '1.5rem var(--section-padding-x)',
+          position:   'absolute',
+          top:        0,
+          left:       0,
+          right:      0,
+          display:    'flex',
+          alignItems: 'center',
+          padding:    '1.5rem var(--section-padding-x)',
         }}
       >
-        <SkeletonBox style={{ width: '2.5rem', height: '1.2rem' }} />
-
-        {isMobile ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            {[0, 1, 2].map((i) => (
-              <SkeletonBox key={i} style={{ width: 22, height: 1.5 }} />
-            ))}
-          </div>
-        ) : (
-          <div style={{ display: 'flex', gap: '2.5rem' }}>
-            {NAV_WIDTHS.map((w, i) => (
-              <SkeletonBox
-                key={i}
-                style={{ width: w, height: '0.72rem', animationDelay: `${i * 0.1}s` }}
-              />
-            ))}
-          </div>
-        )}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+          <SkeletonBox style={{ width: '2.6rem', height: '0.9rem' }} />
+        </div>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <SkeletonBox style={{ width: 'clamp(7rem, 11vw, 9rem)', height: '1rem' }} />
+        </div>
+        <div style={{ flex: 1 }} />
       </motion.div>
 
       {/* ── Skeleton Hero ─────────────────────────────────────────── */}

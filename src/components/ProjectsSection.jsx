@@ -176,6 +176,16 @@ export const ProjectsSection = () => {
       </div>
 
       <style>{`
+        .project-preview-tag {
+          font-size: 0.625rem;
+          letter-spacing: 0.14em;
+        }
+        @media (max-width: 767px) {
+          .project-preview-description {
+            font-size: 0.8125rem;
+            line-height: 1.55;
+          }
+        }
         @media (min-width: 768px) {
           .projects-grid {
             grid-template-columns: 28% 1fr !important;
@@ -240,7 +250,7 @@ const ProjectPreview = ({ project }) => (
       {/* Top: description — left aligned */}
       <motion.p
         variants={itemVariants}
-        className="text-body"
+        className="text-body project-preview-description"
         style={{
           maxWidth: '52ch',
           color: 'rgba(245, 240, 235, 0.82)',
@@ -287,12 +297,12 @@ const ProjectPreview = ({ project }) => (
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '0.75rem 1.25rem',
+            gap: '0.5rem 1rem',
             justifyContent: 'center',
           }}
         >
           {project.tags.map((tag) => (
-            <span key={tag} className="text-label" style={{ color: 'var(--color-muted)' }}>
+            <span key={tag} className="text-label project-preview-tag" style={{ color: 'var(--color-muted)' }}>
               {tag}
             </span>
           ))}

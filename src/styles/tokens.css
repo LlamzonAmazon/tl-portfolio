@@ -31,4 +31,10 @@
   --transition-base:    320ms ease;
   --transition-slow:    600ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-reveal:  800ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Nav overlay ────────────────────────────────────────── */
+  --nav-overlay-bg:     #F5F0EB;
+  --nav-overlay-text:   #0a0a0a;
+  --nav-hole-width:     30vw;
+  --nav-hole-height:    65vh;
 }

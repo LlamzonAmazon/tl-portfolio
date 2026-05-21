@@ -75,9 +75,9 @@ export const Cursor = () => {
           width: lineSize,
           height: 1,
           transform: 'translate(-50%, -50%)',
-          background: 'var(--color-white)',
+          background: 'var(--cursor-color, var(--color-white))',
           opacity: lineOpacity,
-          transition: 'width 0.18s ease, opacity 0.18s ease',
+          transition: 'width 0.18s ease, opacity 0.18s ease, background 0.3s ease',
         }}
       />
       {/* Vertical bar */}
@@ -89,9 +89,9 @@ export const Cursor = () => {
           width: 1,
           height: lineSize,
           transform: 'translate(-50%, -50%)',
-          background: 'var(--color-white)',
+          background: 'var(--cursor-color, var(--color-white))',
           opacity: lineOpacity,
-          transition: 'height 0.18s ease, opacity 0.18s ease',
+          transition: 'height 0.18s ease, opacity 0.18s ease, background 0.3s ease',
         }}
       />
       {/* Hover label */}
@@ -107,8 +107,9 @@ export const Cursor = () => {
             fontFamily: 'var(--font-body)',
             fontSize: '0.6rem',
             letterSpacing: '0.18em',
-            color: 'var(--color-white)',
+            color: 'var(--cursor-color, var(--color-white))',
             whiteSpace: 'nowrap',
+            transition: 'color 0.3s ease',
           }}
         >
           {label}

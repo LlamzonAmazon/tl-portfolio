@@ -99,7 +99,7 @@ const ExperienceRow = ({ exp }) => {
               {exp.description.split('\n\n').map((para, j) => (
                 <p
                   key={j}
-                  className="text-body"
+                  className="text-body experience-description"
                   style={{
                     maxWidth: '72ch',
                     marginTop: j > 0 ? '1rem' : 0,
@@ -140,6 +140,14 @@ export const ExperienceSection = () => (
     id="experience"
     style={{ padding: 'var(--section-padding-y) var(--section-padding-x)' }}
   >
+    <style>{`
+      @media (max-width: 767px) {
+        .experience-description {
+          font-size: 0.8125rem;
+          line-height: 1.55;
+        }
+      }
+    `}</style>
     <SectionLabel index="04" label="EXPERIENCE" />
 
     <motion.h2

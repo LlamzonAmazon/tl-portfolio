@@ -7,7 +7,7 @@
             "description": "Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.",
             "image": "/preview-dash.png",
             "tags": [
-                "Azur (Blob Storage, Logic Apps, Container Instances)",
+                "Azure",
                 "Python",
                 "Pandas",
                 "NumPy",
