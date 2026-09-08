@@ -108,7 +108,28 @@ const ExperienceRow = ({ exp }) => {
                   {para}
                 </p>
               ))}
-              {/* Tags — inline, no badges */}
+              {/* Optional client / product link */}
+              {exp.link && (
+                <a
+                  href={exp.link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="hover-underline-red text-label"
+                  data-cursor-label="VISIT →"
+                  style={{
+                    color: 'var(--color-white)',
+                    marginTop: '1.75rem',
+                    minHeight: '44px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {exp.link.label} ↗
+                </a>
+              )}
+
+              {/* Tags - inline, no badges */}
               <div
                 style={{
                   display: 'flex',

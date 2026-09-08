@@ -1,23 +1,14 @@
 {
-  "headlineLines": ["Building", "scalable and", "reliable solutions."],
+  "headlineLines": ["Building", "and securing", "production systems."],
   "bio": [
-    "I'm a freelance solutions engineer building and improving software and workflows for local businesses.",
-    "I use AI throughout how I design and ship for faster iteration, clearer specs, and solutions that stay practical to run long after handoff.",
-    "My background spans cybersecurity, cloud computing, and full-stack development."
+    "I'm a software engineer working independently with businesses on the systems they actually run on: storefronts, ordering backends, data pipelines, and the agent tooling around them.",
+    "Before that I spent a year in security operations, investigating incidents and writing detections across seven client environments. That work is why I design for least privilege by default, and why I audit what a system publishes rather than trusting what it reports about itself.",
+    "I hold a BSc with Honours Specialization in Computer Science from Western University. My honours thesis, on communication-efficient federated learning for IoT health devices, was accepted as a first-author paper at IEEE GLOBECOM 2026."
   ],
-  "expertise": [
-    {
-      "title": "Solutions Engineering",
-      "body": "Scoping problems, shipping software, and improving operational systems. Building anything from customer-facing tools to backends that keep businesses running."
-    },
-    {
-      "title": "AI-Augmented Development",
-      "body": "Applying modern AI tooling to accelerate development, documentation, and troubleshooting without sacrificing maintainability or security."
-    },
-    {
-      "title": "Security & Cloud Computing",
-      "body": "Hands-on SOC operations, KQL threat detection, and infrastructure work across Azure, GCP, and AWS."
-    }
+  "domains": [
+    "Forward Deployed Engineering",
+    "Security & Cloud Architecture",
+    "Applied AI"
   ],
   "cta": {
     "label": "CONNECT WITH ME →",

@@ -2,50 +2,95 @@
     "projects": [
         {
             "id": 1,
+            "title": "Asynchronous Federated Learning Network",
+            "category": "research",
+            "summary": "A federated learning system that cuts what edge clients upload by syncing shallow and deep model layers on different schedules.",
+            "points": [
+                "Partitions the model by state_dict prefix. The server aggregates shallow layers with weighted FedAvg every round, deep layers only every K-th.",
+                "Between deep syncs it serves a staleness-tracked cache, so off-rounds upload 898 KB instead of 141.6 MB.",
+                "Correctness is pinned by a K=1 run that has to reproduce synchronous FedAvg exactly. That check is what caught an aggregation bug mid-project.",
+                "On a 37.1M-parameter ECG CNN over 12-lead PTB-XL data, K=4 cuts client upload 74.5% with accuracy comparable to the synchronous baseline.",
+                "Accepted as a first-author paper at IEEE GLOBECOM 2026."
+            ],
+            "image": "/preview-async.png",
+            "tags": [
+                "Python",
+                "PyTorch",
+                "Flower",
+                "NumPy",
+                "Distributed Systems"
+            ],
+            "githubUrl": "https://github.com/LlamzonAmazon/asynchronous-fl"
+        },
+        {
+            "id": 2,
             "title": "Global Development Dashboard",
             "category": "pro bono",
-            "description": "Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.",
+            "summary": "A scheduled Azure pipeline that turns five incompatible international data feeds into one comparable country-level view.",
+            "points": [
+                "Logic Apps triggers a Function that starts a containerized Python job in Container Instances: fetch, clean, score, aggregate, publish, in one command.",
+                "Factory-pattern fetchers absorb a paginated REST API, a ZIP archive, and a half-hour unattended crawl behind one interface with exponential backoff.",
+                "Pluggable scorers normalize 28 indicators to a 0-100 scale, rolled up through a YAML-driven taxonomy of subdomains and seven pillars.",
+                "The React frontend reads nothing but a versioned three-file JSON contract, with missing observations as explicit nulls rather than sentinel zeros.",
+                "A manifest-last atomic publish means a failed run cannot overwrite the last known-good snapshot. 216 countries, 35 years."
+            ],
             "image": "/preview-dash.png",
             "tags": [
                 "Azure",
                 "Python",
                 "Pandas",
-                "NumPy",
                 "Docker",
-                "Power BI"
+                "React",
+                "TypeScript",
+                "D3"
             ],
             "demoUrl": "https://plancatalyst.org",
             "githubUrl": "https://github.com/PlanCatalyst/TSI-Data-Dashboard"
         },
         {
-            "id": 2,
-            "title": "Asynchronous Federated Learning Network",
-            "category": "thesis",
-            "description": "Engineering an optimized federated learning network for distributed IoT healthcare settings using an asynchronous layer-wise parameter update scheduler implemented with PyTorch and Flower.",
-            "image": "/preview-async.png",
-            "tags": [
-                "Python",
-                "Flower",
-                "PyTorch",
-                "NumPy"
-            ],
-            "demoUrl": "https://",
-            "githubUrl": "https://github.com/LlamzonAmazon/asynchronous-fl"
-        },
-        {
             "id": 3,
             "title": "westernsalesclub.ca",
             "category": "websites",
-            "description": "The website for Western's first sales club paired with backend content management dashboard allowing club executives to authenticate and manage the website's content.",
+            "summary": "A production site for Western's first sales club, plus a CMS that lets executives manage content without a developer in the loop.",
+            "points": [
+                "Every query runs client-side against a public anon key, so the entire authorization burden sits in Postgres.",
+                "SQL grants strip anon to SELECT-only as a hard ceiling, and row-level security filters rows by visibility column so drafts never leak.",
+                "A SECURITY DEFINER is_admin() is the only admin check. It reads an admins table no API role can reach, with search_path pinned against hijacking.",
+                "The client gate is a three-phase state machine that renders only a spinner until is_admin() confirms, and force-signs-out on any RPC error.",
+                "Deletes run storage-first with retry, so a partial failure orphans a file rather than a row pointing at a missing image."
+            ],
             "image": "/preview-wsc.png",
             "tags": [
-                "React.js",
-                "OAuth 2.0",
+                "Next.js",
+                "TypeScript",
                 "Supabase",
-                "PostgreSQL"
+                "PostgreSQL",
+                "OAuth 2.0",
+                "Row-Level Security"
             ],
             "demoUrl": "https://westernsalesclub.ca",
             "githubUrl": "https://github.com/UWO-TSI/wsc-website"
+        },
+        {
+            "id": 4,
+            "title": "Agent-Ops Dashboard",
+            "category": "personal",
+            "summary": "A local console over a markdown knowledge base that runs my job hunt and tracks every other domain I work in.",
+            "points": [
+                "Fastify API and a Next.js front end, both supervised by launchd, reachable from my phone over a private tailnet rather than the public internet.",
+                "A nightly pipeline reads a config of role criteria, locations, and salary floor, then a deterministic Python guard applies the hard filters before a model sees anything.",
+                "What survives is pulled from ATS boards, scored, and written into an applications database the UI renders as a live tracker.",
+                "Each posting that clears gets a LaTeX resume drafted from my own per-project source files, held to a line budget that enforces one page.",
+                "The API asserts a loopback bind at startup and refuses to run otherwise, and every file read goes through a realpath prefix check. 86 tests, traversal cases included."
+            ],
+            "tags": [
+                "TypeScript",
+                "Fastify",
+                "Next.js",
+                "WebSockets",
+                "Tailscale",
+                "launchd"
+            ]
         }
     ]
 }

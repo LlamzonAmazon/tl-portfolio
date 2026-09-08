@@ -2,47 +2,55 @@
     "experiences": [
         {
             "id": 1,
-            "title": "Solutions Engineer",
-            "organization": "Freelance",
-            "time": "May 2026 - Present",
-            "location": "Remote",
-            "description": "Building scalable and secure software solutions for local businesses/organizations (CMS, automation, workflows, insights platforms, websites, etc.)",
+            "title": "Forward Deployed Software Engineer",
+            "organization": "Independent",
+            "time": "Jun 2026 - Present",
+            "location": "Vancouver, BC",
+            "link": {
+                "label": "MEROSYOGURT.COM",
+                "href": "https://merosyogurt.com"
+            },
+            "description": "Building and operating agentic platforms for food and beverage businesses, ingesting cross-platform stock, sales, events, and operational data so each tenant's agent works from a real understanding of the business it runs.\n\nShipped and now run a production storefront and ordering backend on Next.js and Cloudflare Workers, covered by 345 tests. Cut page weight from 23.2 MB to 1.37 MB and desktop LCP from 7.2s to 2.5s by replacing runtime image delivery with a build-time pipeline, and capped the public write path per client IP so no address reaches the database or the logs.\n\nAlso building a patient retention and follow-up platform for allied health clinics: physiotherapy, RMT, kinesiology, and dental. It reads the practice management database directly and runs structured outreach off it, filling cancelled appointment slots from a ranked patient list, pulling bookings forward when an earlier slot opens, and prompting patients who are overdue for follow-up care. The revenue is already sitting in the patient list; the system's job is to stop it leaking. Multi-tenant with per-tenant database isolation, identity federated across three providers, and Terraform-managed infrastructure. Built and tested for a first dental clinic, not yet deployed.",
             "tags": [
+                "Cloudflare Workers",
+                "Next.js",
+                "TypeScript",
                 "AWS",
-                "Azure",
-                "GCP",
-                "Cloudflare",
-                "GitHub",
-                "React",
-                "Node.js",
-                "Docker",
-                "Supabase"
+                "Terraform",
+                "Python",
+                "FastAPI",
+                "PostgreSQL",
+                "Docker"
             ]
         },
         {
             "id": 2,
-            "title": "Lead Software Engineer",
-            "organization": "PlanCatalyst (Pro Bono)",
+            "title": "Lead Cloud Engineer",
+            "organization": "PlanCatalyst",
             "time": "Sep 2025 - Apr 2026",
             "location": "Remote",
-            "description": "Heading development of an Azure-powered global development dashboard projecting country-level development indicators from public data sources to guide organizational humanitarian efforts.\n\nConsulting the organization on financial constraints and Azure service architecture design to ensure smooth delivery of a secure, cost-effective, and seamlessly-integrated final product.\n\nLeading a team of 5 developers by driving code-base design and development, setting the development timeline, creating architecture diagrams, and hosting structured weekly team meetings.",
+            "description": "Architected an Azure ingestion and scoring pipeline across six services (Logic Apps, Functions, Container Instances, Container Registry, Blob Storage, Static Web Apps) that turns five live international data feeds into comparable country-level development scores: 216 countries, 28 indicators, 35 years of history.\n\nMade a failed run incapable of overwriting good data. The frontend reads nothing but a versioned three-file JSON contract, published behind schema validation, so a broken pipeline leaves the last known-good snapshot in place rather than replacing it with a partial one.\n\nLed a four-person team through PR review and weekly syncs, and audited the published output against what the pipeline claimed about itself. The audit caught a saturating scorer that had pinned one pillar to a perfect score for 182 of 216 countries, before any of it reached stakeholders.",
             "tags": [
                 "Azure",
                 "Python",
                 "Pandas",
-                "NumPy",
-                "Power BI"
+                "Docker",
+                "React",
+                "TypeScript",
+                "D3"
             ]
         },
         {
             "id": 3,
             "title": "Security Analyst",
-            "organization": "CYBERWELL Solutions",
+            "organization": "CYBERWELL",
             "time": "Sep 2025 - Apr 2026",
             "location": "Remote",
-            "description": "Investigating authentication, access control, and SaaS-related security events across 7 enterprise environments, identifying misconfigurations, account/device compromises, and control gaps.\n\nSupporting Microsoft Entra ID logging, access policy review, and authentication telemetry analysis.\n\nTranslating open-source intelligence (OSINT) into usable KQL alert rules for Microsoft Sentinel to proactively strengthen client environment cyber-security posture.",
+            "description": "Triaging and investigating security incidents across 7+ client environments, concentrated on IAM access controls, authentication telemetry, and cloud misconfigurations.\n\nReviewing Microsoft Entra ID logging and access policy, and tracing account and device compromises back to the control gap that allowed them rather than closing at the alert.\n\nTranslating open-source intelligence into KQL detection rules in Microsoft Sentinel, so a technique seen in the wild becomes coverage in a client tenant before it is used against one.",
             "tags": [
-                "Azure (Defender, Sentinel, Entra ID)",
+                "Microsoft Sentinel",
+                "Microsoft Defender",
+                "Entra ID",
                 "Cortex XSOAR",
                 "KQL",
                 "OSINT"
@@ -51,29 +59,31 @@
         {
             "id": 4,
             "title": "Security Operations Intern",
-            "organization": "CYBERWELL Solutions",
+            "organization": "CYBERWELL",
             "time": "May 2025 - Aug 2025",
             "location": "Remote",
-            "description": "Investigating and resolving 8 security incident cases per day in an external client environment.\n\nDesigning and implementing KQL detection rules in Microsoft Sentinel to strengthen identity-related controls and reduce unauthorized access risk.\n\nConducting third-party risk management (TPRM) assessments to minimize legal risk associated with vendors.",
+            "description": "Running incident response in a client environment at roughly eight cases a day, from triage through containment and writeup.\n\nDesigning and tuning SIEM alert rules in Microsoft Sentinel to strengthen identity controls and reduce unauthorized access risk.\n\nConducting third-party risk management assessments to bound the security and legal exposure carried in through vendors.",
             "tags": [
-                "Azure (Sentinel, Entra ID)",
+                "Microsoft Sentinel",
+                "Entra ID",
                 "KQL",
-                "TPRM",
-                "Incident Response"
+                "Incident Response",
+                "TPRM"
             ]
         },
         {
             "id": 5,
-            "title": "IT Intern",
-            "organization": "WELL Health Technologies",
+            "title": "IT Operations Intern",
+            "organization": "WELL Health Technologies (TSX: WELL)",
             "time": "May 2023 - Aug 2023",
             "location": "Vancouver, BC",
-            "description": "Engineering a Bash-based device telemetry agent to centralize endpoint logs in Azure, improving visibility into device posture and authentication activity across 5 clinics.\n\nMaintaining compliance documents to protect sensitive patient data under industry standards (ISO 27001, SOC2).",
+            "description": "Engineered a Bash telemetry agent to automate device log collection and centralize endpoint data in Azure, improving monitoring visibility across 5 clinic environments.\n\nMaintained ISO 27001 and SOC 2 compliance documentation to uphold data protection standards in a regulated healthcare IT environment.",
             "tags": [
                 "Bash",
-                "Azure (Endpoint Management, Compliance)",
+                "Azure",
+                "Endpoint Management",
                 "ISO 27001",
-                "SOC2"
+                "SOC 2"
             ]
         }
     ]

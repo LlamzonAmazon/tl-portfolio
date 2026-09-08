@@ -48,36 +48,146 @@
 .hover-underline-red:hover::after { width: 100%; }
 .hover-underline-red:hover        { color: var(--color-accent-red); transition: color var(--transition-base); }
 
-/* Contact social link buttons */
-.contact-social-link {
-  display: inline-flex;
+/* About — full-bleed domain band.
+   Breaks out of the section's horizontal padding so the hairlines run edge to
+   edge, then pads the grid back in so the type stays aligned with the section
+   label above it. */
+.about-band {
+  margin-top: clamp(5rem, 9vh, 7rem);
+  margin-left: calc(var(--section-padding-x) * -1);
+  margin-right: calc(var(--section-padding-x) * -1);
+}
+
+.about-band__rule {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  transform-origin: left;
+}
+/* The bottom rule is already at full scale; only the top one draws in. */
+.about-band__rule--static {
+  transform: none;
+}
+
+.about-band__grid {
+  display: grid;
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+}
+
+.about-domain {
+  padding-top: clamp(2.5rem, 5vw, 3.75rem);
+  padding-bottom: clamp(2.5rem, 5vw, 3.75rem);
+  padding-right: clamp(1rem, 2vw, 2rem);
+  transition: background var(--transition-base);
+}
+.about-domain:hover {
+  background: rgba(192, 57, 79, 0.05);
+}
+
+.about-domain__index {
+  display: block;
+}
+
+.about-domain__rule {
+  display: block;
+  height: 1px;
+  width: 0;
+  margin-top: 0.85rem;
+  background: var(--color-accent-red);
+  transition: width var(--transition-slow);
+}
+.about-domain:hover .about-domain__rule {
+  width: 2rem;
+}
+
+.about-domain__name {
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+  transition: color var(--transition-base);
+}
+.about-domain:hover .about-domain__name {
+  color: var(--color-accent-red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-domain__rule {
+    transition: none;
+  }
+}
+
+/* Connect tiles — the two large social targets in the contact section */
+.connect-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.6em;
-  padding: 0.85em 1.75em;
+  justify-content: center;
+  gap: 1.25rem;
+  aspect-ratio: 1 / 1;
+  padding: 1.5rem;
   border: 1px solid rgba(245, 240, 235, 0.18);
   color: var(--color-white);
   text-decoration: none;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   background: transparent;
   transition:
     border-color var(--transition-base),
     color var(--transition-base),
     background var(--transition-base);
 }
-.contact-social-link:hover {
+.connect-tile:hover {
   border-color: var(--color-accent-red);
   color: var(--color-accent-red);
   background: rgba(192, 57, 79, 0.06);
 }
-.contact-social-arrow {
-  font-style: normal;
-  font-size: 1em;
-  transition: transform var(--transition-base);
+
+.connect-tile__icon {
+  width: clamp(2.75rem, 7vw, 4.75rem);
+  height: auto;
+  fill: currentColor;
+  transition: transform var(--transition-slow);
 }
-.contact-social-link:hover .contact-social-arrow {
-  transform: translate(2px, -2px);
+.connect-tile:hover .connect-tile__icon {
+  transform: translateY(-4px);
+}
+
+.connect-tile__label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.connect-tile__arrow {
+  position: absolute;
+  top: 0.9rem;
+  right: 1.1rem;
+  font-style: normal;
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base);
+}
+.connect-tile:hover .connect-tile__arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connect-tile__icon,
+  .connect-tile__arrow {
+    transition: opacity var(--transition-base);
+  }
+  .connect-tile:hover .connect-tile__icon {
+    transform: none;
+  }
 }

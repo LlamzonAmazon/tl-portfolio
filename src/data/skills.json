@@ -1,145 +1,49 @@
 {
     "skills": [
-        {
-            "name": "Java",
-            "category": "Languages"
-        },
-        {
-            "name": "Python",
-            "category": "Languages"
-        },
-        {
-            "name": "C/C++",
-            "category": "Languages"
-        },
-        {
-            "name": "SQL",
-            "category": "Languages"
-        },
-        {
-            "name": "NoSQL",
-            "category": "Languages"
-        },
-        {
-            "name": "JavaScript",
-            "category": "Languages"
-        },
-        {
-            "name": "HTML/CSS",
-            "category": "Languages"
-        },
-        {
-            "name": "Bash",
-            "category": "Languages"
-        },
-        {
-            "name": "R",
-            "category": "Languages"
-        },
-        {
-            "name": "KQL",
-            "category": "Languages"
-        },
-        {
-            "name": "PostgreSQL",
-            "category": "Frameworks"
-        },
-        {
-            "name": "MySQL",
-            "category": "Frameworks"
-        },
-        {
-            "name": "MongoDB",
-            "category": "Frameworks"
-        },
-        {
-            "name": "TerraForm",
-            "category": "Frameworks"
-        },
-        {
-            "name": "Flask",
-            "category": "Frameworks"
-        },
-        {
-            "name": "FastAPI",
-            "category": "Frameworks"
-        },
-        {
-            "name": "React",
-            "category": "Frameworks"
-        },
-        {
-            "name": "Node.js",
-            "category": "Frameworks"
-        },
-        {
-            "name": "RESTful APIs",
-            "category": "Frameworks"
-        },
-        {
-            "name": "AWS",
-            "category": "Tools"
-        },
-        {
-            "name": "GCP",
-            "category": "Tools"
-        },
-        {
-            "name": "Microsoft Azure",
-            "category": "Tools"
-        },
-        {
-            "name": "Docker",
-            "category": "Tools"
-        },
-        {
-            "name": "Git",
-            "category": "Tools"
-        },
-        {
-            "name": "Kubernetes",
-            "category": "Tools"
-        },
-        {
-            "name": "Atlassian Software",
-            "category": "Tools"
-        },
-        {
-            "name": "Pandas",
-            "category": "Libraries"
-        },
-        {
-            "name": "Supabase",     
-            "category": "Tools"
-        },
-        {
-            "name": "NumPy",
-            "category": "Libraries"
-        },
-        {
-            "name": "PyTorch",
-            "category": "Libraries"
-        },
-        {
-            "name": "scikit-learn",
-            "category": "Libraries"
-        },
-        {
-            "name": "Pydantic",
-            "category": "Libraries"
-        },
-        {
-            "name": "Matplotlib",
-            "category": "Libraries"
-        },
-        {
-            "name": "Seaborn",
-            "category": "Libraries"
-        },
-        {
-            "name": "Qt",
-            "category": "Libraries"
-        }
+        { "name": "Python",       "category": "Languages" },
+        { "name": "TypeScript",   "category": "Languages" },
+        { "name": "JavaScript",   "category": "Languages" },
+        { "name": "Java",         "category": "Languages" },
+        { "name": "C/C++",        "category": "Languages" },
+        { "name": "SQL",          "category": "Languages" },
+        { "name": "Bash",         "category": "Languages" },
+        { "name": "KQL",          "category": "Languages" },
+        { "name": "R",            "category": "Languages" },
+        { "name": "HTML/CSS",     "category": "Languages" },
+
+        { "name": "React",           "category": "Frameworks" },
+        { "name": "Next.js",         "category": "Frameworks" },
+        { "name": "Node.js",         "category": "Frameworks" },
+        { "name": "FastAPI",         "category": "Frameworks" },
+        { "name": "Fastify",         "category": "Frameworks" },
+        { "name": "Flask",           "category": "Frameworks" },
+        { "name": "RESTful APIs",    "category": "Frameworks" },
+        { "name": "PostgreSQL",      "category": "Frameworks" },
+        { "name": "MySQL",           "category": "Frameworks" },
+        { "name": "MongoDB",         "category": "Frameworks" },
+
+        { "name": "Microsoft Azure",    "category": "Tools" },
+        { "name": "AWS",                "category": "Tools" },
+        { "name": "GCP",                "category": "Tools" },
+        { "name": "Cloudflare Workers", "category": "Tools" },
+        { "name": "Docker",             "category": "Tools" },
+        { "name": "Terraform",          "category": "Tools" },
+        { "name": "Kubernetes",         "category": "Tools" },
+        { "name": "GitHub Actions",     "category": "Tools" },
+        { "name": "Git",                "category": "Tools" },
+        { "name": "Supabase",           "category": "Tools" },
+        { "name": "Microsoft Sentinel", "category": "Tools" },
+        { "name": "Atlassian Software", "category": "Tools" },
+
+        { "name": "Pandas",       "category": "Libraries" },
+        { "name": "NumPy",        "category": "Libraries" },
+        { "name": "PyTorch",      "category": "Libraries" },
+        { "name": "Flower",       "category": "Libraries" },
+        { "name": "scikit-learn", "category": "Libraries" },
+        { "name": "Pydantic",     "category": "Libraries" },
+        { "name": "Matplotlib",   "category": "Libraries" },
+        { "name": "Seaborn",      "category": "Libraries" },
+        { "name": "Qt",           "category": "Libraries" }
     ],
     "categories": [
         "Languages",
