@@ -1,0 +1,284 @@
+/* ============================================================
+   Texture — the "engineer's drafting board" system.
+   Pure CSS/SVG: graph-paper grids, crosshatch shading, ink rules.
+   Everything is low-contrast sepia over paper; no raster art.
+   ============================================================ */
+
+/* ── Two-tier ruled grid — hand-drafted, not mathematically even:
+   some lines fade, some break, every 5th line (the tile edge) reads
+   slightly stronger. See public/texture-grid.svg. ───────────────── */
+.bg-grid-ruled {
+  background-image: url('/texture-grid.svg');
+  background-size: var(--grid-major) var(--grid-major);
+  background-position: var(--grid-anchor, 0 0);
+  background-repeat: repeat;
+}
+
+/* ── Paper grain — two-tone feTurbulence noise (ink + highlight flecks
+   baked into the same tile), composited normally over whatever's beneath. */
+.bg-grain {
+  background-image: url('/texture-grain.svg');
+  background-size: 120px 120px;
+  background-repeat: repeat;
+}
+
+/* ── Ink speckles — scattered, irregular, barely-there dot texture. ─── */
+.bg-speckle {
+  background-image: url('/texture-speckle.svg');
+  background-size: 240px 240px;
+  background-repeat: repeat;
+}
+
+/* ── Paper roughness — coarse, low-frequency blotchy tonal variation,
+   the "rough/handmade stock" counterpart to the fine grain above. */
+.bg-roughness {
+  background-image: url('/texture-roughness.svg');
+  background-size: 480px 480px;
+  background-repeat: repeat;
+}
+
+/* ── Paper wrinkles — faint creases, a light/shadow pair straddling each
+   fold line rather than a single flat band. Barely visible individually. */
+.bg-wrinkle {
+  background-image:
+    linear-gradient(115deg, transparent 42%, rgba(var(--ink-rgb), 0.018) 49%, rgba(var(--highlight-rgb), 0.02) 51%, transparent 58%),
+    linear-gradient(250deg, transparent 60%, rgba(var(--ink-rgb), 0.014) 68%, rgba(var(--highlight-rgb), 0.016) 70%, transparent 78%);
+}
+
+/* ── Soft top-down light — the page's implied light source, reinforcing
+   the vignette with a warm (never white) catch-light near the top. ──── */
+.bg-shade-top {
+  background-image: linear-gradient(180deg, rgba(var(--highlight-rgb), 0.05), transparent 40%);
+}
+
+/* ── Crosshatch shading (pen-and-ink hatch fill) ─────────── */
+.bg-crosshatch {
+  background-image:
+    repeating-linear-gradient( 45deg, rgba(var(--ink-rgb), 0.06) 0 1px, transparent 1px var(--hatch-gap)),
+    repeating-linear-gradient(-45deg, rgba(var(--ink-rgb), 0.06) 0 1px, transparent 1px var(--hatch-gap));
+}
+
+/* Single-direction hatch (lighter, directional shading) */
+.bg-hatch {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(var(--ink-rgb), 0.07) 0 1px, transparent 1px 7px);
+}
+
+/* ── The whole-page parchment stack: paper → speckle → grain → wrinkles →
+   top-light → vignette, composited in one element via background-blend-mode
+   (no extra DOM layers). Depth comes from overlapping many barely-visible
+   layers, not any single strong one.
+   This is the site's base surface — see PaperBackdrop. ─────────────────── */
+.paper-backdrop {
+  background-color: var(--color-paper);
+  background-image:
+    url('/texture-speckle.svg'),
+    url('/texture-grain.svg'),
+    linear-gradient(115deg, transparent 42%, rgba(var(--ink-rgb), 0.018) 49%, rgba(var(--highlight-rgb), 0.02) 51%, transparent 58%),
+    linear-gradient(250deg, transparent 60%, rgba(var(--ink-rgb), 0.014) 68%, rgba(var(--highlight-rgb), 0.016) 70%, transparent 78%),
+    linear-gradient(180deg, rgba(var(--highlight-rgb), 0.05), transparent 40%),
+    radial-gradient(120% 120% at 50% 0%, transparent 55%, rgba(var(--ink-rgb), 0.075) 100%),
+    url('/texture-roughness.svg');
+  background-size:
+    240px 240px,
+    120px 120px,
+    auto, auto, auto, auto,
+    480px 480px;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-blend-mode: normal, normal, normal, normal, normal, normal, soft-light;
+}
+
+/* ── Paper-mounted card: a slightly lighter/warmer sheet on the page,
+   held down by a hairline border + a tight shadow — never a hard drop
+   shadow, never stark white. A faint diagonal gradient stands in for
+   raking light: a warm catch top-left, a soft ink shadow bottom-right. */
+.paper-card {
+  background-color: var(--color-card);
+  background-image: linear-gradient(135deg, rgba(var(--highlight-rgb), 0.5) 0%, transparent 32%, transparent 68%, rgba(var(--ink-rgb), 0.025) 100%);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--shadow-paper), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ── Stacked variant: an offset second sheet reads underneath, like a
+   mounted plate sitting on the museum-board layer beneath it. Opt-in —
+   the offset shadow can crowd tightly clipped elements (e.g. WipeText). */
+.paper-card-stacked {
+  box-shadow: var(--shadow-paper), var(--shadow-stack), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ── Tape reveal: a flat paper-white band that STRETCHES across the line, then
+   CONTRACTS to reveal the ink behind it ("magic tape").
+
+   Two independent edges, each a plain 0→1 var driven by GSAP (see TapeText.tsx
+   / PinnedStage.tsx). Custom properties inherit by default, so the parent's
+   animated values reach the `__ink` / `__band` children — no @property needed:
+       --lead   band's leading (right) edge   ── stretch phase: 0 → 1
+       --trail  band's trailing (left) edge    ── reveal  phase: 0 → 1
+   Sequenced (lead fills first, then trail chases it), the band fills the whole
+   line white, then collapses rightward — uncovering the ink left-to-right.
+   Ink is visible only left of `trail`. Both clips are pure `clip-path:
+   inset()` (GPU composited, no per-frame layout). ───────────────────────── */
+.tape-text {
+  --lead: 0;
+  --trail: 0;
+  position: relative;
+  /* No `display` override — the consumer controls it (the hero names use the
+   * `block` utility). The band anchors to whatever block/inline-block box the
+   * consumer establishes. */
+}
+
+/* Ink revealed to the left of the trailing edge. */
+.tape-text__ink {
+  clip-path: inset(0 calc(100% - clamp(0%, var(--trail) * 100%, 100%)) 0 0);
+}
+
+/* The white strip itself, spanning [trail, lead]. Sits above the ink so it
+   reads as tape laid over the sheet and cleanly covers any sub-pixel seam. */
+.tape-text__band {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgb(var(--highlight-rgb)); /* warm paper catch-light, flat — no border/glow */
+  clip-path: inset(0
+    calc(100% - clamp(0%, var(--lead) * 100%, 100%)) 0
+    clamp(0%, var(--trail) * 100%, 100%));
+}
+
+/* ── Drafting-sheet card border: one thin straight ink rule, 90° sharp
+   corners — the card reads as a sheet pinned to the board, not a plaque.
+   Declared after .paper-card so this border wins over its hairline. ── */
+.frame-draft {
+  border: 1.5px solid rgba(var(--sepia-rgb), 0.85);
+  border-radius: 0;
+  box-shadow: var(--shadow-paper);
+}
+
+/* Placeholder ("more soon") sheet — muted border so it recedes. No filter:
+   these move every scrub frame and a filter forces per-frame GPU passes. */
+.frame-draft--placeholder {
+  border-color: rgba(var(--sepia-rgb), 0.55);
+}
+
+/* Placeholder face — empty drafting sheet, hatched instead of inked. */
+.placeholder-face {
+  background-image: repeating-linear-gradient(45deg, rgba(var(--ink-rgb), 0.05) 0 1px, transparent 1px 8px);
+}
+
+/* ── Fade masks so grids dissolve at edges (not hard cut) ── */
+.mask-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+.mask-fade-radial {
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+          mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+}
+
+/* ── Ink hairline rule (1px, drawable via scaleX). The groove shadow
+   simulates the rule being pressed into the paper, not printed on it. */
+.ink-rule {
+  height: 1px;
+  width: 100%;
+  background: var(--color-line);
+  box-shadow: var(--groove-rule);
+  transform-origin: left center;
+}
+
+/* Registration / corner tick marks (engineer's crop marks) */
+.tick {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--color-sepia);
+  border-style: solid;
+  border-width: 0;
+  opacity: 0.5;
+}
+.tick-tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+.tick-tr { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+.tick-bl { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+.tick-br { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ── Compass-mark loading sweep (see CompassMark.tsx). Bounded rotation, not
+   a bounce — matches the board's restrained motion vocabulary. Respects
+   prefers-reduced-motion via the global override in base.css. ─────────── */
+@keyframes compass-sweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Ruler divider — a numbered section rule (see RulerDivider.tsx). The
+   dashed line stands in for a scale's tick marks; label sits inside the line
+   rather than beside it, echoing the printed rule callouts elsewhere. ──── */
+.ruler-divider-line {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-sepia) 0px,
+    var(--color-sepia) 4px,
+    transparent 4px,
+    transparent 9px
+  );
+  opacity: 0.4;
+}
+
+/* ── Drafting corner ticks on a card — dormant until hover, echoing the
+   page-corner registration marks (.tick) at component scale. Opt-in via
+   paper-card-ticks wrapping four .tick spans (see ProjectCard). ──────── */
+.paper-card-ticks .tick {
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-ink);
+}
+.frame-draft:hover .tick,
+.frame-draft:focus-visible .tick {
+  opacity: 0.55;
+}
+
+/* ── Wax seal — a small pressed-wax stamp reserved for a "live" mark (a
+   project with a public demo). The ring is the same hand-roughened
+   vocabulary as the drafting linework (see .roughen-seal filter, defined
+   locally per-usage per the DraftingGrid/ProjectsLinework convention) rather
+   than a clean vector circle, so it reads as pressed rather than printed. */
+.wax-seal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, var(--color-wax-light), var(--color-wax) 70%);
+  color: var(--color-paper);
+  box-shadow: 0 2px 6px rgba(var(--wax-rgb), 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transform: rotate(-4deg);
+}
+
+/* ── Tech seal — a small circular badge for a project's tool/tech tags,
+   echoing the compass/celestial-circle motif rather than a pill/chip.
+   Tags with no brand mark fall back to a monogram stamp, rotated a few
+   degrees off-true so it reads as hand-pressed, not vector-perfect. ── */
+.tech-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--sepia-rgb), 0.32);
+  background: rgba(var(--paper-rgb), 0.55);
+  color: var(--color-sepia);
+  font-size: 15px;
+}
+.tech-seal--stamp {
+  box-shadow: inset 0 0 0 2px rgba(var(--sepia-rgb), 0.14);
+  transform: rotate(-3deg);
+}
+.tech-seal--sm {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+.tech-seal--sm.tech-seal--stamp {
+  box-shadow: inset 0 0 0 1.5px rgba(var(--sepia-rgb), 0.14);
+}

@@ -1,0 +1,48 @@
+import type { Project, ProjectCategory } from './types'
+
+/** Display order for category groups (empty groups are skipped at render). */
+export const projectCategoryOrder: ProjectCategory[] = [
+  'thesis',
+  'pro bono',
+  'websites',
+  'solutions',
+]
+
+export const projects: Project[] = [
+  {
+    id: 1,
+    title: 'Global Development Dashboard',
+    category: 'pro bono',
+    description:
+      'Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.',
+    image: '/preview-dash.png',
+    tags: ['Azure', 'Python', 'Pandas', 'NumPy', 'Docker', 'Power BI'],
+    demoUrl: 'https://plancatalyst.org',
+    githubUrl: 'https://github.com/PlanCatalyst/TSI-Data-Dashboard',
+    size: 'lg',
+  },
+  {
+    id: 2,
+    title: 'Asynchronous Federated Learning Network',
+    category: 'thesis',
+    description:
+      'Engineering an optimized federated learning network for distributed IoT healthcare settings using an asynchronous layer-wise parameter update scheduler implemented with PyTorch and Flower.',
+    image: '/preview-async.png',
+    tags: ['Python', 'Flower', 'PyTorch', 'NumPy'],
+    // No public demo — original data had a broken "https://" placeholder.
+    githubUrl: 'https://github.com/LlamzonAmazon/asynchronous-fl',
+    size: 'sm',
+  },
+  {
+    id: 3,
+    title: 'westernsalesclub.ca',
+    category: 'websites',
+    description:
+      "The website for Western's first sales club paired with backend content management dashboard allowing club executives to authenticate and manage the website's content.",
+    image: '/preview-wsc.png',
+    tags: ['React.js', 'OAuth 2.0', 'Supabase', 'PostgreSQL'],
+    demoUrl: 'https://westernsalesclub.ca',
+    githubUrl: 'https://github.com/UWO-TSI/wsc-website',
+    size: 'sm',
+  },
+]

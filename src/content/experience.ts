@@ -1,0 +1,54 @@
+import type { ExperienceEntry } from './types'
+
+export const experiences: ExperienceEntry[] = [
+  {
+    id: 1,
+    title: 'Solutions Engineer',
+    organization: 'Freelance',
+    time: 'May 2026 - Present',
+    location: 'Remote',
+    description:
+      'Building scalable and secure software solutions for local businesses/organizations (CMS, automation, workflows, insights platforms, websites, etc.)',
+    tags: ['AWS', 'Azure', 'GCP', 'Cloudflare', 'GitHub', 'React', 'Node.js', 'Docker', 'Supabase'],
+  },
+  {
+    id: 2,
+    title: 'Lead Software Engineer',
+    organization: 'PlanCatalyst (Pro Bono)',
+    time: 'Sep 2025 - Apr 2026',
+    location: 'Remote',
+    description:
+      'Heading development of an Azure-powered global development dashboard projecting country-level development indicators from public data sources to guide organizational humanitarian efforts.\n\nConsulting the organization on financial constraints and Azure service architecture design to ensure smooth delivery of a secure, cost-effective, and seamlessly-integrated final product.\n\nLeading a team of 5 developers by driving code-base design and development, setting the development timeline, creating architecture diagrams, and hosting structured weekly team meetings.',
+    tags: ['Azure', 'Python', 'Pandas', 'NumPy', 'Power BI'],
+  },
+  {
+    id: 3,
+    title: 'Security Analyst',
+    organization: 'CYBERWELL Solutions',
+    time: 'Sep 2025 - Apr 2026',
+    location: 'Remote',
+    description:
+      'Investigating authentication, access control, and SaaS-related security events across 7 enterprise environments, identifying misconfigurations, account/device compromises, and control gaps.\n\nSupporting Microsoft Entra ID logging, access policy review, and authentication telemetry analysis.\n\nTranslating open-source intelligence (OSINT) into usable KQL alert rules for Microsoft Sentinel to proactively strengthen client environment cyber-security posture.',
+    tags: ['Azure (Defender, Sentinel, Entra ID)', 'Cortex XSOAR', 'KQL', 'OSINT'],
+  },
+  {
+    id: 4,
+    title: 'Security Operations Intern',
+    organization: 'CYBERWELL Solutions',
+    time: 'May 2025 - Aug 2025',
+    location: 'Remote',
+    description:
+      'Investigating and resolving 8 security incident cases per day in an external client environment.\n\nDesigning and implementing KQL detection rules in Microsoft Sentinel to strengthen identity-related controls and reduce unauthorized access risk.\n\nConducting third-party risk management (TPRM) assessments to minimize legal risk associated with vendors.',
+    tags: ['Azure (Sentinel, Entra ID)', 'KQL', 'TPRM', 'Incident Response'],
+  },
+  {
+    id: 5,
+    title: 'IT Intern',
+    organization: 'WELL Health Technologies',
+    time: 'May 2023 - Aug 2023',
+    location: 'Vancouver, BC',
+    description:
+      'Engineering a Bash-based device telemetry agent to centralize endpoint logs in Azure, improving visibility into device posture and authentication activity across 5 clinics.\n\nMaintaining compliance documents to protect sensitive patient data under industry standards (ISO 27001, SOC2).',
+    tags: ['Bash', 'Azure (Endpoint Management, Compliance)', 'ISO 27001', 'SOC2'],
+  },
+]
