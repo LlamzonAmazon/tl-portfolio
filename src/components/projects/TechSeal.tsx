@@ -8,24 +8,12 @@ interface TechSealProps {
   small?: boolean
 }
 
-/** First letter of the first two words, or the first two letters of a single word. */
-function monogram(tag: string): string {
-  const words = tag.split(/[\s.]+/).filter(Boolean)
-  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase()
-  return tag.slice(0, 2).toUpperCase()
-}
-
+/** A tool's mark on a graphite disc (lib/techIcons.ts resolves every tag to a logo). */
 export function TechSeal({ tag, showLabel = false, small = false }: TechSealProps) {
-  const match = getTechIcon(tag)
-  const sizeClass = small ? 'tech-seal--sm' : ''
-
-  const badge = match ? (
-    <span className={`tech-seal ${sizeClass}`} aria-hidden="true">
-      <match.Icon />
-    </span>
-  ) : (
-    <span className={`tech-seal tech-seal--stamp ${sizeClass}`} aria-hidden="true">
-      <span className="text-mono-sm normal-case">{monogram(tag)}</span>
+  const { Icon, label } = getTechIcon(tag)
+  const badge = (
+    <span className={`tech-seal ${small ? 'tech-seal--sm' : ''}`} aria-hidden="true" title={label}>
+      <Icon />
     </span>
   )
 
@@ -34,9 +22,7 @@ export function TechSeal({ tag, showLabel = false, small = false }: TechSealProp
   return (
     <span className="inline-flex items-center gap-2">
       {badge}
-      <span className="text-mono-sm normal-case" style={{ color: 'var(--color-ink-soft)' }}>
-        {match?.label ?? tag}
-      </span>
+      <span className="text-label-sm">{label}</span>
     </span>
   )
 }

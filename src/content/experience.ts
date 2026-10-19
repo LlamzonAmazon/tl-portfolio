@@ -1,54 +1,93 @@
 import type { ExperienceEntry } from './types'
 
+/**
+ * Reverse chronological. Synced 2026-10-18.
+ * Descriptions use the modal's inline markup: **bold**, *italic*, [label](url),
+ * "- " bullet blocks and "### " section headers, blocks split on blank lines.
+ */
 export const experiences: ExperienceEntry[] = [
   {
-    id: 1,
-    title: 'Solutions Engineer',
-    organization: 'Freelance',
-    time: 'May 2026 - Present',
-    location: 'Remote',
-    description:
-      'Building scalable and secure software solutions for local businesses/organizations (CMS, automation, workflows, insights platforms, websites, etc.)',
-    tags: ['AWS', 'Azure', 'GCP', 'Cloudflare', 'GitHub', 'React', 'Node.js', 'Docker', 'Supabase'],
+    "id": 1,
+    "title": "Forward Deployed Engineer",
+    "organization": "Trellum",
+    "time": "Aug 2026 - Present",
+    "location": "Vancouver, BC",
+    "links": [
+      {
+        "label": "TRELLUM.CA",
+        "href": "https://trellum.ca"
+      }
+    ],
+    "description": "I build and deploy **Trellum**, an agent platform for restaurants with two pillars: restaurant operations and growth through go-to-market. The operations side is *live in beta*; the go-to-market agent is planned.\n\n### What it does\nEach restaurant gets its own isolated agent, grounded in the business's live sales, orders, menu and labor data. The agent drafts the work and a person approves it. Nothing is sent or written outward on its own.\n\n### What I own\n- A **5-service Docker Compose stack**: a Node backend-for-frontend serving a React client over an authenticated WebSocket, a Cloudflare tunnel, and 2 PostgreSQL databases.\n- The 6 tool handlers of a **read-only Toast POS MCP server**, which ground the agent in live point-of-sale data.\n- Per-user sign-in with a mandatory **TOTP** second factor and an audit row on every action.\n- Cloudflare Access in front of the admin console, age-encrypted backups verified by a round-trip test in CI, and deploys through scoped credentials.",
+    "tags": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "Docker",
+      "MCP",
+      "Cloudflare",
+      "GitHub Actions"
+    ]
   },
   {
-    id: 2,
-    title: 'Lead Software Engineer',
-    organization: 'PlanCatalyst (Pro Bono)',
-    time: 'Sep 2025 - Apr 2026',
-    location: 'Remote',
-    description:
-      'Heading development of an Azure-powered global development dashboard projecting country-level development indicators from public data sources to guide organizational humanitarian efforts.\n\nConsulting the organization on financial constraints and Azure service architecture design to ensure smooth delivery of a secure, cost-effective, and seamlessly-integrated final product.\n\nLeading a team of 5 developers by driving code-base design and development, setting the development timeline, creating architecture diagrams, and hosting structured weekly team meetings.',
-    tags: ['Azure', 'Python', 'Pandas', 'NumPy', 'Power BI'],
+    "id": 2,
+    "title": "Software Engineer",
+    "organization": "PlanCatalyst (Plan International Canada)",
+    "time": "Sep 2025 - Apr 2026",
+    "location": "Remote",
+    "links": [
+      {
+        "label": "SCORING ENGINE",
+        "href": "https://jolly-pebble-0e2f9300f.7.azurestaticapps.net/#/map"
+      }
+    ],
+    "description": "I built the [Global Country Development Scoring Engine](https://jolly-pebble-0e2f9300f.7.azurestaticapps.net/#/map), turning **5 live international feeds** into a 7-pillar model that consultants use to compare need across **216 countries**.\n\n- Ingested 35 years of indicator history in unattended runs through paginated APIs, ZIP archives and UN SDG fetches, giving each feed its own fetcher and cleaner with exponential backoff.\n- Joined feeds that mixed UN M49 codes, ISO3 and free-text country names onto one canonical key, so every country resolves to a single row.\n- Orchestrated fetch, clean, score and publish across 3 Azure services behind a versioned 3-file JSON contract that publishes meta.json last, so a failed run *never* overwrites the last good dataset.",
+    "tags": [
+      "Azure",
+      "Python",
+      "Pandas",
+      "Docker",
+      "React",
+      "TypeScript",
+      "D3"
+    ]
   },
   {
-    id: 3,
-    title: 'Security Analyst',
-    organization: 'CYBERWELL Solutions',
-    time: 'Sep 2025 - Apr 2026',
-    location: 'Remote',
-    description:
-      'Investigating authentication, access control, and SaaS-related security events across 7 enterprise environments, identifying misconfigurations, account/device compromises, and control gaps.\n\nSupporting Microsoft Entra ID logging, access policy review, and authentication telemetry analysis.\n\nTranslating open-source intelligence (OSINT) into usable KQL alert rules for Microsoft Sentinel to proactively strengthen client environment cyber-security posture.',
-    tags: ['Azure (Defender, Sentinel, Entra ID)', 'Cortex XSOAR', 'KQL', 'OSINT'],
+    "id": 3,
+    "title": "Security Analyst",
+    "organization": "CYBERWELL Solutions",
+    "time": "Sep 2025 - Apr 2026",
+    "earlierRole": {
+      "title": "Security Operations Intern",
+      "time": "Apr 2025 - Sep 2025"
+    },
+    "location": "Remote",
+    "description": "On-call incident response and detection engineering across client Microsoft 365 and Azure security stacks, promoted from Security Operations Intern to Security Analyst.\n\n- Ran on-call incident response across **7 enterprise client tenants**, resolving **8+ security incidents per day** by correlating Microsoft Entra ID sign-in and audit logs with mailbox activity, endpoint process and system logs, and device network traffic to root cause.\n- Cut the false-positive alert rate **12%** by writing and tuning KQL detection rules in Microsoft Sentinel and Microsoft Defender for Endpoint, and documented the correlation logic in playbooks the team reuses.\n- Reviewed conditional access configurations in Microsoft Entra ID across all 7 tenants.\n- Assessed vendor security posture through third-party risk management reviews.",
+    "tags": [
+      "Microsoft Sentinel",
+      "Microsoft Defender for Endpoint",
+      "Entra ID",
+      "KQL",
+      "Cortex XSOAR",
+      "Cortex XDR",
+      "Elastic",
+      "Incident Response"
+    ]
   },
   {
-    id: 4,
-    title: 'Security Operations Intern',
-    organization: 'CYBERWELL Solutions',
-    time: 'May 2025 - Aug 2025',
-    location: 'Remote',
-    description:
-      'Investigating and resolving 8 security incident cases per day in an external client environment.\n\nDesigning and implementing KQL detection rules in Microsoft Sentinel to strengthen identity-related controls and reduce unauthorized access risk.\n\nConducting third-party risk management (TPRM) assessments to minimize legal risk associated with vendors.',
-    tags: ['Azure (Sentinel, Entra ID)', 'KQL', 'TPRM', 'Incident Response'],
-  },
-  {
-    id: 5,
-    title: 'IT Intern',
-    organization: 'WELL Health Technologies',
-    time: 'May 2023 - Aug 2023',
-    location: 'Vancouver, BC',
-    description:
-      'Engineering a Bash-based device telemetry agent to centralize endpoint logs in Azure, improving visibility into device posture and authentication activity across 5 clinics.\n\nMaintaining compliance documents to protect sensitive patient data under industry standards (ISO 27001, SOC2).',
-    tags: ['Bash', 'Azure (Endpoint Management, Compliance)', 'ISO 27001', 'SOC2'],
-  },
+    "id": 4,
+    "title": "IT Intern",
+    "organization": "WELL Health Technologies (TSX: WELL)",
+    "time": "May 2023 - Sep 2023",
+    "location": "Vancouver, BC",
+    "description": "- Built a **Bash endpoint telemetry agent** that collects device logs and centralizes them in Azure, giving the IT team device-posture visibility across **5 clinic environments**.\n- Kept ISO 27001 and SOC 2 control documentation current for a regulated healthcare IT environment.",
+    "tags": [
+      "Bash",
+      "Azure",
+      "Endpoint Management",
+      "ISO 27001",
+      "SOC 2"
+    ]
+  }
 ]

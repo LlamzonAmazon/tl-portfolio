@@ -1,10 +1,32 @@
 /* ============================================================
-   Texture — the "engineer's drafting board" system.
-   Pure CSS/SVG: graph-paper grids, crosshatch shading, ink rules.
-   Everything is low-contrast sepia over paper; no raster art.
+   Texture: the "engineer's drafting board" system, Rev C.
+   Pure CSS/SVG: graph-paper grids, hairline rules, drawn corners.
+   Graphite over paper, ink for figures, one sheet hue for labels.
+   No borders, no shadows: tone separates surfaces, drawn
+   registration corners imply their edges.
    ============================================================ */
 
-/* ── Two-tier ruled grid — hand-drafted, not mathematically even:
+/* ── Sheet keys: the spectrum runs once across the six sections: I red,
+   II orange and yellow (the thesis plate's two studies; its labels key
+   yellow), then III green, IV blue, V indigo, VI violet. The preloader (00)
+   shares the hero's red as its overture. (theme/spectrum.ts)
+   Set data-sheet once on a sheet's root; every keyed label, key line and
+   key node inside reads --hue (marks) / --hue-ink (text). Colour only
+   labels: it never fills a surface. ─────────────────────────────────── */
+[data-sheet="00"] { --hue: var(--color-vermilion); --hue-ink: var(--color-vermilion-ink); }
+[data-sheet="01"] { --hue: var(--color-vermilion); --hue-ink: var(--color-vermilion-ink); }
+[data-sheet="02"] { --hue: var(--color-orpiment); --hue-ink: var(--color-orpiment-ink); }
+[data-sheet="03"] { --hue: var(--color-verdigris); --hue-ink: var(--color-verdigris-ink); }
+[data-sheet="04"] { --hue: var(--color-azurite); --hue-ink: var(--color-azurite-ink); }
+[data-sheet="05"] { --hue: var(--color-indigo); --hue-ink: var(--color-indigo-ink); }
+[data-sheet="06"] { --hue: var(--color-murex); --hue-ink: var(--color-murex-ink); }
+
+/* ── Surfaces. Three tones and nothing else: the board (paper), a raised
+   sheet (one step lighter), and the plate (inverted ink). ───────────── */
+.sheet { background: var(--color-sheet); }
+.ink-plate { background: var(--color-ink); color: var(--color-paper); --hue-ink: var(--hue); }
+
+/* ── Two-tier ruled grid: hand-drafted, not mathematically even:
    some lines fade, some break, every 5th line (the tile edge) reads
    slightly stronger. See public/texture-grid.svg. ───────────────── */
 .bg-grid-ruled {
@@ -14,115 +36,37 @@
   background-repeat: repeat;
 }
 
-/* ── Paper grain — two-tone feTurbulence noise (ink + highlight flecks
-   baked into the same tile), composited normally over whatever's beneath. */
-.bg-grain {
-  background-image: url('/texture-grain.svg');
-  background-size: 120px 120px;
-  background-repeat: repeat;
-}
-
-/* ── Ink speckles — scattered, irregular, barely-there dot texture. ─── */
-.bg-speckle {
-  background-image: url('/texture-speckle.svg');
-  background-size: 240px 240px;
-  background-repeat: repeat;
-}
-
-/* ── Paper roughness — coarse, low-frequency blotchy tonal variation,
-   the "rough/handmade stock" counterpart to the fine grain above. */
-.bg-roughness {
-  background-image: url('/texture-roughness.svg');
-  background-size: 480px 480px;
-  background-repeat: repeat;
-}
-
-/* ── Paper wrinkles — faint creases, a light/shadow pair straddling each
-   fold line rather than a single flat band. Barely visible individually. */
-.bg-wrinkle {
-  background-image:
-    linear-gradient(115deg, transparent 42%, rgba(var(--ink-rgb), 0.018) 49%, rgba(var(--highlight-rgb), 0.02) 51%, transparent 58%),
-    linear-gradient(250deg, transparent 60%, rgba(var(--ink-rgb), 0.014) 68%, rgba(var(--highlight-rgb), 0.016) 70%, transparent 78%);
-}
-
-/* ── Soft top-down light — the page's implied light source, reinforcing
-   the vignette with a warm (never white) catch-light near the top. ──── */
-.bg-shade-top {
-  background-image: linear-gradient(180deg, rgba(var(--highlight-rgb), 0.05), transparent 40%);
-}
-
-/* ── Crosshatch shading (pen-and-ink hatch fill) ─────────── */
-.bg-crosshatch {
-  background-image:
-    repeating-linear-gradient( 45deg, rgba(var(--ink-rgb), 0.06) 0 1px, transparent 1px var(--hatch-gap)),
-    repeating-linear-gradient(-45deg, rgba(var(--ink-rgb), 0.06) 0 1px, transparent 1px var(--hatch-gap));
-}
-
-/* Single-direction hatch (lighter, directional shading) */
-.bg-hatch {
-  background-image:
-    repeating-linear-gradient(45deg, rgba(var(--ink-rgb), 0.07) 0 1px, transparent 1px 7px);
-}
-
-/* ── The whole-page parchment stack: paper → speckle → grain → wrinkles →
-   top-light → vignette, composited in one element via background-blend-mode
-   (no extra DOM layers). Depth comes from overlapping many barely-visible
-   layers, not any single strong one.
-   This is the site's base surface — see PaperBackdrop. ─────────────────── */
+/* ── The page surface: flat paper. No grain, no speckle, no vignette:
+   anything stippled reads as dirt on the screen. Character comes from the
+   linework. See PaperBackdrop. ───────────────────────────────────────── */
 .paper-backdrop {
   background-color: var(--color-paper);
-  background-image:
-    url('/texture-speckle.svg'),
-    url('/texture-grain.svg'),
-    linear-gradient(115deg, transparent 42%, rgba(var(--ink-rgb), 0.018) 49%, rgba(var(--highlight-rgb), 0.02) 51%, transparent 58%),
-    linear-gradient(250deg, transparent 60%, rgba(var(--ink-rgb), 0.014) 68%, rgba(var(--highlight-rgb), 0.016) 70%, transparent 78%),
-    linear-gradient(180deg, rgba(var(--highlight-rgb), 0.05), transparent 40%),
-    radial-gradient(120% 120% at 50% 0%, transparent 55%, rgba(var(--ink-rgb), 0.075) 100%),
-    url('/texture-roughness.svg');
-  background-size:
-    240px 240px,
-    120px 120px,
-    auto, auto, auto, auto,
-    480px 480px;
-  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
-  background-blend-mode: normal, normal, normal, normal, normal, normal, soft-light;
 }
 
-/* ── Paper-mounted card: a slightly lighter/warmer sheet on the page,
-   held down by a hairline border + a tight shadow — never a hard drop
-   shadow, never stark white. A faint diagonal gradient stands in for
-   raking light: a warm catch top-left, a soft ink shadow bottom-right. */
+/* ── Card: a raised sheet, one tone above the paper. No outline, no
+   shadow; its edge is the tone step (and, when drafted, its corners). ── */
 .paper-card {
-  background-color: var(--color-card);
-  background-image: linear-gradient(135deg, rgba(var(--highlight-rgb), 0.5) 0%, transparent 32%, transparent 68%, rgba(var(--ink-rgb), 0.025) 100%);
-  border: 1px solid var(--color-card-border);
-  box-shadow: var(--shadow-paper), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: var(--color-sheet);
 }
 
-/* ── Stacked variant: an offset second sheet reads underneath, like a
-   mounted plate sitting on the museum-board layer beneath it. Opt-in —
-   the offset shadow can crowd tightly clipped elements (e.g. WipeText). */
-.paper-card-stacked {
-  box-shadow: var(--shadow-paper), var(--shadow-stack), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
 
 /* ── Tape reveal: a flat paper-white band that STRETCHES across the line, then
    CONTRACTS to reveal the ink behind it ("magic tape").
 
    Two independent edges, each a plain 0→1 var driven by GSAP (see TapeText.tsx
    / PinnedStage.tsx). Custom properties inherit by default, so the parent's
-   animated values reach the `__ink` / `__band` children — no @property needed:
+   animated values reach the `__ink` / `__band` children: no @property needed:
        --lead   band's leading (right) edge   ── stretch phase: 0 → 1
        --trail  band's trailing (left) edge    ── reveal  phase: 0 → 1
    Sequenced (lead fills first, then trail chases it), the band fills the whole
-   line white, then collapses rightward — uncovering the ink left-to-right.
+   line white, then collapses rightward: uncovering the ink left-to-right.
    Ink is visible only left of `trail`. Both clips are pure `clip-path:
    inset()` (GPU composited, no per-frame layout). ───────────────────────── */
 .tape-text {
   --lead: 0;
   --trail: 0;
   position: relative;
-  /* No `display` override — the consumer controls it (the hero names use the
+  /* No `display` override: the consumer controls it (the hero names use the
    * `block` utility). The band anchors to whatever block/inline-block box the
    * consumer establishes. */
 }
@@ -138,125 +82,282 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: rgb(var(--highlight-rgb)); /* warm paper catch-light, flat — no border/glow */
+  background: var(--color-sheet); /* sheet-white tape: one tone up from the paper, flat, no edge */
   clip-path: inset(0
     calc(100% - clamp(0%, var(--lead) * 100%, 100%)) 0
     clamp(0%, var(--trail) * 100%, 100%));
 }
 
-/* ── Drafting-sheet card border: one thin straight ink rule, 90° sharp
-   corners — the card reads as a sheet pinned to the board, not a plaque.
-   Declared after .paper-card so this border wins over its hairline. ── */
-.frame-draft {
-  border: 1.5px solid rgba(var(--sepia-rgb), 0.85);
-  border-radius: 0;
-  box-shadow: var(--shadow-paper);
-}
-
-/* Placeholder ("more soon") sheet — muted border so it recedes. No filter:
-   these move every scrub frame and a filter forces per-frame GPU passes. */
-.frame-draft--placeholder {
-  border-color: rgba(var(--sepia-rgb), 0.55);
-}
-
-/* Placeholder face — empty drafting sheet, hatched instead of inked. */
+/* Placeholder ("more soon") sheet: no raised tone, it stays on the paper
+   and is hatched, so it reads as a sheet not yet issued. */
 .placeholder-face {
-  background-image: repeating-linear-gradient(45deg, rgba(var(--ink-rgb), 0.05) 0 1px, transparent 1px 8px);
+  background-image: repeating-linear-gradient(45deg, var(--line-grid-minor) 0 1px, transparent 1px 8px);
 }
 
-/* ── Fade masks so grids dissolve at edges (not hard cut) ── */
-.mask-fade-y {
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-          mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-}
+/* ── Fade mask so grids dissolve at the edges (not hard cut) ── */
 .mask-fade-radial {
   -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
           mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
 }
 
-/* ── Ink hairline rule (1px, drawable via scaleX). The groove shadow
-   simulates the rule being pressed into the paper, not printed on it. */
-.ink-rule {
-  height: 1px;
-  width: 100%;
-  background: var(--color-line);
-  box-shadow: var(--groove-rule);
-  transform-origin: left center;
-}
-
-/* Registration / corner tick marks (engineer's crop marks) */
-.tick {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: var(--color-sepia);
-  border-style: solid;
-  border-width: 0;
-  opacity: 0.5;
-}
-.tick-tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
-.tick-tr { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
-.tick-bl { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
-.tick-br { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
-
-/* ── Compass-mark loading sweep (see CompassMark.tsx). Bounded rotation, not
-   a bounce — matches the board's restrained motion vocabulary. Respects
-   prefers-reduced-motion via the global override in base.css. ─────────── */
-@keyframes compass-sweep {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ── Ruler divider — a numbered section rule (see RulerDivider.tsx). The
-   dashed line stands in for a scale's tick marks; label sits inside the line
-   rather than beside it, echoing the printed rule callouts elsewhere. ──── */
+/* ── Ruler divider: a numbered section rule (see RulerDivider.tsx), drawn
+   as an actual scale: a 4H baseline, minor ticks every 8px, a taller major
+   tick every 40px. ─────────────────────────────────────────────────────── */
 .ruler-divider-line {
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--color-sepia) 0px,
-    var(--color-sepia) 4px,
-    transparent 4px,
-    transparent 9px
-  );
-  opacity: 0.4;
+  height: 7px;
+  background:
+    linear-gradient(var(--line-grid-major) 0 0) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--color-graphite-h) 0 1px, transparent 1px 40px) bottom / 100% 7px no-repeat,
+    repeating-linear-gradient(90deg, var(--color-graphite-2h) 0 1px, transparent 1px 8px) bottom / 100% 4px no-repeat;
 }
 
-/* ── Drafting corner ticks on a card — dormant until hover, echoing the
-   page-corner registration marks (.tick) at component scale. Opt-in via
-   paper-card-ticks wrapping four .tick spans (see ProjectCard). ──────── */
-.paper-card-ticks .tick {
-  opacity: 0;
-  transition: opacity var(--dur-base) var(--ease-ink);
+/* ── Registration corners: the board's one edge language. A sheet has no
+   outline; four overshooting L-marks sit OUTSIDE its box, the arms crossing
+   at each corner like a draughtsman's construction (--mark-arm along the
+   edge, --mark-over past the corner). One geometry, two renderers:
+
+     .frame-edge   four edge spans (FrameEdges.tsx; DrawnFrame.tsx drives the
+                   same spans from Framer). Each scales along its edge on a
+                   timeline (lib/lines.ts `edges`) but paints ONLY its two end
+                   arms, so the pen sweeps the edge and leaves a mark at each
+                   end. Any `relative` host (cards, links, modals) takes them.
+     .sheet-frame  the same marks as ONE SVG pen path (SheetFrame.tsx), for
+                   sheets whose frame continues from a construction line.
+
+   Hover and keyboard focus DRAW the marks: --mark-arm (registered in
+   tokens.css) transitions to --mark-arm-hover on the host, and both
+   renderers read the animated value, so the arms grow together. ─────────── */
+.frame-edge {
+  position: absolute;
+  pointer-events: none;
+  z-index: var(--z-frame);
+  --a: calc(var(--mark-arm) + var(--mark-over));
+  --c: var(--line-mark);
 }
-.frame-draft:hover .tick,
-.frame-draft:focus-visible .tick {
-  opacity: 0.55;
+.frame-edge--t, .frame-edge--b {
+  left: calc(-1 * var(--mark-over)); right: calc(-1 * var(--mark-over)); height: var(--line-w-mark);
+  background: linear-gradient(90deg, var(--c) 0 var(--a), transparent var(--a) calc(100% - var(--a)), var(--c) calc(100% - var(--a)));
+}
+.frame-edge--r, .frame-edge--l {
+  top: calc(-1 * var(--mark-over)); bottom: calc(-1 * var(--mark-over)); width: var(--line-w-mark);
+  background: linear-gradient(180deg, var(--c) 0 var(--a), transparent var(--a) calc(100% - var(--a)), var(--c) calc(100% - var(--a)));
+}
+.frame-edge--t { top: 0; transform-origin: left; }
+.frame-edge--r { right: 0; transform-origin: top; }
+.frame-edge--b { bottom: 0; transform-origin: right; }
+.frame-edge--l { left: 0; transform-origin: bottom; }
+
+/* The hosts that draw their marks further on hover / focus. The inert
+   placeholder sheet is a div and never hovers. */
+.draft-sheet, .experience-card {
+  transition: --mark-arm var(--dur-hover) var(--ease-pen);
+}
+button.draft-sheet:hover, button.draft-sheet:focus-visible,
+.experience-card:hover, .experience-card:focus-visible,
+.frame-link:hover, .frame-link:focus-visible {
+  --mark-arm: var(--mark-arm-hover);
 }
 
-/* ── Wax seal — a small pressed-wax stamp reserved for a "live" mark (a
-   project with a public demo). The ring is the same hand-roughened
-   vocabulary as the drafting linework (see .roughen-seal filter, defined
-   locally per-usage per the DraftingGrid/ProjectsLinework convention) rather
-   than a clean vector circle, so it reads as pressed rather than printed. */
-.wax-seal {
-  position: relative;
+/* ── Drafted sheet (project cards, both paths). Three layers, each with its
+   own clock: the paper (.draft-sheet__paper, grown or unrolled), the face
+   (.card-face, inked), and the frame (.sheet-frame, one SVG pen path, see
+   SheetFrame.tsx). The host itself paints nothing, so no part of the sheet
+   can show before its pen gets there. ──────────────────────────────────── */
+.draft-sheet { position: relative; display: block; padding: 0; background: none; text-align: left; }
+.draft-sheet__paper { position: absolute; inset: 0; pointer-events: none; }
+/* The frame SVG is the sheet's box grown by --mark-over on every side, so the
+   corner overshoot has room to be drawn; its paths sit in a group shifted back
+   by the same amount, so path coordinates stay in the sheet's own px. */
+.sheet-frame {
+  position: absolute;
+  top: calc(-1 * var(--mark-over));
+  left: calc(-1 * var(--mark-over));
+  width: calc(100% + 2 * var(--mark-over));
+  height: calc(100% + 2 * var(--mark-over));
+  overflow: visible;
+  pointer-events: none;
+  z-index: var(--z-frame);
+  /* The one-path frame is masked down to its four corners (overshoot + arm,
+     plus the pen's width), so its pen still travels the whole perimeter but
+     only the registration marks remain. */
+  --a: calc(var(--mark-over) + var(--mark-arm) + var(--line-w-mark));
+  -webkit-mask:
+    linear-gradient(#000 0 0) top left / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) top right / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) bottom left / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) bottom right / var(--a) var(--a) no-repeat;
+          mask:
+    linear-gradient(#000 0 0) top left / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) top right / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) bottom left / var(--a) var(--a) no-repeat,
+    linear-gradient(#000 0 0) bottom right / var(--a) var(--a) no-repeat;
+}
+.sheet-frame__paths { transform: translate(var(--mark-over), var(--mark-over)); }
+/* The summary only shows when the face (content box) can hold it beside
+   everything else: hidden on short sheets, two lines on mid, three on tall. */
+.sheet-face { container-type: size; }
+.sheet-summary { display: none; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+@container (min-height: 155px) { .sheet-summary { display: -webkit-box; } }
+@container (min-height: 175px) { .sheet-summary { -webkit-line-clamp: 3; } }
+
+/* ── Line roles for SVG linework (see --line-* tokens). Every drawable path
+   carries pathLength="1", so draw = dashoffset 1 -> 0, retract = 0 -> 1,
+   pass-through = 0 -> -1, regardless of the path's real length. ──────── */
+[pathLength] { stroke-dasharray: 1; }
+/* --draw-k: a Drawing's render scale (components/ui/Drawing.tsx), so line
+   weights stay true px however large the figure is drawn. */
+.ln-hair      { stroke: var(--line-grid-major); stroke-width: calc(var(--line-w-hair) / var(--draw-k, 1));      fill: none; }
+.ln-construct { stroke: var(--line-construct); stroke-width: calc(var(--line-w-construct) / var(--draw-k, 1)); fill: none; }
+.ln-hatch     { stroke: var(--line-hatch);     stroke-width: calc(var(--line-w-hatch) / var(--draw-k, 1));     fill: none; }
+.ln-dim       { stroke: var(--line-dim);       stroke-width: calc(var(--line-w-dim) / var(--draw-k, 1));       fill: none; }
+.ln-datum     { stroke: var(--line-datum);     stroke-width: calc(var(--line-w-datum) / var(--draw-k, 1));     fill: none; }
+.ln-ink       { stroke: var(--line-ink);       stroke-width: calc(var(--line-w-ink) / var(--draw-k, 1));       fill: none; stroke-linejoin: miter; }
+.ln-mark      { stroke: var(--line-mark);      stroke-width: calc(var(--line-w-mark) / var(--draw-k, 1));      fill: none; stroke-linecap: square; }
+.ln-key       { stroke: var(--line-key);       stroke-width: calc(var(--line-w-datum) / var(--draw-k, 1));     fill: none; }
+.ln-dashed    { stroke-dasharray: calc(var(--dash-construct-on) / var(--draw-k, 1)) calc(var(--dash-construct-off) / var(--draw-k, 1)); }
+.ln-rule      { stroke: var(--line-rule);      stroke-width: 1px;                     fill: none; }
+.ln-frame     { stroke: var(--line-frame);     stroke-width: var(--line-w-frame);     fill: none; stroke-linecap: square; }
+.ln-frame--muted { stroke: var(--color-graphite-2h); }
+/* Nodes are filled discs in the sheet hue (the colour that runs through the
+   sections), always painted above their lines, hidden by clip until their
+   line's pen reaches them (lib/lines.ts nodesAlong): revealed top to bottom.
+   The clip starts closed in CSS so none can show early. */
+.ln-node      { fill: var(--hue); stroke: none; clip-path: inset(0% 0% 100% 0%); }
+.ln-node--key { fill: var(--hue); }
+.ln-node--open { fill: var(--color-paper); stroke: var(--hue); stroke-width: calc(var(--line-w-mark) / var(--draw-k, 1)); }
+/* Ghost plate: a figure set BEHIND type steps every role two grades
+   lighter so the type stays the darkest thing on the sheet. Keyed lines,
+   nodes and labels keep the sheet hue: the labels still read. */
+.drawing--ghost .ln-ink,
+.drawing--ghost .ln-mark      { stroke: var(--color-graphite-h); }
+.drawing--ghost .ln-datum,
+.drawing--ghost .ln-dim       { stroke: var(--color-graphite-2h); }
+.drawing--ghost .ln-construct { stroke: var(--color-graphite-4h); }
+.drawing--ghost .ln-hatch     { stroke: var(--color-graphite-6h); }
+.drawing--ghost .ln-label:not(.ln-label--key),
+.drawing--ghost .ln-label--serif { fill: var(--color-graphite-hb); }
+/* Pale plate: a ghost whose two darkest roles (ink, mark) step down to 2H,
+   for a plate that sits under controls (the contact links); its light
+   construction stays as ghost. Drawing adds .drawing--ghost alongside. */
+.drawing--pale .ln-ink,
+.drawing--pale .ln-mark { stroke: var(--color-graphite-2h); }
+/* Faint plate: an oversized backdrop that must sit very quietly behind type
+   (a dense single-line trace, say). Every role, keys included, goes to the
+   hard leads: wholly grey, no hue. */
+.drawing--faint .ln-ink,
+.drawing--faint .ln-mark,
+.drawing--faint .ln-key       { stroke: var(--color-graphite-4h); }
+.drawing--faint .ln-datum,
+.drawing--faint .ln-dim       { stroke: var(--color-graphite-6h); }
+.drawing--faint .ln-construct,
+.drawing--faint .ln-hatch     { stroke: var(--color-graphite-9h); }
+.drawing--faint .ln-node,
+.drawing--faint .ln-node--key { fill: var(--color-graphite-2h); }
+.drawing--faint .ln-label     { fill: var(--color-graphite-2h); }
+
+/* Annotation type inside a drawing: wiped in once its leader lands. */
+.ln-label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: var(--micro-track);
+  text-transform: uppercase;
+  fill: var(--color-graphite-hb);
+}
+.ln-label--key { fill: var(--hue-ink); }
+.ln-label--serif { font-family: var(--font-display); font-style: italic; font-weight: 500; letter-spacing: 0; text-transform: none; fill: var(--color-ink); }
+
+/* ── Stage furniture: registration crosshairs pinned to the viewport's
+   corners (StageFurniture.tsx), under the title block. ─────────────────── */
+.stage-furniture { position: absolute; inset: 0; z-index: var(--z-furniture); pointer-events: none; }
+
+/* ── Title block: a drafting sheet's info box, fixed bottom-right of the
+   pinned stage. Its frame and rules are drawn spans (.tb-edge), never a
+   static border. See TitleBlock.tsx. ─────────────────────────────────── */
+.title-block {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: var(--z-titleblock);
+  display: grid;
+  grid-template-columns: 40% 60%;
+  width: clamp(13rem, 17vw, 17rem);
+  /* Rev C: the title block is the board's one inverted PLATE: ink ground,
+     paper type (micro tier), graphite rules, the current sheet's hue as its
+     column rule. Its sheet numbers are the Cormorant .numeral, as in SheetIndex. */
+  color: var(--color-paper);
+}
+.title-block__bg { position: absolute; inset: 0; background: var(--color-ink); }
+/* The legend stands on the block: right-aligned, drawn at 1:1 so the scale
+   bar measures true CSS millimetres. */
+.title-block__legend { position: absolute; right: 0; bottom: calc(100% + 0.4rem); width: 260px; height: 84px; }
+.title-block__legend .drawing { width: 100%; height: 100%; }
+.title-block__cell { position: relative; padding: 0.45rem 0.7rem; white-space: nowrap; min-width: 0; }
+.title-block__cell--key { color: var(--color-graphite-h); }
+.title-block__swap { display: grid; }
+.title-block__swap > span { grid-area: 1 / 1; }
+.tb-edge { position: absolute; pointer-events: none; background: var(--color-ink); }
+.tb-edge--t { left: 0; right: 0; top: 0; height: 1px; transform-origin: left; }
+.tb-edge--r { top: 0; bottom: 0; right: 0; width: 1px; transform-origin: top; }
+.tb-edge--b { left: 0; right: 0; bottom: 0; height: 1px; transform-origin: right; }
+.tb-edge--l { top: 0; bottom: 0; left: 0; width: 1px; transform-origin: bottom; }
+.tb-edge--r1 { left: 0; right: 0; height: 1px; transform-origin: left; background: var(--color-graphite-b); top: 50%; }
+.tb-edge--cd { top: 0; bottom: 0; left: 40%; width: 1px; transform-origin: top; background: var(--hue); }
+
+/* Dimension value label (sits on the dimension line, paper knocks out the line). */
+.dim-value {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0 0.5rem;
+  background: var(--color-paper);
+  text-transform: none; /* micro tier, but it carries units (mm, deg): case matters */
+  color: var(--hue-ink);
+  white-space: nowrap;
+}
+
+/* ── Seals: a stamp on a sheet's top-right corner, ink ground, paper type,
+   micro tier. Monotone on purpose: status is not a sheet key, so a seal never
+   borrows the hue. No tilt, no gloss, no ring. The SHAPE is the meaning:
+     disc   (.seal--live)       a live product (LiveSeal.tsx)
+     plate  (.seal--published)  a publication (PublishedSeal.tsx); square,
+                                like every sheet and plate on the board
+   Sized in the micro tier, so nothing on a seal is smaller than 0.55rem. ── */
+.seal {
+  position: absolute;
+  top: var(--seal-inset);
+  right: var(--seal-inset);
+  z-index: var(--z-seal);
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, var(--color-wax-light), var(--color-wax) 70%);
+  pointer-events: none;
+  background: var(--color-ink);
   color: var(--color-paper);
-  box-shadow: 0 2px 6px rgba(var(--wax-rgb), 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  transform: rotate(-4deg);
+  font-weight: 600;
+  line-height: 1;
+}
+.seal--live {
+  width: var(--seal-size);
+  height: var(--seal-size);
+  border-radius: var(--radius-seal);
+}
+.seal--published {
+  gap: 0.25rem;
+  max-width: 10rem;
+  padding: 0.5rem 0.75rem;
+}
+.seal__venue {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--color-graphite-2h);
 }
 
-/* ── Tech seal — a small circular badge for a project's tool/tech tags,
-   echoing the compass/celestial-circle motif rather than a pill/chip.
-   Tags with no brand mark fall back to a monogram stamp, rotated a few
-   degrees off-true so it reads as hand-pressed, not vector-perfect. ── */
+/* ── Tech seal: a small graphite disc for a project's tool/tech tags (the
+   compass/celestial-circle motif rather than a pill). No ring: the disc is
+   a 6H tone on the sheet. Monogram stamps invert to ink. ─────────────── */
 .tech-seal {
   display: inline-flex;
   align-items: center;
@@ -264,21 +365,260 @@
   flex-shrink: 0;
   width: 30px;
   height: 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(var(--sepia-rgb), 0.32);
-  background: rgba(var(--paper-rgb), 0.55);
-  color: var(--color-sepia);
+  border-radius: var(--radius-seal);
+  background: var(--color-graphite-6h);
+  color: var(--color-ink);
   font-size: 15px;
-}
-.tech-seal--stamp {
-  box-shadow: inset 0 0 0 2px rgba(var(--sepia-rgb), 0.14);
-  transform: rotate(-3deg);
 }
 .tech-seal--sm {
   width: 20px;
   height: 20px;
   font-size: 10px;
 }
-.tech-seal--sm.tech-seal--stamp {
-  box-shadow: inset 0 0 0 1.5px rgba(var(--sepia-rgb), 0.14);
+
+/* ── Detail sheet shell (SheetModal.tsx). The layer is portaled to <body> and
+   owns the top of the stacking scale (--z-modal); inside it the scrim sits
+   at the bottom and the sheet one step above, so neither can ever cover the
+   other. The scrim is the one fade on the board: tone + blur over the page
+   (backdrop-filter, so its ancestors must never carry opacity, filter or
+   clip-path or the blur loses sight of the page). ───────────────────────── */
+.sheet-layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* 16px gutters at phone width */
 }
+@media (min-width: 640px) { .sheet-layer { padding: 2rem; } }
+
+.sheet-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-tone);
+  -webkit-backdrop-filter: blur(var(--scrim-blur));
+  backdrop-filter: blur(var(--scrim-blur));
+}
+
+.sheet-panel {
+  position: relative;
+  z-index: var(--z-raised);
+  width: 100%;
+  max-width: 42rem;
+  max-height: 88vh;
+  max-height: 88dvh;
+}
+/* The sheet scrolls internally; the close button and frame stay put. */
+.sheet-scroll {
+  max-height: inherit;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  padding: 1.5rem;
+}
+@media (min-width: 640px) { .sheet-scroll { padding: 2.25rem; } }
+.sheet-scroll:focus-visible { outline-offset: -4px; }
+
+/* Detail sheet close: a small set-in CLOSE label (label tier) on a sheet-white
+   plate (so it reads over a preview image too), inset from the corner so it
+   has air. It looks 28px tall but is hit at --hit-min (the ::after). Hover and
+   keyboard focus invert it to the ink plate; the focus ring stands off the
+   plate. */
+.sheet-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: var(--z-raised);
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  padding: 0 0.625rem;
+  background: var(--color-sheet);
+  color: var(--color-ink);
+  transition: background-color var(--dur-hover) var(--ease-settle), color var(--dur-hover) var(--ease-settle);
+}
+.sheet-close::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, var(--hit-min));
+  height: var(--hit-min);
+  transform: translate(-50%, -50%);
+}
+@media (min-width: 640px) { .sheet-close { top: 1.75rem; right: 1.75rem; } }
+.sheet-close:hover, .sheet-close:focus-visible { background: var(--color-ink); color: var(--color-paper); }
+.sheet-close:focus-visible { outline: 1px solid var(--color-ink); outline-offset: 2px; }
+.sheet-close:active { transition-duration: var(--dur-press); }
+
+/* A hairline on a detail sheet: DRAWN in from the left on open and retracted
+   on close (SheetSection.tsx), never faded. */
+.sheet-rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--line-rule);
+  transform-origin: left;
+}
+
+/* Vertical rhythm of a sheet's body; headings take extra air above. */
+.sheet-flow { display: flex; flex-direction: column; gap: 0.875rem; }
+.sheet-flow > .sheet-heading { margin-top: 1.25rem; }
+.sheet-flow > .sheet-heading:first-child { margin-top: 0; }
+
+/* Section header: a keyed small-caps label with a hairline running out to
+   the edge of the sheet. */
+.sheet-heading { display: flex; align-items: center; gap: 0.9rem; }
+.sheet-heading__text {
+  flex: none;
+  margin: 0;
+  color: var(--hue-ink);
+}
+.sheet-heading .sheet-rule { flex: 1; }
+
+/* Colophon: the plate that closes a detail sheet, like a printer's ornament
+   at a chapter's end. Centred, small, drawn after the sheet's corners. */
+.colophon { display: flex; justify-content: center; margin-top: 2.5rem; }
+.colophon .drawing { height: 7.5rem; width: auto; aspect-ratio: var(--plate-aspect, 1); }
+
+/* A study plate on an unissued placeholder sheet: fills the face above its label. */
+.placeholder-plate { position: relative; flex: 1; min-height: 0; display: block; }
+.placeholder-plate .drawing { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Stage plates: positioned backdrops and margin studies in a scene plane.
+   Always under the scene's type, never hit-testable. */
+.stage-plate { position: absolute; pointer-events: none; }
+.stage-plate .drawing { width: 100%; height: 100%; display: block; }
+
+/* Section plates: one oversized ghost figure behind each document-flow
+   section (SectionPlate.tsx), centred on --plate-x / --plate-y and cropped
+   by the section, so the flow keeps the stage's scale contrast. */
+.section-plate {
+  position: absolute;
+  left: var(--plate-x, 50%);
+  top: var(--plate-y, 50%);
+  width: var(--plate-w, 150%);
+  max-width: 72rem;
+  aspect-ratio: var(--plate-aspect, 1);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.section-plate .drawing { width: 100%; height: 100%; display: block; }
+
+/* Bulleted technical points on a detail sheet: drafting nodes, not discs. */
+.sheet-points { display: flex; flex-direction: column; gap: 0.75rem; }
+.sheet-points li { position: relative; padding-left: 1.25rem; }
+.sheet-points li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-seal);
+  background: var(--hue);
+}
+
+/* ── Experience card ─────────────────────────────────────────────────── */
+.experience-card { min-height: 11rem; }
+.experience-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 1.45vw, 1.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  padding-right: 2.25rem; /* clear of the live seal */
+}
+/* Pinned stage: the sheet has the room, so the cards take it. */
+.experience-card--stage { min-height: clamp(14rem, 36vh, 21rem); }
+.experience-card--stage .experience-card__title { font-size: clamp(1.35rem, 1.9vw, 1.9rem); }
+
+/* ── Skills board (kanban) ───────────────────────────────────────────── */
+.kanban { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 2.2vw, 2.5rem); }
+.kanban__column { position: relative; min-width: 0; }
+.kanban__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0 0 0.6rem 1.1rem;
+}
+.kanban__list { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.7vh, 0.5rem); padding: 0.8rem 0 0 1.1rem; list-style: none; margin: 0; }
+.skill-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: clamp(1.9rem, 4.2vh, 2.6rem);
+  padding: 0 0.7rem 0 0.45rem;
+  background: var(--color-sheet);
+}
+/* Hover: a hue key line is DRAWN down the chip's left edge. A chip is not a
+   control, so it does not lift. */
+.skill-chip::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--hue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--dur-hover) var(--ease-pen);
+}
+.skill-chip:hover::before { transform: scaleY(1); transform-origin: top; }
+.skill-chip__name {
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  color: var(--color-ink-mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 767px) {
+  .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.5rem; }
+}
+
+/* ── Frame link (contact) ────────────────────────────────────────────── */
+.frame-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.6rem;
+  color: var(--color-ink);
+  background: transparent; /* no fill at rest: nothing but the drawn corners mark the link */
+  transition:
+    background-color var(--dur-hover) var(--ease-settle),
+    color var(--dur-hover) var(--ease-settle),
+    --mark-arm var(--dur-hover) var(--ease-pen);
+}
+/* Hover inverts the link to a plate: the strongest contrast the board has. */
+.frame-link:hover, .frame-link:focus-visible { background: var(--color-ink); color: var(--color-paper); }
+.frame-link__label { display: inline-block; }
+.frame-link__arrow { display: inline-block; transition: transform var(--dur-hover) var(--ease-pen); }
+.frame-link:hover .frame-link__arrow, .frame-link:focus-visible .frame-link__arrow { transform: translate(3px, -3px); }
+/* Hue rule under the label: drawn in from the left on hover, passes out to the right on leave. */
+.frame-link__rule {
+  position: absolute;
+  left: 1.6rem;
+  right: 1.6rem;
+  bottom: 0.6rem;
+  height: 1px;
+  background: var(--hue);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-hover) var(--ease-pen);
+}
+.frame-link:hover .frame-link__rule, .frame-link:focus-visible .frame-link__rule { transform: scaleX(1); transform-origin: left; }
+
+/* Experience row: one column per role (--roles, set by the scene), hung from
+   the datum; every other one drops lower. */
+.experience-row { display: grid; grid-template-columns: repeat(var(--roles, 5), minmax(0, 1fr)); gap: clamp(0.9rem, 1.6vw, 1.75rem); align-items: start; }
+.experience-row__drop { margin-top: clamp(3rem, 10vh, 6.5rem); }
+
+/* Static kanban (document flow): column rules are part of the sheet, already drawn. */
+/* Rules, not borders: painted as 1px gradients so no box ever closes. */
+.kanban--static .kanban__header { background: linear-gradient(var(--line-datum) 0 0) bottom / 100% 1px no-repeat; }
+.kanban--static .kanban__list { background: linear-gradient(var(--line-datum) 0 0) left / 1px 100% no-repeat; margin-left: 0; }

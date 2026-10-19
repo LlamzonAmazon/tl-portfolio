@@ -28,3 +28,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.claude/worktrees/
+
+# Local agent instructions (point at private notes; never committed)
+CLAUDE.md

@@ -7,6 +7,9 @@ import { Preloader } from '@/components/ui/Preloader'
 import { PinnedStage } from '@/components/stage/PinnedStage'
 import { HeroFallback } from '@/components/hero/HeroFallback'
 import { ProjectsBoard } from '@/components/projects/ProjectsBoard'
+import { ExperienceList } from '@/components/experience/ExperienceList'
+import { SkillsBoard } from '@/components/skills/SkillsBoard'
+import { ContactFallback } from '@/components/contact/ContactFallback'
 
 // Dev/QA affordance: `?skipIntro` bypasses the preloader (and unlocks anims).
 const skipIntro =
@@ -15,8 +18,7 @@ const skipIntro =
 export function Home() {
   const [isLoading, setIsLoading] = useState(!skipIntro)
   const [ready, setReady] = useState(skipIntro)
-
-  useScrollLock(!ready)
+  const [introDone, setIntroDone] = useState(false)
 
   // Single source of truth for the pinned-vs-fallback branch: on capable
   // devices the whole site is one continuous scroll-locked stage (PinnedStage);
@@ -26,8 +28,12 @@ export function Home() {
   const reducedMotion = usePrefersReducedMotion()
   const pinnedMode = isDesktop && canHover && !reducedMotion
 
+  // Locked through the preloader, and in pinned mode through the intro too:
+  // the stage is fully pinned and measured before the first scroll.
+  useScrollLock(!ready || (pinnedMode && !introDone))
+
   return (
-    <div className="text-ink" style={{ overflowX: 'hidden' }}>
+    <div className="text-ink" style={{ overflowX: 'clip' }}>
       <AnimatePresence
         initial={false}
         onExitComplete={() => {
@@ -39,12 +45,18 @@ export function Home() {
       </AnimatePresence>
 
       {pinnedMode ? (
-        <PinnedStage ready={ready} />
+        <PinnedStage ready={ready} onIntroComplete={() => setIntroDone(true)} />
       ) : (
-        <>
+        // One ruled grid under the whole document, anchored to the page, so
+        // every section sits on the same board (as the pinned stage does).
+        <div className="relative">
+          <div aria-hidden className="bg-grid-ruled absolute inset-0" />
           <HeroFallback ready={ready} />
           <ProjectsBoard />
-        </>
+          <ExperienceList />
+          <SkillsBoard />
+          <ContactFallback />
+        </div>
       )}
     </div>
   )

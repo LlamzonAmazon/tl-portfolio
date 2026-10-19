@@ -16,7 +16,7 @@ interface TapeTextProps {
 /**
  * Tape-reveal primitive: a flat paper-white band stretches across the line,
  * then contracts to reveal the ink behind it ("magic tape").
- * Dumb — the parent times the reveal via the forwarded ref by tweening two
+ * Dumb: the parent times the reveal via the forwarded ref by tweening two
  * edge vars in sequence: first `--lead` 0→1 (the band fills the line white),
  * then `--trail` 0→1 (the band collapses rightward, uncovering the ink):
  *   `gsap.to(ref.current, { '--lead': 1, ... })` then `{ '--trail': 1, ... }`.

@@ -5,11 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Home } from './pages/Home'
 import { LenisContext } from './context/LenisContext'
 import { PaperBackdrop } from './components/ui/PaperBackdrop'
+import { smoothScroll } from './theme/motion'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// Lenis easing derived from the shared paper cubic-bezier.
-const lenisEasing = (t: number): number => 1 - Math.pow(1 - t, 3)
 
 export default function App() {
   const [lenis, setLenis] = useState<Lenis | null>(null)
@@ -18,8 +16,7 @@ export default function App() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const instance = new Lenis({
-      duration: 1.2,
-      easing: lenisEasing,
+      lerp: smoothScroll.lerp,
       smoothWheel: !prefersReduced,
     })
 

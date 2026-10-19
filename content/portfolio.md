@@ -1,9 +1,8 @@
-# Thomas Llamzon — Portfolio Content
+# Thomas Llamzon: Portfolio Content
 
-> Human-readable archive / source-of-truth for all site copy.
-> The app renders from the typed modules in `src/content/*.ts`; keep this file
-> in sync when copy changes. Nothing here is loaded at build time — it is a
-> backup and editing surface.
+> Human-readable mirror of the site copy. The app renders from the typed modules in
+> `src/content/*.ts`; keep this file in sync when copy changes. Nothing here is loaded at build time.
+> Inline markup (**bold**, *italic*, [label](url)) renders in the detail modals.
 
 ---
 
@@ -11,127 +10,142 @@
 
 - **Wordmark:** Thomas Llamzon
 - **Hero display name:** THOMAS / LLAMZON
+- **Hero title:** SECURITY-FIRST SOFTWARE ENGINEER, BUILDING SCALABLE SYSTEMS
+- **Pillars:** Security · Agents · Full-Stack
 - **Tagline:** Software Engineering · Cybersecurity · Cloud Computing
-
-**Nav:** About · Projects · Experience · Skills · Contact
-
-**Socials:**
-- GitHub — https://github.com/LlamzonAmazon
-- LinkedIn — https://linkedin.com/in/thomasllamzon
-
-**Footer:** © {year} Thomas Llamzon · Built with React & Vite
+- GitHub: https://github.com/LlamzonAmazon
+- LinkedIn: https://linkedin.com/in/thomasllamzon
+- **Footer:** © {year} Thomas Llamzon · Built with React & Vite
 
 ---
 
-## Hero
+## Projects
 
-Two-line display name **THOMAS** / **LLAMZON**, tagline "Software Engineering · Cybersecurity · Cloud Computing", scroll indicator.
+Category order: research · pro bono · websites · personal.
 
----
+### Asynchronous Layer-Wise Federated Learning (research)
 
-## About  (02 — ABOUT)
+A federated learning system that cuts what edge clients upload by syncing shallow and deep model layers on different schedules.
 
-**Headline:** Building / scalable and / reliable solutions.
+- Partitions the model by state_dict prefix. The server aggregates shallow layers with weighted FedAvg every round and deep layers every *K*-th round.
+- Between deep syncs it serves a staleness-tracked cache, so off-rounds upload about 898 KB (0.6% of the model) instead of the full 141.6 MB.
+- Correctness is pinned by a K=1 run that has to reproduce synchronous FedAvg exactly.
+- On a 37M-parameter ECG model over 12-lead PTB-XL data, syncing deep layers every second round **halves client upload** (49.7%, 1.78 GB to 0.90 GB) with no measurable accuracy cost against the synchronous baseline (83.2% vs 82.7%, p = 0.31 over 3 seeds).
+- Published as a first-author paper at **IEEE GLOBECOM 2026**: *Asynchronous Layer-Wise Weight Updating for Communication-Efficient Federated Learning in IoT Health Devices*.
 
-**Bio:**
-1. I'm a freelance solutions engineer building and improving software and workflows for local businesses.
-2. I use AI throughout how I design and ship for faster iteration, clearer specs, and solutions that stay practical to run long after handoff.
-3. My background spans cybersecurity, cloud computing, and full-stack development.
-
-**Expertise:**
-- **Solutions Engineering** — Scoping problems, shipping software, and improving operational systems. Building anything from customer-facing tools to backends that keep businesses running.
-- **AI-Augmented Development** — Applying modern AI tooling to accelerate development, documentation, and troubleshooting without sacrificing maintainability or security.
-- **Security & Cloud Computing** — Hands-on SOC operations, KQL threat detection, and infrastructure work across Azure, GCP, and AWS.
-
-**CTA:** CONNECT WITH ME → (#contact)
-
----
-
-## Projects  (03 — PROJECTS)
-
-Heading: "My projects." — grouped by category order: thesis · pro bono · websites · solutions.
-
-### Global Development Dashboard  — _pro bono_
-Engineering a cloud data pipeline that automatically fetches, cleans, structures, and stores global development data from live data feeds (UN SDGs, ND-GAIN, World Bank) that is visualized on a public interactive dashboard.
-- Tags: Azure, Python, Pandas, NumPy, Docker, Power BI
-- Live: https://plancatalyst.org
-- GitHub: https://github.com/PlanCatalyst/TSI-Data-Dashboard
-- Image: `/preview-dash.png`
-
-### Asynchronous Federated Learning Network  — _thesis_
-Engineering an optimized federated learning network for distributed IoT healthcare settings using an asynchronous layer-wise parameter update scheduler implemented with PyTorch and Flower.
-- Tags: Python, Flower, PyTorch, NumPy
-- Live: _none_ (original data had a broken `https://` placeholder — Live link hidden)
+- Tags: Python, PyTorch, Flower, NumPy, Distributed Systems
 - GitHub: https://github.com/LlamzonAmazon/asynchronous-fl
+- Published: IEEE GLOBECOM 2026
 - Image: `/preview-async.png`
 
-### westernsalesclub.ca  — _websites_
-The website for Western's first sales club paired with backend content management dashboard allowing club executives to authenticate and manage the website's content.
-- Tags: React.js, OAuth 2.0, Supabase, PostgreSQL
+### Global Country Development Scoring Engine (pro bono)
+
+An Azure pipeline that turns five incompatible international data feeds into one comparable country-level view.
+
+- Runs on 3 Azure services (Blob Storage, Static Web Apps, Container Registry): a containerized Python job fetches, cleans, scores, aggregates, and publishes in one command.
+- Factory-pattern fetchers absorb a paginated REST API, a ZIP archive, and an unattended crawl behind one interface with exponential backoff.
+- Pluggable scorers normalize 28 indicators to a 0-100 scale, rolled up through YAML-defined subdomains into seven scoring pillars.
+- The React frontend reads nothing but a versioned three-file JSON contract. **114,627 of 211,680** missing values are published as explicit nulls, so a gap is never scored as a zero.
+- An atomic publish that writes meta.json last means a failed run *cannot* overwrite the last known-good snapshot. 216 countries, 28 indicators, 35 years.
+
+- Tags: Azure, Python, Pandas, Docker, React, TypeScript, D3
+- Live: https://jolly-pebble-0e2f9300f.7.azurestaticapps.net/#/map
+- GitHub: https://github.com/PlanCatalyst/TSI-Data-Dashboard
+
+### westernsalesclub.ca (websites)
+
+A production site for Western's student-run sales club, with a CMS that lets its executives edit every page without a developer in the loop.
+
+- Every query runs client-side against a public anon key, so the entire authorization burden sits in Postgres: SQL grants as a hard ceiling, row-level security, and one SECURITY DEFINER check with search_path pinned.
+- Every admin write requires a **TOTP second factor**. Row-level security checks the session's aal2 claim on all 11 tables and 5 storage buckets, across 15 SQL migrations.
+- Admin access is invite-only through 14-day links, every non-owner admin expires after ten months with self-renewal blocked, and each change lands in an append-only audit log.
+- The whole site is editable from /admin, text and photos alike. Each field is capped by a database CHECK sized to the layout it renders in, so a limit cannot be lifted from the browser.
+- Image deletes remove the stored file first and retry the database delete up to 3 times, so a partial failure leaves a retryable row instead of an untracked orphaned file.
+
+- Tags: Next.js, TypeScript, Supabase, PostgreSQL, OAuth 2.0, TOTP, Row-Level Security
 - Live: https://westernsalesclub.ca
 - GitHub: https://github.com/UWO-TSI/wsc-website
-- Image: `/preview-wsc.png`
+
+### StackWatch (personal)
+
+A business's threat intelligence agent: an autonomous threat intelligence team, custom-built for one business.
+
+- Matches each resolved package version against OSV and NVD advisories with deterministic version ranges, parsing npm lockfiles v1 to v3, with a source link on every finding.
+- Gates every match behind a **four-rung evidence ladder** (present, reachable, exploitable, confirmed), promoting a finding only when a Semgrep reachability rule or a scoped runtime check on an authorized target supports it.
+- Raises severity for advisories listed in CISA KEV or scoring EPSS 0.5 or higher, joining both feeds to OSV on CVE aliases and applying the raise only to packages the business actually loads.
+- Its research agent runs on a local model and must back every extracted fact with a *verbatim quote* from a fetched page, or the fact is rejected.
+- API-key authentication on every route by default, failing closed when no key is configured, with per-IP rate limits on routes that trigger outbound fetches and outbound requests restricted to public addresses. 1,294 tests run in CI.
+
+- Tags: Python, FastAPI, Pydantic, ClickHouse, Docker, Semgrep, Ollama, GitHub Actions
+- GitHub: https://github.com/LlamzonAmazon/StackWatch
 
 ---
 
-## Experience  (04 — EXPERIENCE)
+## Experience
 
-Heading: "My experience." — accordion rows.
+### Forward Deployed Engineer, Trellum
+_Aug 2026 - Present · Vancouver, BC_
 
-### Solutions Engineer — Freelance
-_May 2026 - Present · Remote_
-Building scalable and secure software solutions for local businesses/organizations (CMS, automation, workflows, insights platforms, websites, etc.)
-- Tags: AWS, Azure, GCP, Cloudflare, GitHub, React, Node.js, Docker, Supabase
+I build and deploy **Trellum**, an agent platform for restaurants with two pillars: restaurant operations and growth through go-to-market. The operations side is *live in beta*; the go-to-market agent is planned.
 
-### Lead Software Engineer — PlanCatalyst (Pro Bono)
+#### What it does
+Each restaurant gets its own isolated agent, grounded in the business's live sales, orders, menu and labor data. The agent drafts the work and a person approves it. Nothing is sent or written outward on its own.
+
+#### What I own
+- A **5-service Docker Compose stack**: a Node backend-for-frontend serving a React client over an authenticated WebSocket, a Cloudflare tunnel, and 2 PostgreSQL databases.
+- The 6 tool handlers of a **read-only Toast POS MCP server**, which ground the agent in live point-of-sale data.
+- Per-user sign-in with a mandatory **TOTP** second factor and an audit row on every action.
+- Cloudflare Access in front of the admin console, age-encrypted backups verified by a round-trip test in CI, and deploys through scoped credentials.
+
+- Tags: TypeScript, React, Node.js, PostgreSQL, Docker, MCP, Cloudflare, GitHub Actions
+- Link: TRELLUM.CA https://trellum.ca
+
+### Software Engineer, PlanCatalyst (Plan International Canada)
 _Sep 2025 - Apr 2026 · Remote_
-Heading development of an Azure-powered global development dashboard projecting country-level development indicators from public data sources to guide organizational humanitarian efforts.
 
-Consulting the organization on financial constraints and Azure service architecture design to ensure smooth delivery of a secure, cost-effective, and seamlessly-integrated final product.
+I built the [Global Country Development Scoring Engine](https://jolly-pebble-0e2f9300f.7.azurestaticapps.net/#/map), turning **5 live international feeds** into a 7-pillar model that consultants use to compare need across **216 countries**.
 
-Leading a team of 5 developers by driving code-base design and development, setting the development timeline, creating architecture diagrams, and hosting structured weekly team meetings.
-- Tags: Azure, Python, Pandas, NumPy, Power BI
+- Ingested 35 years of indicator history in unattended runs through paginated APIs, ZIP archives and UN SDG fetches, giving each feed its own fetcher and cleaner with exponential backoff.
+- Joined feeds that mixed UN M49 codes, ISO3 and free-text country names onto one canonical key, so every country resolves to a single row.
+- Orchestrated fetch, clean, score and publish across 3 Azure services behind a versioned 3-file JSON contract that publishes meta.json last, so a failed run *never* overwrites the last good dataset.
 
-### Security Analyst — CYBERWELL Solutions
+- Tags: Azure, Python, Pandas, Docker, React, TypeScript, D3
+- Link: SCORING ENGINE https://jolly-pebble-0e2f9300f.7.azurestaticapps.net/#/map
+
+### Security Analyst, CYBERWELL Solutions
 _Sep 2025 - Apr 2026 · Remote_
-Investigating authentication, access control, and SaaS-related security events across 7 enterprise environments, identifying misconfigurations, account/device compromises, and control gaps.
+_Promoted from Security Operations Intern, Apr 2025 - Sep 2025_
 
-Supporting Microsoft Entra ID logging, access policy review, and authentication telemetry analysis.
+On-call incident response and detection engineering across client Microsoft 365 and Azure security stacks, promoted from Security Operations Intern to Security Analyst.
 
-Translating open-source intelligence (OSINT) into usable KQL alert rules for Microsoft Sentinel to proactively strengthen client environment cyber-security posture.
-- Tags: Azure (Defender, Sentinel, Entra ID), Cortex XSOAR, KQL, OSINT
+- Ran on-call incident response across **7 enterprise client tenants**, resolving **8+ security incidents per day** by correlating Microsoft Entra ID sign-in and audit logs with mailbox activity, endpoint process and system logs, and device network traffic to root cause.
+- Cut the false-positive alert rate **12%** by writing and tuning KQL detection rules in Microsoft Sentinel and Microsoft Defender for Endpoint, and documented the correlation logic in playbooks the team reuses.
+- Reviewed conditional access configurations in Microsoft Entra ID across all 7 tenants.
+- Assessed vendor security posture through third-party risk management reviews.
 
-### Security Operations Intern — CYBERWELL Solutions
-_May 2025 - Aug 2025 · Remote_
-Investigating and resolving 8 security incident cases per day in an external client environment.
+- Tags: Microsoft Sentinel, Microsoft Defender for Endpoint, Entra ID, KQL, Cortex XSOAR, Cortex XDR, Elastic, Incident Response
 
-Designing and implementing KQL detection rules in Microsoft Sentinel to strengthen identity-related controls and reduce unauthorized access risk.
+### IT Intern, WELL Health Technologies (TSX: WELL)
+_May 2023 - Sep 2023 · Vancouver, BC_
 
-Conducting third-party risk management (TPRM) assessments to minimize legal risk associated with vendors.
-- Tags: Azure (Sentinel, Entra ID), KQL, TPRM, Incident Response
+- Built a **Bash endpoint telemetry agent** that collects device logs and centralizes them in Azure, giving the IT team device-posture visibility across **5 clinic environments**.
+- Kept ISO 27001 and SOC 2 control documentation current for a regulated healthcare IT environment.
 
-### IT Intern — WELL Health Technologies
-_May 2023 - Aug 2023 · Vancouver, BC_
-Engineering a Bash-based device telemetry agent to centralize endpoint logs in Azure, improving visibility into device posture and authentication activity across 5 clinics.
-
-Maintaining compliance documents to protect sensitive patient data under industry standards (ISO 27001, SOC2).
-- Tags: Bash, Azure (Endpoint Management, Compliance), ISO 27001, SOC2
+- Tags: Bash, Azure, Endpoint Management, ISO 27001, SOC 2
 
 ---
 
-## Skills  (05 — SKILLS)
+## Skills
 
-Heading: "What I / work with."
-
-- **Languages:** Java, Python, C/C++, SQL, NoSQL, JavaScript, HTML/CSS, Bash, R, KQL
-- **Frameworks:** PostgreSQL, MySQL, MongoDB, TerraForm, Flask, FastAPI, React, Node.js, RESTful APIs
-- **Tools:** AWS, GCP, Microsoft Azure, Docker, Git, Kubernetes, Atlassian Software, Supabase
-- **Libraries:** Pandas, NumPy, PyTorch, scikit-learn, Pydantic, Matplotlib, Seaborn, Qt
+- **Languages:** Python, TypeScript, JavaScript, Java, C/C++, SQL, Bash, KQL, R, HTML/CSS
+- **Frameworks:** React, Next.js, Node.js, FastAPI, Fastify, Flask, RESTful APIs, PostgreSQL, MySQL, MongoDB
+- **Tools:** Microsoft Azure, AWS, GCP, Cloudflare Workers, Docker, Terraform, GitHub Actions, Git, Supabase, Microsoft Sentinel, Atlassian Software
+- **Libraries:** Pandas, NumPy, PyTorch, Flower, scikit-learn, Pydantic, Matplotlib, Seaborn, Qt
 
 ---
 
-## Contact  (06 — CONTACT)
+## Contact
 
-Heading: "Connect / with me."
-- GitHub → https://github.com/LlamzonAmazon
-- LinkedIn → https://linkedin.com/in/thomasllamzon
+- GitHub: https://github.com/LlamzonAmazon
+- LinkedIn: https://linkedin.com/in/thomasllamzon
+

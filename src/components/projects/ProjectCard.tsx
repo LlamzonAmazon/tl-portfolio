@@ -1,21 +1,25 @@
 import { forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import type { Project, ProjectSize } from '@/content/types'
-import { duration, easeInk } from '@/theme/motion'
+import { bezier, duration, travel } from '@/theme/motion'
+import { roman, SHEETS } from '@/theme/spectrum'
 import { LiveSeal } from './LiveSeal'
+import { PublishedSeal } from './PublishedSeal'
+import { SheetFrame } from './SheetFrame'
 import { TechSeal } from './TechSeal'
-import { unrollCardVariants } from './unrollConstants'
+import { sheetFaceVariants, sheetFrameVariants, sheetPaperVariants, sheetVariants } from './unrollConstants'
 
 interface ProjectCardProps {
   project: Project
-  /** Position in the board — used for the deterministic size fallback. */
+  /** Position in the board: the sheet number, and the deterministic size fallback. */
   index: number
   onOpen: (id: number) => void
   /**
-   * Pinned-stage usage: entrance is owned by an ancestor scaling plane (the
-   * board zoom-out) plus a wrapper visibility toggle, so Framer's own
-   * entrance variants are skipped (only whileHover/click stay Framer-owned).
-   * Default false = fallback path's Framer stagger entrance.
+   * Pinned-stage usage: the stage timeline drafts the sheet (its frame path
+   * from where the radial lands, then the paper grows, then the face inks;
+   * see stage/sequences/projects.ts), so no Framer variants are attached.
+   * Default false = fallback path: the same three layers on Framer variants
+   * (frame draws, paper unrolls, face inks), driven by ProjectsBoard.
    */
   pinned?: boolean
 }
@@ -34,42 +38,37 @@ export const ProjectCard = forwardRef<HTMLButtonElement, ProjectCardProps>(funct
   ref,
 ) {
   const size = project.size ?? SIZE_CYCLE[index % SIZE_CYCLE.length]
+  const v = <T,>(variants: T) => (pinned ? undefined : variants)
 
   return (
     <motion.button
       ref={ref}
-      variants={pinned ? undefined : unrollCardVariants}
-      whileHover={{ y: -4 }}
-      transition={{ duration: duration.base, ease: easeInk }}
+      variants={v(sheetVariants)}
+      whileHover={{ y: -travel.lift }}
+      transition={{ duration: duration.hover, ease: bezier.settle }}
       onClick={() => onOpen(project.id)}
       aria-haspopup="dialog"
-      aria-label={`${project.title} — view project details`}
-      className={`frame-draft paper-card paper-card-ticks relative block h-full w-full ${pinned ? 'min-h-[100px]' : 'min-h-[220px]'} text-left ${SIZE_CLASSES[size]}`}
+      aria-label={`${project.title}: view project details`}
+      className={`draft-sheet h-full w-full ${pinned ? 'min-h-[100px]' : 'min-h-[220px]'} ${SIZE_CLASSES[size]}`}
     >
-      {!pinned && (
-        <>
-          <span aria-hidden className="tick tick-tl" />
-          <span aria-hidden className="tick tick-tr" />
-          <span aria-hidden className="tick tick-bl" />
-          <span aria-hidden className="tick tick-br" />
-        </>
-      )}
-      {!pinned && project.demoUrl && <LiveSeal />}
+      <motion.span aria-hidden className="draft-sheet__paper paper-card" variants={v(sheetPaperVariants)} />
+      <SheetFrame variants={v(sheetFrameVariants)} />
 
-      <div
-        className={`relative flex h-full w-full flex-col justify-end overflow-hidden ${pinned ? 'gap-1 p-3 sm:p-4' : 'gap-2 p-5 sm:p-6'}`}
+      <motion.div
+        variants={v(sheetFaceVariants)}
+        className={`card-face relative flex h-full w-full flex-col overflow-hidden ${pinned ? 'sheet-face gap-1 p-3 sm:p-4' : 'gap-2 p-5 sm:p-6'}`}
       >
-        <span
-          className="text-mono w-fit rounded-[3px] px-2 py-1"
-          style={{ color: 'var(--color-sepia)', background: 'rgba(var(--sepia-rgb), 0.1)' }}
-        >
+        {project.publishedIn ? <PublishedSeal venue={project.publishedIn} /> : project.demoUrl && <LiveSeal />}
+        <span className="text-label text-label--key">
+          <span className="numeral">{SHEETS['03'].numeral}</span>.{roman(index + 1).toLowerCase()}
+        </span>
+        <span className="text-label mt-auto w-fit px-2 py-1" style={{ background: 'var(--color-graphite-9h)' }}>
           {project.category}
         </span>
         <h3
           className={pinned ? '' : 'text-serif-lg'}
           style={{
             color: 'var(--color-ink)',
-            textShadow: 'var(--emboss-subtle)',
             ...(pinned
               ? {
                   fontFamily: 'var(--font-display)',
@@ -82,12 +81,22 @@ export const ProjectCard = forwardRef<HTMLButtonElement, ProjectCardProps>(funct
         >
           {project.title}
         </h3>
+        <p
+          className={pinned ? 'sheet-summary' : undefined}
+          style={{
+            color: 'var(--color-ink-soft)',
+            fontSize: pinned ? 'clamp(0.72rem, 0.8vw, 0.85rem)' : '0.9rem',
+            lineHeight: 1.45,
+          }}
+        >
+          {project.summary}
+        </p>
         <div className={`flex flex-wrap ${pinned ? 'mt-0.5 gap-1' : 'mt-1 gap-2'}`}>
           {project.tags.map((tag) => (
             <TechSeal key={tag} tag={tag} small={pinned} />
           ))}
         </div>
-      </div>
+      </motion.div>
     </motion.button>
   )
 })

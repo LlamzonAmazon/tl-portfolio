@@ -2,40 +2,50 @@ import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { projects } from '@/content/projects'
 import { stagger } from '@/theme/motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { RulerDivider } from '@/components/ui/RulerDivider'
+import { SectionPlate } from '@/components/ui/SectionPlate'
+import { arcus } from '@/lib/draft/figures/arcus'
 import { ProjectCard } from './ProjectCard'
 import { ProjectDetailModal } from './ProjectDetailModal'
 
+const ARCUS = arcus()
+
 const gridVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: stagger.loose } },
+  visible: { transition: { staggerChildren: stagger.item } },
 }
 
 /**
- * Mobile/touch/reduced-motion path: normal document flow, Framer whileInView
- * stagger reveal. No GSAP, no ScrollTrigger — this section is never mounted
- * on the pinned-stage path (see PinnedStage), which scrub-drives the same
- * card/linework components as part of the site's single continuous timeline.
+ * Mobile/touch/reduced-motion path: normal document flow. On whileInView
+ * each sheet is drafted at item stagger (frame draws, paper unrolls, face
+ * inks; see unrollConstants.ts); reduced motion renders them drafted.
+ * No GSAP, no ScrollTrigger: this section is never mounted on the
+ * pinned-stage path (see PinnedStage), which scrub-drives the same card
+ * components as part of the site's single continuous timeline.
  */
 export function ProjectsBoard() {
   const [activeProjectId, setActiveProjectId] = useState<number | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
 
   const activeProject = useMemo(() => projects.find((p) => p.id === activeProjectId) ?? null, [activeProjectId])
 
   return (
     <section
       id="projects"
+      data-sheet="03"
       className="relative overflow-hidden"
       style={{ padding: 'var(--section-py) var(--section-px)' }}
     >
+      <SectionPlate figure={ARCUS} width="170%" x="72%" y="34%" />
       <div className="relative mx-auto max-w-[var(--content-max)]">
         <div className="mb-10 sm:mb-14">
-          <RulerDivider index="03" label="Projects" />
+          <RulerDivider sheet="03" />
           <h2 className="text-heading mt-3">My projects.</h2>
         </div>
 
         <motion.div
-          initial="hidden"
+          initial={reducedMotion ? 'visible' : 'hidden'}
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={gridVariants}

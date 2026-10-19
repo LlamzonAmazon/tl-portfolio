@@ -1,0 +1,179 @@
+/* ============================================================
+   Specimen layout. Page structure only: every colour, weight and
+   ease comes from tokens.css / texture.css. Single light world by
+   design (the board is paper); no dark theme.
+   ============================================================ */
+
+body { background: var(--color-paper); }
+
+.spec {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-inline: clamp(1rem, 5vw, 5rem);
+  padding-block: clamp(2.5rem, 6vh, 5rem);
+  display: grid;
+  gap: clamp(4rem, 10vh, 7rem);
+}
+
+.spec code { font-family: var(--font-body); font-size: 0.85em; color: var(--color-ink); background: var(--color-graphite-9h); padding: 0 0.3em; }
+.spec-lede { max-width: 62ch; }
+.spec-note { max-width: 70ch; color: var(--color-graphite-b); }
+.spec-head { display: grid; gap: 1.25rem; margin-bottom: 2rem; }
+.spec-sheet-section { min-width: 0; }
+
+/* ── Masthead: text + title block plate, prism plate full width below ── */
+.spec-mast {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem 3rem;
+  align-items: end;
+}
+.spec-mast__text { display: grid; gap: 1.25rem; min-width: 0; }
+.spec-mast__text h1 { text-wrap: balance; }
+.spec-tb { position: relative; }
+.spec-mast .plate { grid-column: 1 / -1; }
+
+/* ── Rules ── */
+.spec-rules { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem 2.5rem; }
+.spec-rules li { display: grid; gap: 0.5rem; font-size: 1.02rem; line-height: 1.6; color: var(--color-ink-mid); }
+.spec-rules strong { color: var(--color-ink); font-weight: 600; }
+.spec-rules__n { font-family: var(--font-display); font-size: 2.6rem; line-height: 1; color: var(--color-ink); }
+
+/* ── Graphite grades: a tone ruler ── */
+.grades { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 0; }
+.grade { display: grid; gap: 0.3rem; align-content: start; min-width: 0; }
+.grade__swatch { height: 5.5rem; }
+.grade__name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; line-height: 1; padding-top: 0.4rem; }
+.grade__hex, .grade__cr { font-variant-numeric: tabular-nums; }
+.grade__role { font-size: 0.78rem; color: var(--color-graphite-b); line-height: 1.35; padding-right: 0.5rem; }
+.surfaces { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 2.5rem; }
+.surface { display: grid; gap: 0.25rem; padding: 2.5rem 1.25rem 1.25rem; min-height: 7rem; align-content: end; }
+.surface.ink-plate .text-label, .surface.ink-plate .text-label-sm { color: var(--color-paper); }
+
+/* ── Spectrum ── */
+.pigments { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1.25rem; }
+.pigment { display: grid; gap: 0.4rem; align-content: start; min-width: 0; }
+.pigment__mark { height: 7rem; background: var(--hue); }
+.pigment__band { font-family: var(--font-display); font-size: 2.4rem; font-weight: 600; line-height: 1; color: var(--hue-ink); padding-top: 0.3rem; }
+.pigment__name { font-family: var(--font-display); font-style: italic; font-size: 1.25rem; text-transform: capitalize; }
+
+/* ── Line roles ── */
+.line-roles { display: grid; gap: 1.1rem; }
+.line-role { display: grid; grid-template-columns: minmax(8rem, 14rem) 8rem 7rem minmax(0, 1fr); align-items: center; gap: 1.5rem; }
+.line-role__svg { width: 100%; height: 24px; }
+.line-role__svg path { stroke-dasharray: none; }
+.line-role__use { font-size: 0.92rem; color: var(--color-graphite-b); }
+
+/* ── Components ── */
+.components { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; align-items: start; }
+.spec-specimen { display: grid; gap: 1.5rem; justify-items: start; min-width: 0; }
+.spec-sheet { display: grid; gap: 0.75rem; padding: 1.75rem; width: 100%; position: relative; }
+.spec-chips { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; width: 100%; }
+.spec-seals { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.spec-static { display: grid; gap: 0.25rem; padding: 1.5rem 1.75rem; }
+.spec-dim { position: relative; transform: none; }
+
+/* ── Pen ── */
+.pen-grid { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: 3rem; margin-bottom: 1.5rem; }
+.pen-tokens { display: grid; gap: 0.6rem; margin: 0; }
+.pen-tokens div { display: flex; justify-content: space-between; gap: 1rem; background: linear-gradient(var(--line-rule) 0 0) bottom / 100% 1px no-repeat; padding-bottom: 0.4rem; }
+.pen-tokens dd { margin: 0; font-variant-numeric: tabular-nums; color: var(--color-ink); }
+.patterns { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem 2rem; }
+.patterns li { display: grid; gap: 0.35rem; }
+.patterns__name { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; }
+
+/* ── Plates ── */
+.folio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem 2.5rem; }
+.plate { display: grid; gap: 1rem; min-width: 0; }
+.plate__figure { background: var(--color-sheet); padding: clamp(0.75rem, 2vw, 1.5rem); }
+.plate__figure .drawing { width: 100%; height: auto; display: block; }
+.plate--wide { grid-template-columns: minmax(0, 1fr); }
+.plate__meta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); gap: 1.5rem; align-items: start; }
+.plate__titles { display: grid; gap: 0.35rem; min-width: 0; }
+.plate__title { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; line-height: 1.05; margin: 0.2rem 0 0; }
+.plate__subject { font-size: 0.95rem; color: var(--color-ink-mid); margin: 0; }
+.plate__patterns { text-transform: uppercase; color: var(--color-graphite-hb); }
+.plate__controls { display: grid; gap: 0.6rem; }
+.plate__buttons { display: flex; gap: 0.75rem; align-items: center; }
+
+.pass-strip { position: relative; display: grid; gap: 2px; padding-block: 2px; }
+.pass-strip__row { position: relative; height: 3px; }
+.pass-strip__bar { position: absolute; top: 0; bottom: 0; background: var(--color-ink); }
+.pass-strip__bar--construct, .pass-strip__bar--hair { background: var(--color-graphite-2h); }
+.pass-strip__bar--hatch { background: var(--color-graphite-h); }
+.pass-strip__bar--dim, .pass-strip__bar--datum { background: var(--color-graphite-hb); }
+.pass-strip__bar--key { background: var(--hue); }
+.pass-strip__head { position: absolute; top: -3px; bottom: -3px; left: 0; width: 1px; background: var(--hue); }
+
+.spec-button {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.8rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  transition: background-color var(--dur-hover) var(--ease-settle);
+}
+.spec-button:hover { background: var(--color-graphite-b); }
+.spec-range { flex: 1; min-width: 0; accent-color: var(--color-ink); }
+
+/* ── Stage proposal ── */
+.stage-table { display: grid; }
+.stage-row {
+  display: grid;
+  grid-template-columns: 11rem 14rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: baseline;
+  padding-block: 1.1rem;
+  background: linear-gradient(var(--line-rule) 0 0) bottom / 100% 1px no-repeat;
+}
+.stage-row__plate { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── Narrow ── */
+@media (max-width: 900px) {
+  .spec-mast { grid-template-columns: minmax(0, 1fr); }
+  .grades { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 1.5rem; }
+  .pigments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .line-role { grid-template-columns: minmax(0, 1fr) auto; gap: 0.4rem 1rem; }
+  .line-role__svg { grid-column: 1 / -1; }
+  .line-role__use { grid-column: 1 / -1; }
+  .components, .folio, .pen-grid { grid-template-columns: minmax(0, 1fr); }
+  .plate__meta { grid-template-columns: minmax(0, 1fr); }
+  .stage-row { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+  .surfaces { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── Two faces ── */
+.type-specimen { display: grid; gap: 1.4rem; }
+.type-row { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1.5rem; align-items: baseline; }
+.type-latin { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.stage-row__place { font-weight: 500; color: var(--color-ink); }
+@media (max-width: 900px) { .type-row { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; } }
+
+/* ── Type tiers, token notes ── */
+.type-tier { display: grid; gap: 0.25rem; }
+.token-note { color: var(--color-graphite-hb); }
+
+/* ── Tones: one figure, four tones ── */
+.tones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }
+.tone { display: grid; gap: 1rem; margin: 0; min-width: 0; }
+.tone__plate { background: var(--color-sheet); aspect-ratio: 1; padding: 1rem; }
+.tone__plate .drawing { width: 100%; height: 100%; }
+.tone__meta { display: grid; gap: 0.35rem; }
+
+/* ── Cards and seals hosted outside their boards ── */
+.spec-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; margin-top: 3rem; }
+.spec-card { min-height: 18rem; display: grid; }
+.spec-seal-host { position: relative; display: block; width: 4rem; height: 4rem; background: var(--color-sheet); }
+.spec-seal-host--wide { width: 13rem; }
+
+/* ── Detail sheet, set statically ── */
+.detail-grid { display: grid; grid-template-columns: minmax(0, 42rem) minmax(0, 1fr); gap: 3rem; align-items: start; }
+.spec-detail { position: relative; padding: 2.25rem; }
+
+@media (max-width: 900px) {
+  .tones, .spec-cards, .detail-grid { grid-template-columns: minmax(0, 1fr); }
+}

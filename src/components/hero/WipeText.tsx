@@ -15,7 +15,7 @@ interface WipeTextProps {
 
 /**
  * Shared tape-wipe primitive: text (optionally backed by a mounted-paper
- * plate layer), both clipped by one `clip-path`. Dumb — the parent times the
+ * plate layer), both clipped by one `clip-path`. Dumb: the parent times the
  * reveal/close directly via the forwarded ref
  * (`gsap.to(ref.current, { clipPath: WIPE_SHOWN | WIPE_HIDDEN }, ...)`).
  * Starts fully clipped so there's no FOUC before GSAP mounts.

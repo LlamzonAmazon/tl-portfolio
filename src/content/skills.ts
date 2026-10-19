@@ -5,22 +5,66 @@ export interface SkillGroup {
   items: string[]
 }
 
-/** Grouped in display order: Languages · Frameworks · Tools · Libraries. */
+/** Synced 2026-10-18; every item has project or role evidence. Display order: Languages · Frameworks · Tools · Libraries. */
 export const skillGroups: SkillGroup[] = [
   {
-    category: 'Languages',
-    items: ['Java', 'Python', 'C/C++', 'SQL', 'NoSQL', 'JavaScript', 'HTML/CSS', 'Bash', 'R', 'KQL'],
+    "category": "Languages",
+    "items": [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "C/C++",
+      "SQL",
+      "Bash",
+      "KQL",
+      "R",
+      "HTML/CSS"
+    ]
   },
   {
-    category: 'Frameworks',
-    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'TerraForm', 'Flask', 'FastAPI', 'React', 'Node.js', 'RESTful APIs'],
+    "category": "Frameworks",
+    "items": [
+      "React",
+      "Next.js",
+      "Node.js",
+      "FastAPI",
+      "Fastify",
+      "Flask",
+      "RESTful APIs",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB"
+    ]
   },
   {
-    category: 'Tools',
-    items: ['AWS', 'GCP', 'Microsoft Azure', 'Docker', 'Git', 'Kubernetes', 'Atlassian Software', 'Supabase'],
+    "category": "Tools",
+    "items": [
+      "Microsoft Azure",
+      "AWS",
+      "GCP",
+      "Cloudflare Workers",
+      "Docker",
+      "Terraform",
+      "GitHub Actions",
+      "Git",
+      "Supabase",
+      "Microsoft Sentinel",
+      "Atlassian Software"
+    ]
   },
   {
-    category: 'Libraries',
-    items: ['Pandas', 'NumPy', 'PyTorch', 'scikit-learn', 'Pydantic', 'Matplotlib', 'Seaborn', 'Qt'],
-  },
+    "category": "Libraries",
+    "items": [
+      "Pandas",
+      "NumPy",
+      "PyTorch",
+      "Flower",
+      "scikit-learn",
+      "Pydantic",
+      "Matplotlib",
+      "Seaborn",
+      "Qt"
+    ]
+  }
 ]

@@ -1,10 +1,10 @@
 /* ============================================================
-   Typography — Cormorant (display) · Inter (body) · JetBrains (mono)
+   Typography: two families, used several ways.
+     Cormorant  display, headings, italic Latin titles, Roman numerals
+     Inter      body, and small tracked labels (no third face)
    ============================================================ */
 
-/* Giant display name (Hero). text-shadow carries the "printed pressure"
-   emboss — a compressed-paper micro-shadow, a catch-light, a hair of
-   colour fringe — as if this much ink actually pressed into the sheet. */
+/* Giant display name (Hero). Flat ink, no emboss: Rev C prints, it does not press. */
 .text-display {
   font-family: var(--font-display);
   font-weight: 600;
@@ -12,7 +12,11 @@
   line-height: 0.86;
   letter-spacing: -0.03em;
   color: var(--color-ink);
-  text-shadow: var(--emboss-heading);
+}
+
+/* Mobile hero name: as large as LLAMZON fits across a phone at 17.5vw */
+.text-display--hero {
+  font-size: clamp(3.5rem, 17.5vw, 15rem);
 }
 
 /* Section headings ("My projects.", "Connect / with me.") */
@@ -23,10 +27,16 @@
   line-height: 0.98;
   letter-spacing: -0.03em;
   color: var(--color-ink);
-  text-shadow: var(--emboss-heading);
 }
 
 /* Sub-heading / large serif callouts */
+/* Thesis line on Sheet II, top left: a heading set smaller and wide, so the
+   sentence balances onto two lines across the sheet. */
+.text-heading--thesis {
+  font-size: clamp(1.75rem, 3.8vw, 4rem);
+  text-wrap: balance;
+}
+
 .text-serif-lg {
   font-family: var(--font-display);
   font-weight: 500;
@@ -34,7 +44,6 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--color-ink);
-  text-shadow: var(--emboss-subtle);
 }
 
 /* Body copy */
@@ -46,51 +55,146 @@
   color: var(--color-ink-soft);
 }
 
-/* Mono technical labels — section numbers, tags, captions */
-.text-mono {
-  font-family: var(--font-mono);
+/* ── Label scale (tokens.css): three tiers of small Inter, and no other.
+     label    .text-label      sheet names, tags, keys, headings, actions
+     micro    .text-micro      seals, the title block, dimension values
+     caption  .text-label-sm   times, counts, names beside a seal (sentence case)
+   Components that are labels by nature (the close button, a frame link, a
+   sheet heading) join a tier here, in the selector lists, so a change to the
+   tier is made once. Graphite HB by default; a keyed label (--key) takes the
+   sheet hue. Digits are tabular. ─────────────────────────────────────────── */
+.text-label,
+.sheet-heading__text,
+.sheet-close,
+.frame-link {
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-size: var(--label-size);
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
-  color: var(--color-sepia);
+  font-variant-numeric: tabular-nums;
 }
+.text-label { color: var(--color-graphite-hb); }
+.text-label--key { color: var(--hue-ink); }
 
-.text-mono-sm {
-  font-family: var(--font-mono);
+.text-micro,
+.title-block,
+.dim-value,
+.seal {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--micro-size);
+  letter-spacing: var(--micro-track);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.text-micro { color: var(--color-graphite-hb); }
+
+.text-label-sm {
+  font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: var(--caption-size);
+  letter-spacing: var(--caption-track);
+  font-variant-numeric: tabular-nums;
   color: var(--color-ink-soft);
 }
 
-/* Gentle 3px hover lift (never bounce) */
-.hover-lift {
-  transition: transform var(--dur-base) var(--ease-ink), box-shadow var(--dur-base) var(--ease-ink);
-}
-.hover-lift:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-soft);
+/* Roman numerals (sheet and pillar indices): the display face, upright,
+   set inside a label so the two families meet on one line. */
+.numeral {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.32em;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  line-height: 1;
 }
 
-/* Sepia hover underline (drawn, not glowed) */
-.link-underline {
-  position: relative;
-  display: inline-block;
+/* Latin titles and plate captions: the display face in italic. */
+.text-latin {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--color-ink);
 }
-.link-underline::after {
+
+/* Stage section headings ("My projects.", "Experience.", "Skills."): one
+   size down from .text-heading so they share a sheet with their content. */
+.stage-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.4vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+/* ── Detail sheet type. A spec sheet, not a landing page: one step down from
+   site body, with the hierarchy carried by the title, the keyed small-caps
+   headings (.sheet-heading, texture.css) and weight, never by size jumps.
+   Inline emphasis is real markup (RichText.tsx):
+     strong  Inter 600, ink
+     em      the display face in italic (Inter has no italic loaded and
+             font-synthesis is off), set up a touch to match x-height
+     a       underlined, takes ink on hover ─────────────────────────── */
+.sheet-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+}
+
+/* The lede: the sheet's one-sentence statement, a step above the rest. */
+.sheet-lede {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.sheet-prose {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-ink-mid);
+  overflow-wrap: break-word;
+}
+.sheet-lede strong, .sheet-prose strong { font-weight: 600; color: var(--color-ink); }
+.sheet-lede em, .sheet-prose em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.1em;
+  letter-spacing: 0;
+  color: var(--color-ink);
+}
+
+.sheet-link {
+  color: var(--color-ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-graphite-f);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-settle);
+}
+.sheet-link:hover, .sheet-link:focus-visible { text-decoration-color: var(--color-ink); }
+
+/* An action link (a label-tier link in a detail sheet's Links row) reads
+   small but is hit at --hit-min: an invisible ::after grows the target
+   without moving anything. Inline links inside prose keep their text height
+   (they wrap, so a taller target would cover the neighbouring lines). */
+.sheet-link.text-label { position: relative; }
+.sheet-link.text-label::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-base) var(--ease-ink);
-}
-.link-underline:hover::after,
-.link-underline:focus-visible::after {
-  transform: scaleX(1);
+  right: 0;
+  top: 50%;
+  height: max(100%, var(--hit-min));
+  transform: translateY(-50%);
 }

@@ -1,102 +1,200 @@
 /* ============================================================
-   Design tokens — "Renaissance Engineer's Board"
+   Design tokens: "Renaissance Engineer's Board", Rev C (Graphite + Spectrum)
    Canonical source of truth. Tailwind v4 reads @theme and
-   generates utilities (bg-paper, text-ink, font-display, …).
-   JS-side motion values live in src/theme/motion.ts.
+   generates utilities (bg-paper, text-ink, text-graphite-hb, ...).
+   JS-side motion values live in src/theme/motion.ts; the spectrum's
+   order lives in src/theme/spectrum.ts (as var() references, never hex).
+
+   Three rules hold the whole palette together:
+     1. Monotone. Surfaces, type and linework are paper, ink and the
+        graphite ramp. Nothing else carries structure.
+     2. Graphite grades are line weights. Hard leads (9H..H) draw the grid
+        and construction; soft leads (HB..4B) carry text and datum lines.
+     3. One sheet, one hue. Colour only LABELS: each sheet (section) is
+        keyed to one spectral pigment, set once per sheet as --hue.
+        Colour never fills a surface and never draws structure.
+   No borders and no shadows anywhere: a surface is separated by tone,
+   an edge is implied by drawn registration marks.
    ============================================================ */
 
-@theme {
-  /* ── Colour: paper + ink + sepia + gold ─────────────────── */
-  --color-paper:        #F5EFE3;
-  --color-paper-dark:   #E9DDC8;
+/* Registered so a corner can DRAW further along its edges on hover: a plain
+   custom property would snap. Inherits, so every child corner follows the
+   host's animated value. */
+@property --mark-arm {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 14px;
+}
 
-  /* Ink, never pure black — three tiers for hierarchy. */
-  --color-ink:          #2A231D;
-  --color-ink-mid:      #44362C;
-  --color-ink-soft:     #5A4838;
+/* static: every token is emitted even if no utility uses it, because JS
+   (theme/spectrum.ts, the specimen) builds var() names at runtime. */
+@theme static {
+  /* ── Surfaces + ink ─────────────────────────────────────── */
+  --color-paper:  #F4F4F4; /* the board */
+  --color-sheet:  #FFFFFF; /* a raised sheet: one tone up, never outlined */
+  --color-ink:    #0B0B0B; /* text, figure ink, the inverted plate */
 
-  --color-sepia:        #8C6743;
-  --color-sepia-light:  #B18A63;
+  /* ── Graphite ramp, by drafting-lead grade (hard -> soft).
+     Contrast vs paper in brackets; only HB and softer may set text. ── */
+  --color-graphite-9h: #EBEBEB; /* [1.1]  grid hairs                     */
+  --color-graphite-6h: #E0E0E0; /* [1.2]  grid minor, sheet-on-sheet tone */
+  --color-graphite-4h: #D0D0D0; /* [1.4]  grid major, hairline rules      */
+  --color-graphite-2h: #B8B8B8; /* [1.8]  construction lines              */
+  --color-graphite-h:  #999999; /* [2.6]  hatch, emphasised construction  */
+  --color-graphite-f:  #7A7A7A; /* [3.9]  dimension lines, large-only text */
+  --color-graphite-hb: #5E5E5E; /* [5.9]  datum lines, captions, keys     */
+  --color-graphite-b:  #454545; /* [8.7]  secondary text                  */
+  --color-graphite-2b: #2E2E2E; /* [12.4] body text                       */
+  --color-graphite-4b: #1A1A1A; /* [15.8] near-ink                        */
 
-  --color-gold:         #B08A42;
-  --color-gold-light:   #D1B06A;
+  /* Text tiers (semantic aliases over the ramp). */
+  --color-ink-mid:  #2E2E2E; /* = graphite-2b, body */
+  --color-ink-soft: #454545; /* = graphite-b, secondary */
 
-  --color-line:         #D7CAB7; /* hairline borders (Tailwind: border-line) */
+  /* ── Spectrum: seven historical pigments in ROYGBIV order. Each has a
+     MARK value (ticks, keys, nodes, leaders, the prism) and an -ink value
+     safe for small text on paper (>= 4.5:1). Where the two are equal the
+     pigment is already text-safe. ─────────────────────────── */
+  --color-vermilion:      #E2341D; /* R  mercury sulphide      */
+  --color-vermilion-ink:  #C42A15;
+  --color-minium:         #F2711C; /* O  red lead              */
+  --color-minium-ink:     #B4500F;
+  --color-orpiment:       #F5C518; /* Y  arsenic sulphide      */
+  --color-orpiment-ink:   #8A6A00;
+  --color-verdigris:      #1FA371; /* G  copper acetate        */
+  --color-verdigris-ink:  #0E7A51;
+  --color-azurite:        #2457E0; /* B  copper carbonate      */
+  --color-azurite-ink:    #2457E0;
+  --color-indigo:         #3D2E9E; /* I  indigofera            */
+  --color-indigo-ink:     #3D2E9E;
+  --color-murex:          #9A2D8E; /* V  Tyrian (murex) purple */
+  --color-murex-ink:      #9A2D8E;
 
-  /* Accent-only — a wax-seal red, reserved for rare authenticity/status marks
-     (e.g. a "live" stamp). Never a primary interactive colour; the board's
-     hierarchy stays ink/sepia/gold. */
-  --color-wax:          #7A2E20;
-  --color-wax-light:    #A6432E;
-
-  /* "Mounted paper" card surface — warmer/lighter than the page paper, never stark white. */
-  --color-card:         #FBF9F4;
-  --color-card-border:  rgba(80, 60, 40, 0.08);
-
-  /* ── Fonts (three, and only three) ──────────────────────── */
+  /* ── Fonts: two families, and only two. Tailwind's defaults are cleared
+     so no third face (its mono or sans stacks) can sneak in via a utility.
+       display  Cormorant Garamond: names, headings, Latin plate titles
+                (italic), Roman numerals
+       body     Inter: running text, and every label set small (see
+                .text-label in typography.css) ──────────────────────── */
+  --font-*: initial;
   --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  /* ── Radius (nothing pill-shaped) ───────────────────────── */
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  /* ── Radius: square sheets, round instruments. Sheets, buttons, plates and
+     modals are 0 (no token needed). Seals that mean "live", nodes and
+     instruments are circles. Nothing else is rounded. ──────────────── */
+  --radius-seal: 9999px;
 
-  /* ── Shadows (soft only, never glow) ────────────────────── */
-  --shadow-soft:  0 6px 24px rgba(42, 35, 29, 0.08);
-  --shadow-lift:  0 10px 34px rgba(42, 35, 29, 0.12);
-  /* "Paper sitting on paper" — a tight, low-blur shadow paired with a hairline border, not a heavy glow. */
-  --shadow-paper: 0 1px 2px rgba(80, 60, 40, 0.07), 0 2px 6px rgba(80, 60, 40, 0.06);
+  /* No shadow tokens: elevation is tone (paper, sheet, plate), never a shadow. */
 }
 
 :root {
-  /* ── Raw colour echoes for use in rgba()/gradients ──────── */
-  --ink-rgb:       42, 35, 29;
-  --sepia-rgb:     140, 103, 67;
-  --paper-rgb:     245, 239, 227;
-  --gold-rgb:      176, 138, 66;
-  --wax-rgb:       122, 46, 32;
-  --highlight-rgb: 255, 252, 242; /* warm paper catch-light — never pure white */
-  --shadow-color: rgba(42, 35, 29, 0.08);
+  /* ── Raw channel echoes for rgba() (grain, scrims, canvas) ──────── */
+  --ink-rgb:       11, 11, 11;
+  --graphite-rgb:  94, 94, 94;   /* HB */
 
-  /* ── Printed pressure: large ink masses subtly compress the paper
-     beneath them — a dark micro-shadow on the compressed edge paired
-     with a warm highlight where the fiber springs back, plus a hair
-     of colour fringing (as if the plate sat a fraction off-register).
-     Applied as text-shadow (headings) or inset box-shadow (rules). ── */
-  --emboss-heading: -0.4px -0.4px 0.5px rgba(var(--ink-rgb), 0.14),
-                      0.5px 0.6px 0 rgba(var(--highlight-rgb), 0.55),
-                      0.9px 0 0 rgba(var(--sepia-rgb), 0.045);
-  --emboss-subtle:  -0.3px -0.3px 0.4px rgba(var(--ink-rgb), 0.1),
-                      0.4px 0.5px 0 rgba(var(--highlight-rgb), 0.45);
-  --groove-rule: inset 0 1px 0 rgba(var(--highlight-rgb), 0.4),
-                 inset 0 -1px 0 rgba(var(--ink-rgb), 0.06);
+  /* ── Sheet hue. Unkeyed regions stay monotone (hue = ink). A sheet sets
+     its key once with data-sheet="00".."06" (see texture.css) and every
+     label inside reads var(--hue) / var(--hue-ink). ─────────────── */
+  --hue:     var(--color-ink);
+  --hue-ink: var(--color-ink);
 
-  /* ── Depth: a second, slightly offset sheet reads underneath a card —
-     "stacked museum documents" rather than a single flat plate. ──── */
-  --shadow-stack: 2px 3px 0 -1px var(--color-paper-dark),
-                  5px 7px 10px -6px rgba(var(--ink-rgb), 0.14);
+  /* ── Line roles. Every drawn line uses one of these. Lines live in the
+     background layer and are always DRAWN (pathLength="1" + dashoffset),
+     never faded or popped in. Thin: nothing structural exceeds 1.25px. ── */
+  --line-grid-minor: var(--color-graphite-6h);
+  --line-grid-major: var(--color-graphite-4h);
+  --line-grid-axis:  var(--color-graphite-2h);
+  --line-construct:  var(--color-graphite-2h); /* 2H · compass + straightedge geometry */
+  --line-hatch:      var(--color-graphite-h);  /* H  · shading, drawn stroke by stroke */
+  --line-dim:        var(--color-graphite-f);  /* F  · dimension + extension lines */
+  --line-datum:      var(--color-graphite-hb); /* HB · spines, leaders tied to content */
+  --line-ink:        var(--color-ink);         /* the figure itself, traced over its construction */
+  --line-mark:       var(--color-ink);         /* registration corners, crosshairs */
+  --line-key:        var(--hue);               /* the one coloured line: leaders to a keyed label */
+  --line-rule:       var(--color-graphite-4h); /* hairline rules, dividers */
+  --line-frame:      var(--color-ink);         /* a sheet's one-path frame (masked down to its corners) */
+  --line-w-hair:      0.5px;
+  --line-w-construct: 0.75px;
+  --line-w-hatch:     0.5px;
+  --line-w-dim:       0.75px;
+  --line-w-datum:     1px;
+  --line-w-ink:       1.25px;
+  --line-w-mark:      1px;
+  --line-w-frame:     1px;
+  /* Construction dash, in true px (Drawing divides by its render scale, see
+     .ln-dashed). The dash is revealed through a drawn mask, never by dashoffset. */
+  --dash-construct-on:  2px;
+  --dash-construct-off: 4px;
+  /* Registration corner, the one edge language: arm length, how far it
+     overshoots the corner, and the arm's length while its sheet is hovered or
+     focused (the pen "draws" the corner further along the edges). --mark-arm
+     is registered below so it can transition; every corner (the .frame-edge
+     spans, the SVG SheetFrame mask) reads the same animated value. */
+  --mark-arm:       14px;
+  --mark-arm-hover: 30px;
+  --mark-over:      0px; /* corners meet at the edge (L marks); a positive value crosses them past it */
 
-  /* ── Layout ─────────────────────────────────────────────── */
+  /* ── Layout. Composition is free: the ruled grid is texture, never a
+     placement unit. Component spacing uses Tailwind's 4px scale. ───────── */
   --section-px:  clamp(1.5rem, 7vw, 9rem);
   --section-py:  clamp(5rem, 12vh, 9rem);
   --content-max: 1440px;
 
   /* ── Drafting-board texture geometry ────────────────────── */
-  --grid-major:  140px;  /* ruled-grid tile size (see texture-grid.svg) */
+  --grid-major:  140px;  /* ruled-grid TEXTURE tile (see texture-grid.svg); never a layout unit */
   --hatch-gap:   6px;    /* crosshatch spacing    */
 
-  /* ── Transitions / easings (mirrors theme/motion.ts) ─────── */
-  --ease-ink:    cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-paper:  cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast:    180ms;
-  --dur-base:    320ms;
-  --dur-slow:    620ms;
-  --dur-reveal:  900ms;
+  /* ── Stacking: one scale, no magic numbers in components. Sheets that
+     live in the page (frames, seals, stage furniture, the title block) stay
+     below 10 and never compete; overlays are portaled to <body> and own the
+     top. (The paper ground sits under the page: see PaperBackdrop.) ────── */
+  --z-raised:    1;   /* a control lifted over its own sheet (close button) */
+  --z-frame:     2;   /* a sheet's registration corners, above its face */
+  --z-seal:      3;   /* a seal stamped on a sheet's face */
+  --z-furniture: 4;   /* stage furniture: registration crosshairs */
+  --z-titleblock: 5;  /* the stage's title block, over everything in the page */
+  --z-modal:     100; /* detail sheets: scrim + sheet, above the whole stage */
+  --z-preloader: 200; /* the intro covers everything, modals included */
 
-  --transition-base: var(--dur-base) var(--ease-ink);
-  --transition-slow: var(--dur-slow) var(--ease-paper);
+  /* ── Scrim: what a detail sheet dims and blurs behind it. The one place
+     the board fades (owner's call); the sheet itself is still drawn. ──── */
+  --scrim-tone: rgba(var(--ink-rgb), 0.58);
+  --scrim-blur: 12px;
+
+  /* ── Touch: no interactive control is smaller than this on either axis. A
+     control that reads smaller keeps its look and gets the rest as an
+     invisible ::after hit area (see .sheet-close). ───────────────────── */
+  --hit-min: 40px;
+
+  /* ── Label scale: three tiers of small Inter, and no other. Every tracked
+     or captioned declaration reads these (typography.css).
+       label    sheet names, tags, keys, headings, actions   0.7rem  uppercase
+       micro    seals, the title block, dimension values     0.64rem uppercase
+       caption  times, counts, names beside a seal           0.72rem sentence case
+     Nothing is set below micro (0.55rem is the floor, for the seals). ───── */
+  --label-size:   0.7rem;
+  --label-track:  0.12em;
+  --micro-size:   0.64rem;
+  --micro-track:  0.12em;
+  --caption-size: 0.72rem;
+  --caption-track: 0.02em;
+
+  /* ── Seals: a stamp on a sheet's corner. The disc is a live product, the
+     plate is a publication; same ink ground and micro type (.seal). ────── */
+  --seal-size: 36px;
+  --seal-inset: 0.75rem;
+
+  /* ── Motion (mirrors theme/motion.ts exactly) ───────────── */
+  --ease-ink:    cubic-bezier(0.22, 1, 0.36, 1);  /* content arriving */
+  --ease-pen:    cubic-bezier(0.65, 0, 0.35, 1);  /* wipes + their lines, camera */
+  --ease-settle: cubic-bezier(0.33, 1, 0.68, 1);  /* hover, lift */
+  --ease-erase:  cubic-bezier(0.37, 0, 0.63, 1);  /* exits + retracting lines */
+  --dur-press:     160ms; /* :active only */
+  --dur-hover:     560ms;
+  --dur-base:      800ms;
+  --dur-reveal:   1200ms;
+  --dur-draw:     1400ms;
+  --dur-construct: 2000ms;
+  --dur-hold:      400ms;
 }

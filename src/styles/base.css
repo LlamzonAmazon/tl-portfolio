@@ -1,7 +1,7 @@
 /* ============================================================
-   Base — document defaults, paper ground
+   Base: document defaults, paper ground
    (margin/padding/box-sizing reset comes from Tailwind's own
-   Preflight, inside @layer base — an unlayered copy here would
+   Preflight, inside @layer base: an unlayered copy here would
    unconditionally beat every Tailwind spacing utility, since
    unlayered CSS always wins over @layer'd CSS regardless of
    specificity or source order.)
@@ -10,8 +10,15 @@
 html {
   font-size: 16px;
   scroll-behavior: auto;            /* Lenis owns smooth scrolling */
-  scrollbar-gutter: stable;
+  /* The scrollbar is present from first paint, locked or not, so it can
+     never arrive later and push the page sideways (useScrollLock blocks
+     input instead of hiding overflow). */
+  overflow-y: scroll;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  /* Never fake a weight or style: if a face has not arrived yet, show the
+     loaded weight rather than a synthesised bold. */
+  font-synthesis: none;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
@@ -22,7 +29,7 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 #root {
@@ -48,25 +55,25 @@ button {
   cursor: pointer;
 }
 
+/* Selection inverts to the plate: ink ground, paper type. */
 ::selection {
-  background: rgba(var(--sepia-rgb), 0.22);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 
+/* Focus is the one outline the system allows: an accessibility affordance,
+   not a border. It takes the sheet's text-safe hue (--hue-ink, >= 3:1 on
+   every sheet; the raw mark value fails on yellow and green). */
 :focus-visible {
-  outline: 1.5px solid var(--color-sepia);
-  outline-offset: 3px;
+  outline: 1px solid var(--hue-ink);
+  outline-offset: 4px;
 }
 
-/* Thin, paper-toned scrollbar */
-::-webkit-scrollbar       { width: 10px; }
-::-webkit-scrollbar-track { background: var(--color-paper-dark); }
-::-webkit-scrollbar-thumb {
-  background: var(--color-sepia-light);
-  border: 3px solid var(--color-paper-dark);
-  border-radius: 6px;
-}
-::-webkit-scrollbar-thumb:hover { background: var(--color-sepia); }
+/* Graphite scrollbar: a square 2H bar on the paper, no track outline. */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-paper); }
+::-webkit-scrollbar-thumb { background: var(--color-graphite-2h); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-graphite-hb); }
 
 /* Respect reduced-motion at the platform level */
 @media (prefers-reduced-motion: reduce) {
