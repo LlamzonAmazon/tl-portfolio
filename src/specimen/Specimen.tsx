@@ -816,7 +816,7 @@ export function Specimen() {
       <section className="spec-sheet-section">
         <SheetHead index="H′" title="Document flow">
           Phones, touch and reduced motion get the same sections in normal flow, on one continuous ruled grid, each
-          with a single oversized plate (SectionPlate) cropped by its section and drawn once when it scrolls in.
+          with a single oversized plate (SectionPlate), cropped at its section's sides and bottom, free to draw up into the section before it, and drawn once when it scrolls in.
         </SheetHead>
         <div className="stage-table">
           {FLOW.map((r) => (

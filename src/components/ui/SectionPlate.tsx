@@ -7,9 +7,11 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 
 interface SectionPlateProps {
   figure: Figure
-  /** Plate width relative to its section. Over 100% bleeds past the edges (the section crops it). */
+  /** Plate width relative to its section. Over 100% bleeds past the sides (the crop cuts it there). */
   width: string
-  /** Centre of the plate, as a fraction of the section (CSS left / top). */
+  /** Cap on the width (CSS length). Defaults to 72rem. */
+  maxWidth?: string
+  /** Centre of the plate, as a fraction of the section (CSS left / top). A y near 0% puts it between this section and the one before. */
   x: string
   y: string
   /** Gate for the first draw (e.g. the hero waits for the preloader). Defaults to true. */
@@ -25,10 +27,11 @@ const MAX_DRAW = 6
  * One oversized ghost plate behind a document-flow section (mobile, touch,
  * reduced motion): the scale contrast the pinned stage gets from its
  * camera. Drawn once, at the figure's own pen pacing, when the section
- * scrolls into view; static (finished) under reduced motion. See
- * .section-plate in texture.css.
+ * scrolls into view; static (finished) under reduced motion. It may draw
+ * above its section's top edge, never past its sides or bottom. See
+ * .section-plate-crop in texture.css.
  */
-export function SectionPlate({ figure, width, x, y, play = true, tone = 'ghost' }: SectionPlateProps) {
+export function SectionPlate({ figure, width, maxWidth, x, y, play = true, tone = 'ghost' }: SectionPlateProps) {
   const ref = useRef<DrawingHandle>(null)
   const hostRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
@@ -56,14 +59,19 @@ export function SectionPlate({ figure, width, x, y, play = true, tone = 'ghost' 
   const [, , bw, bh] = figure.box
   const style = {
     '--plate-w': width,
+    '--plate-max': maxWidth,
     '--plate-x': x,
     '--plate-y': y,
     '--plate-aspect': String(bw / bh),
   } as CSSProperties
 
   return (
-    <div ref={hostRef} aria-hidden className="section-plate" style={style}>
-      <Drawing ref={ref} figure={figure} animated={!reduced} tone={tone} />
+    <div aria-hidden className="section-plate-crop">
+      <div className="section-plate-frame">
+        <div ref={hostRef} className="section-plate" style={style}>
+          <Drawing ref={ref} figure={figure} animated={!reduced} tone={tone} />
+        </div>
+      </div>
     </div>
   )
 }

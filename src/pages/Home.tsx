@@ -49,8 +49,10 @@ export function Home() {
       ) : (
         // One ruled grid under the whole document, anchored to the page, so
         // every section sits on the same board (as the pinned stage does).
-        <div className="relative">
-          <div aria-hidden className="bg-grid-ruled absolute inset-0" />
+        // Isolated, so the section plates (z -1) sit over the grid (z -2)
+        // and under every section's content.
+        <div className="relative isolate">
+          <div aria-hidden className="bg-grid-ruled absolute inset-0 -z-2" />
           <HeroFallback ready={ready} />
           <ProjectsBoard />
           <ExperienceList />

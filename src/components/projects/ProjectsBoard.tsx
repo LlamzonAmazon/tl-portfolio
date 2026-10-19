@@ -34,10 +34,12 @@ export function ProjectsBoard() {
     <section
       id="projects"
       data-sheet="03"
-      className="relative overflow-hidden"
-      style={{ padding: 'var(--section-py) var(--section-px)' }}
+      className="relative overflow-x-clip"
+      style={{ padding: 'var(--section-py) var(--section-px) var(--flow-py)' }}
     >
-      <SectionPlate figure={ARCUS} width="170%" x="72%" y="34%" />
+      {/* Its top edge level with the title: the section's top padding plus half
+          the plate's height (min(170%, 72rem) wide, 600 x 660 box). */}
+      <SectionPlate figure={ARCUS} width="170%" x="72%" y="calc(var(--section-py) + min(170vw, 72rem) * 0.55)" />
       <div className="relative mx-auto max-w-[var(--content-max)]">
         <div className="mb-10 sm:mb-14">
           <RulerDivider sheet="03" />

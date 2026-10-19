@@ -14,8 +14,8 @@ const AUREA = sectioAurea()
  */
 export function SkillsBoard() {
   return (
-    <section id="skills" data-sheet="05" className="relative overflow-hidden" style={{ padding: 'var(--section-py) var(--section-px)' }}>
-      <SectionPlate figure={AUREA} width="160%" x="60%" y="30%" tone="faint" />
+    <section id="skills" data-sheet="05" className="relative overflow-x-clip" style={{ padding: 'var(--flow-py) var(--section-px)' }}>
+      <SectionPlate figure={AUREA} width="160%" x="40%" y="0%" tone="faint" />
       <div className="relative mx-auto max-w-[var(--content-max)]">
         <div className="mb-10 sm:mb-14">
           <RulerDivider sheet="05" />

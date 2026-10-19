@@ -20,8 +20,8 @@ export function ExperienceList() {
   const active = useMemo(() => experiences.find((e) => e.id === activeId) ?? null, [activeId])
 
   return (
-    <section id="experience" data-sheet="04" className="relative overflow-hidden" style={{ padding: 'var(--section-py) var(--section-px)' }}>
-      <SectionPlate figure={HARMONIA} width="160%" x="40%" y="52%" tone="faint" />
+    <section id="experience" data-sheet="04" className="relative overflow-x-clip" style={{ padding: 'var(--flow-py) var(--section-px)' }}>
+      <SectionPlate figure={HARMONIA} width="160%" x="40%" y="0%" tone="faint" />
       <div className="relative mx-auto max-w-[var(--content-max)]">
         <div className="mb-10 sm:mb-14">
           <RulerDivider sheet="04" />

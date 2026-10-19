@@ -146,6 +146,7 @@
      placement unit. Component spacing uses Tailwind's 4px scale. ───────── */
   --section-px:  clamp(1.5rem, 7vw, 9rem);
   --section-py:  clamp(5rem, 12vh, 9rem);
+  --flow-py:     clamp(2.5rem, 6vh, 4.5rem); /* document-flow sections: half of --section-py, so the gap between two is one --section-py */
   --content-max: 1440px;
 
   /* ── Drafting-board texture geometry ────────────────────── */

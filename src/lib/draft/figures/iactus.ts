@@ -14,9 +14,9 @@ const BOX = { w: 640, h: 300 }
  * throw. The construction stays monotone (quiet): only the instants carry
  * colour.
  *
- * Passes (from motusFlight): ground chord, line of the shot, protractor and
- * its ticks, equal-time ticks, trajectory with its seven keyed instants,
- * impact, falls 1 4 9.
+ * Passes (from motusFlight): ground chord, line of the shot and the cross at
+ * its end, protractor and its ticks, equal-time ticks, trajectory with its
+ * seven keyed instants, impact, falls 1 4 9.
  *
  * `opts` places it in a scene's own coordinates (the desktop hero measures
  * the name and passes the plane); without them it is drawn on its own box.

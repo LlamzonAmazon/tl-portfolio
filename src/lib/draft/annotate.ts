@@ -12,6 +12,7 @@
  *   rose        a compass circle, then a star traced as one stroke
  *   scaleBar    a rule and its divisions, numbered at the ends
  *   registration  a circle and a cross that overshoots it
+ *   terminus    a small cross on a line's end, so the end reads as intended
  *
  * Only `key` strokes and `key` labels carry the sheet hue.
  */
@@ -168,4 +169,11 @@ export function registration(s: Sketch, c: Vec, r: number) {
   s.pass('together', 'registration-cross')
   s.line([c[0] - r * 1.6, c[1]], [c[0] + r * 1.6, c[1]], 'mark')
   s.line([c[0], c[1] - r * 1.6], [c[0], c[1] + r * 1.6], 'mark')
+}
+
+/** A small cross on the end of a line running along `ang` (radians): the line stops here on purpose. */
+export function terminus(s: Sketch, at: Vec, ang: number, r = 6) {
+  s.pass('together', 'terminus')
+  s.line(polar(at, r, ang + TAU / 8), polar(at, r, ang + TAU * 5 / 8), 'construct')
+  s.line(polar(at, r, ang - TAU / 8), polar(at, r, ang + TAU * 3 / 8), 'construct')
 }

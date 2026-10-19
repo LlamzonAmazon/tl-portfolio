@@ -520,14 +520,29 @@ button.draft-sheet:hover, button.draft-sheet:focus-visible,
 .stage-plate .drawing { width: 100%; height: 100%; display: block; }
 
 /* Section plates: one oversized ghost figure behind each document-flow
-   section (SectionPlate.tsx), centred on --plate-x / --plate-y and cropped
-   by the section, so the flow keeps the stage's scale contrast. */
+   section (SectionPlate.tsx), centred on --plate-x / --plate-y, so the flow
+   keeps the stage's scale contrast. The crop is the section's sides and
+   bottom plus --plate-rise above its top (72rem): a plate
+   centred near its section's top edge draws on up into the section before
+   it, between the two. The frame is the section's own box inside the crop,
+   so --plate-x / --plate-y stay fractions of the section. z-index -1 within
+   the flow's isolated root (Home.tsx) keeps every plate under all section
+   content, its neighbours' included, and over the ruled grid. */
+.section-plate-crop {
+  --plate-rise: 72rem;
+  position: absolute;
+  inset: calc(-1 * var(--plate-rise)) 0 0 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+.section-plate-frame { position: absolute; inset: var(--plate-rise) 0 0 0; }
 .section-plate {
   position: absolute;
   left: var(--plate-x, 50%);
   top: var(--plate-y, 50%);
   width: var(--plate-w, 150%);
-  max-width: 72rem;
+  max-width: var(--plate-max, 72rem);
   aspect-ratio: var(--plate-aspect, 1);
   transform: translate(-50%, -50%);
   pointer-events: none;
