@@ -18,7 +18,10 @@ export function ContactFallback() {
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden text-center"
       style={{ padding: 'var(--section-px)' }}
     >
-      <SectionPlate figure={ROSA} width="300%" x="14%" y="60%" tone="pale" />
+      {/* The section is only one screen tall, so the centre drops to at least one
+          radius (half of the plate's min(300%, 72rem) width) below the top: the
+          rose never crosses the section's top edge, and only its upper part shows. */}
+      <SectionPlate figure={ROSA} width="300%" x="14%" y="max(60%, min(150vw, 36rem))" tone="pale" />
       <div className="relative flex flex-col items-center">
         <Reveal>
           <span className="text-label text-label--key">

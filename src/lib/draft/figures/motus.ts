@@ -105,8 +105,12 @@ export function motusFlight({ w, h, from, to, apexY, spectrum = false, impact: h
 
   s.pass('relay', 'ground')
   s.line(from, to, 'construct', { dashed: true })
+  // As a current, the line of the shot runs on past the plane's edge (the
+  // first edge it crosses, plus a margin) so it leaves the sheet instead of
+  // stopping partway; as a plain construction line it ends at u = 0.45.
+  const shotEnd = shotFlow ? Math.min(dx > 0 ? (w + 24 - from[0]) / dx : Infinity, dy - 4 * H < 0 ? (from[1] + 24) / (4 * H - dy) : Infinity) : 0.45
   s.pass('relay', 'line of the shot')
-  s.line(from, shot(0.45), 'construct', { dashed: true, nodes: ['start'], nodeKind: quiet ? 'ink' : 'key', flow: shotFlow ? { mode: 'replace' } : undefined })
+  s.line(from, shot(shotEnd), 'construct', { dashed: true, nodes: ['start'], nodeKind: quiet ? 'ink' : 'key', flow: shotFlow ? { mode: 'replace' } : undefined })
   protractor(s, from, 46, chordAng, shotAng, (chordAng - shotAng) / 6, 3, 'construct')
 
   s.pass('fan', 'equal times')
