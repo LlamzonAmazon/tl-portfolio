@@ -32,5 +32,6 @@ export function iactus(opts?: Pick<FlightOpts, 'w' | 'h' | 'from' | 'to' | 'apex
     spectrum: true,
     impact: true,
     quiet: true,
+    shotFlow: true,
   })
 }

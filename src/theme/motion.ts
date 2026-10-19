@@ -118,6 +118,22 @@ export const pen = {
 } as const
 
 /**
+ * Flow lines (texture.css .ln-flow): dashed currents that keep marching
+ * once drawn, where a figure is about motion (light, flight, orbit, load,
+ * a turning screw). The one motion on the board that runs on the clock:
+ * a flow's draw and retract stay on its stroke's window like any line;
+ * only the march is ambient. Never on structure, measures, hatch or frames.
+ */
+export const flow = {
+  /** March speed in true screen px per second, at any plate scale. */
+  speed: 16,
+  /** One cycle of the dash, px: --dash-flow-on + --dash-flow-off (tokens.css). Keep in lockstep. */
+  period: 10,
+  /** A parallel current's clip starts this far into its parent's draw window: it follows in the pen's wake. */
+  wake: 0.25,
+} as const
+
+/**
  * Stage timeline spans. The pinned stage's master timeline is scrubbed by
  * scroll, so these are SCROLL UNITS, not seconds (PinnedStage maps one unit
  * to VH_PER_UNIT viewport heights). Only spans shared by more than one

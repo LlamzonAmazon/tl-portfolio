@@ -50,6 +50,9 @@ export function systema({ planets = 5, key = 2, spectrum = false }: SystemaOpts 
     s.line(polar(c, 18, a), polar(c, k % 2 ? 25 : 32, a), k % 2 ? 'construct' : 'datum')
   }
 
+  // The datum orbits (II, IV) become currents, each at its Kepler speed
+  // (orbital speed ~ r^-1/2, against Earth's orbit): inner faster, outer slower.
+  const kepler = (r: number) => Math.sqrt(162 / r)
   s.pass('fan', 'orbits')
   orbits.forEach((r, i) => {
     const t0 = Math.PI * 0.5
@@ -65,11 +68,12 @@ export function systema({ planets = 5, key = 2, spectrum = false }: SystemaOpts 
       nodeKind: i === key ? 'key' : 'ink',
       nodeR: 3 + i * 0.7,
       nodeColor: hue(i + 1),
+      flow: i % 2 ? { mode: 'replace', speed: kepler(r) } : undefined,
     })
     s.label([planet[0] + 9, planet[1] - 8], numerals[i], { size: 8.5, kind: i === key ? 'key' : 'label' })
     if (i === 2) {
       s.pass('relay', 'epicycle')
-      s.circle(planet, 16, 'construct', { arm: true, nodes: [0.3], nodeKind: 'key', nodeR: 2, nodeColor: hue(6) })
+      s.circle(planet, 16, 'construct', { arm: true, nodes: [0.3], nodeKind: 'key', nodeR: 2, nodeColor: hue(6), flow: { mode: 'replace', speed: 1.5 } })
       s.pass('fan', 'orbits')
     }
   })

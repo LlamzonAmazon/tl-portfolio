@@ -5,6 +5,7 @@ import { nodePath } from '@/lib/lines'
 import { ExperienceCard } from '@/components/experience/ExperienceCard'
 import { ExperienceDetailModal } from '@/components/experience/ExperienceDetailModal'
 import { Drawing } from '@/components/ui/Drawing'
+import { FlowPath, type FlowHandle } from '@/components/ui/FlowPath'
 import { SheetIndex } from '@/components/ui/SheetIndex'
 import type { DrawingHandle } from '@/lib/draft/choreo'
 import { motusFlight, type FlightOpts } from '@/lib/draft/figures/motus'
@@ -18,7 +19,9 @@ import { elBox, setD } from './geometry'
  */
 const SYSTEMA = systema({ planets: experiences.length, key: 0 })
 /** Flight before the first layout: same stroke count as every measured one. */
-const FLIGHT_DEFAULT: FlightOpts = { w: 1440, h: 810, from: [-900, 450], to: [80, 200], apexY: 90 }
+const FLIGHT_DEFAULT: FlightOpts = { w: 1440, h: 810, from: [-900, 450], to: [80, 200], apexY: 90, current: 'outside' }
+/** The datum's current runs this far above it: level with the flight's (outside) and Diramatio's run, so the three read as one line. */
+const DATUM_FLOW_OFF = 9
 
 export interface ExperienceSceneHandle {
   plane: HTMLDivElement | null
@@ -32,6 +35,8 @@ export interface ExperienceSceneHandle {
   systema: () => DrawingHandle | null
   /** The horizontal datum every role hangs from, drawn left to right. */
   datum: SVGPathElement | null
+  /** The current above the datum, from the flight's landing to where the Skills line leaves. */
+  datumFlow: FlowHandle | null
   leaders: Array<SVGPathElement | null>
   nodes: Array<SVGPathElement | null>
   /** Where each card's leader meets the datum, 0 (datum start) to 1 (end). Written by layout. */
@@ -70,6 +75,7 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
   const systemaRef = useRef<DrawingHandle>(null)
   const [flight, setFlight] = useState(() => motusFlight(FLIGHT_DEFAULT))
   const datum = useRef<SVGPathElement>(null)
+  const datumFlow = useRef<FlowHandle>(null)
   const leaders = useRef<Array<SVGPathElement | null>>([])
   const nodes = useRef<Array<SVGPathElement | null>>([])
 
@@ -97,9 +103,12 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
       datumEnd.x = x2
       datumEnd.y = y
       setD(datum.current, `M${x1} ${y} H${x2}`)
+      const flowD = `M${x1} ${y - DATUM_FLOW_OFF} H${x2}`
+      setD(datumFlow.current?.pen, flowD)
+      setD(datumFlow.current?.line, flowD)
       // The flight's apex clears the top of the sheet's heading band.
       setFlight(
-        motusFlight({ w: plane.clientWidth, h: plane.clientHeight, from: [crossFrom.x, crossFrom.y], to: [x1, y], apexY: plane.clientHeight * 0.11 }),
+        motusFlight({ w: plane.clientWidth, h: plane.clientHeight, from: [crossFrom.x, crossFrom.y], to: [x1, y], apexY: plane.clientHeight * 0.11, current: 'outside' }),
       )
 
       const boxes = cardRefs.current.map((card) => (card ? elBox(card, r) : null))
@@ -130,6 +139,7 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
       flight: () => flightRef.current,
       systema: () => systemaRef.current,
       datum: datum.current,
+      datumFlow: datumFlow.current,
       leaders: leaders.current,
       nodes: nodes.current,
       cardF,
@@ -157,6 +167,7 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
       </div>
 
       <svg ref={svgRef} aria-hidden className="absolute inset-0 h-full w-full overflow-visible" fill="none">
+        <FlowPath ref={datumFlow} animated />
         <path ref={datum} className="ln-datum" pathLength={1} style={hidden} />
         {experiences.map((e, i) => (
           <path

@@ -114,6 +114,7 @@
   --line-key:        var(--hue);               /* the one coloured line: leaders to a keyed label */
   --line-rule:       var(--color-graphite-4h); /* hairline rules, dividers */
   --line-frame:      var(--color-ink);         /* a sheet's one-path frame (masked down to its corners) */
+  --line-flow:       var(--color-graphite-h);  /* H  · a flow line: the dashed current that keeps moving once drawn */
   --line-w-hair:      0.5px;
   --line-w-construct: 0.75px;
   --line-w-hatch:     0.5px;
@@ -122,10 +123,16 @@
   --line-w-ink:       1.25px;
   --line-w-mark:      1px;
   --line-w-frame:     1px;
+  --line-w-flow:      0.9px;
   /* Construction dash, in true px (Drawing divides by its render scale, see
      .ln-dashed). The dash is revealed through a drawn mask, never by dashoffset. */
   --dash-construct-on:  2px;
   --dash-construct-off: 4px;
+  /* Flow dash (.ln-flow): longer than the construction dash, so a moving
+     dash never reads as a still one. On + off is one cycle of the march;
+     theme/motion.ts flow.period mirrors the sum. */
+  --dash-flow-on:  4px;
+  --dash-flow-off: 6px;
   /* Registration corner, the one edge language: arm length, how far it
      overshoots the corner, and the arm's length while its sheet is hovered or
      focused (the pen "draws" the corner further along the edges). --mark-arm

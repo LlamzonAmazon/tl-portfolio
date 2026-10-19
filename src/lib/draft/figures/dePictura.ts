@@ -71,8 +71,9 @@ export function dePictura(o: PicturaOpts = {}) {
   s.pass('fan', 'braccia')
   ticks.forEach((x) => s.line([x, gy], [x, gy + 8], 'mark'))
 
+  // Every other orthogonal is a current marching to the centric point: the pavement recedes as you look.
   s.pass('fan', 'orthogonals')
-  ticks.forEach((x) => s.line([x, gy], vp, 'construct'))
+  ticks.forEach((x, i) => s.line([x, gy], vp, 'construct', i % 2 ? { flow: { mode: 'replace' } } : {}))
 
   // The diagonal to the distance point fixes the depth of every row.
   const diagA: Vec = [x0, gy]

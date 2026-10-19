@@ -1,4 +1,4 @@
-import { compose, place, placePoint, tint, type Placement } from '../compose'
+import { compose, place, placePoint, still, tint, type Placement } from '../compose'
 import { sketch } from '../sketch'
 import { arcus } from './arcus'
 import { fenestra } from './fenestra'
@@ -61,14 +61,16 @@ export function thesisPlate() {
   join.pass('relay', 'join')
   // Along the springing line to below the corner, then up to it: one relay.
   const turn: [number, number] = [spiralStart[0], springEnd[1]]
-  join.line(springEnd, turn, 'datum')
-  join.line(turn, spiralStart, 'datum', { nodes: ['end'], nodeKind: 'key', nodeR: 3.2 })
+  // A current rides the datum from the arch to the spiral, on its outer side.
+  join.line(springEnd, turn, 'datum', { flow: { mode: 'parallel', off: -10 } })
+  join.line(turn, spiralStart, 'datum', { nodes: ['end'], nodeKind: 'key', nodeR: 3.2, flow: { mode: 'parallel', off: -10 } })
 
   // Two studies, two hues: the arch's dots orange; the rectangle's take the sheet's yellow.
   return compose('thesis', THESIS_BOX, [
     tint(place(arch), 'var(--color-minium)'),
     join.build(),
     place(aurea),
-    tint(place(window), 'var(--color-minium)'),
+    // The arch's thrust carries this sheet's motion, so the oculus stays still here.
+    tint(still(place(window)), 'var(--color-minium)'),
   ])
 }

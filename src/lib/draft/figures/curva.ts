@@ -34,7 +34,8 @@ export function curva() {
   }
 
   s.pass('relay', 'curve')
-  s.path(cubic(P[0], P[1], P[2], P[3]), 'ink', { nodes: ['start', 'end'] })
+  // A current outside the curve, running the way t does. The scaffolding is a proof and stays put.
+  s.path(cubic(P[0], P[1], P[2], P[3]), 'ink', { nodes: ['start', 'end'], flow: { mode: 'parallel', off: -9 } })
   s.label([80, 455], 'curva · de casteljau', { kind: 'serif', size: 15 })
   return s.build()
 }

@@ -16,7 +16,7 @@
  *   const fig = s.build()
  */
 
-import { arc, lerp, polar, segment, TOP, TAU, type PathShape, type Vec } from './geometry'
+import { arc, lerp, offsetPath, polar, segment, TOP, TAU, type PathShape, type Vec } from './geometry'
 
 /** Line roles (texture.css .ln-*), lightest to heaviest. */
 export type Layer = 'hair' | 'construct' | 'hatch' | 'dim' | 'datum' | 'key' | 'ink' | 'mark'
@@ -48,6 +48,33 @@ export interface Arm {
   a1: number
 }
 
+/**
+ * A flow line: a dashed current that marches for as long as it is drawn
+ * (texture.css .ln-flow, theme/motion.ts flow). Declare one only where the
+ * figure is about motion (light, flight, orbit, load, a turning screw),
+ * never on structure, measures, hatch or frames.
+ *   replace   the stroke itself becomes the current (it is not inked)
+ *   parallel  the stroke keeps its ink and a current runs `off` beside it
+ *             (+ = the pen's right, inside a clockwise arc), drawn in the
+ *             pen's wake
+ * `dir` -1 runs it against the pen; `speed` multiplies flow.speed.
+ */
+export interface FlowSpec {
+  mode: 'replace' | 'parallel'
+  off?: number
+  dir?: 1 | -1
+  speed?: number
+}
+
+export interface Flow {
+  mode: FlowSpec['mode']
+  /** The current's own path (the stroke's, or its parallel). */
+  d: string
+  len: number
+  dir: 1 | -1
+  speed: number
+}
+
 export interface Stroke extends PathShape {
   id: string
   layer: Layer
@@ -58,6 +85,8 @@ export interface Stroke extends PathShape {
   nodes: FigNode[]
   /** Compass arcs: an arm opens from the centre, swings with the pen, then folds back. */
   arm?: Arm
+  /** A flow line riding this stroke (see FlowSpec). */
+  flow?: Flow
 }
 
 export interface Label {
@@ -101,6 +130,7 @@ export interface StrokeOpts {
   /** Fill for every node of this stroke (a CSS value). */
   nodeColor?: string
   nodeR?: number
+  flow?: FlowSpec
 }
 
 export interface LabelOpts {
@@ -113,6 +143,11 @@ export interface LabelOpts {
 }
 
 const NODE_R = 3
+
+function flowOf(shape: PathShape, spec: FlowSpec): Flow {
+  const p = spec.mode === 'parallel' ? offsetPath(shape, spec.off ?? 0) : shape
+  return { mode: spec.mode, d: p.d, len: p.len, dir: spec.dir ?? 1, speed: spec.speed ?? 1 }
+}
 
 export function sketch(id: string, box: Figure['box']) {
   const passes: Pass[] = []
@@ -139,7 +174,8 @@ export function sketch(id: string, box: Figure['box']) {
       }
       return { color, ...spec, r, kind }
     })
-    current().strokes.push({ ...shape, id: sid, layer, dashed: opts.dashed, color: opts.color, nodes, arm })
+    const flow = opts.flow ? flowOf(shape, opts.flow) : undefined
+    current().strokes.push({ ...shape, id: sid, layer, dashed: opts.dashed, color: opts.color, nodes, arm, flow })
     last = sid
     return sid
   }

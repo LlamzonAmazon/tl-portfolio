@@ -79,7 +79,7 @@ const PIGMENTS: Record<string, { mineral: string; mark: string; ink: string; cr:
   murex: { mineral: 'Tyrian purple', mark: '#9A2D8E', ink: '#9A2D8E', cr: '6.1', keys: 'VI · Contact' },
 }
 
-const LINES: Array<{ layer: Layer; grade: string; w: string; use: string }> = [
+const LINES: Array<{ layer: Layer | 'flow'; grade: string; w: string; use: string }> = [
   { layer: 'construct', grade: '2H', w: '0.75', use: 'Compass and straightedge geometry. Drawn first, overshoots its marks.' },
   { layer: 'hatch', grade: 'H', w: '0.5', use: 'Shading and section fill, laid stroke by stroke.' },
   { layer: 'dim', grade: 'F', w: '0.75', use: 'Dimension and extension lines.' },
@@ -87,6 +87,7 @@ const LINES: Array<{ layer: Layer; grade: string; w: string; use: string }> = [
   { layer: 'ink', grade: 'Ink', w: '1.25', use: 'The figure itself, traced over its construction.' },
   { layer: 'mark', grade: 'Ink', w: '1', use: 'Registration corners, ticks, crosshairs.' },
   { layer: 'key', grade: 'Hue', w: '1', use: 'The one coloured line: a leader to a keyed label.' },
+  { layer: 'flow', grade: 'H', w: '0.9', use: 'A current: dashed, marching once drawn, only where a figure is about motion. Replaces a stroke or runs parallel in its wake.' },
 ]
 
 /** Drawing tones: the same figure stepped back for what sits in front of it. */

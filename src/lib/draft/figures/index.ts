@@ -7,7 +7,7 @@
 
 import type { SheetKey } from '@/theme/spectrum'
 import type { Figure } from '../sketch'
-import { compose } from '../compose'
+import { compose, still } from '../compose'
 import { arcus } from './arcus'
 import { cochlea } from './cochlea'
 import { curva } from './curva'
@@ -48,7 +48,7 @@ export const FOLIO: readonly Plate[] = [
   { id: 'iactus', title: 'Iactus Iridis', subject: 'The cast of the rainbow: a projectile thrown over the name, its seven equal instants struck R to V, landing in an impact mark', sheet: '01', patterns: ['plot', 'fan', 'measure'], build: () => iactus() },
   { id: 'motus', title: 'Motus Proiectorum', subject: "Galileo's parabola: the fall grows as the square of time", sheet: '04', patterns: ['plot', 'fan', 'measure'], build: motus },
   { id: 'arcus', title: 'Arcus Acutus', subject: 'Equilateral pointed arch set out by compass, voussoirs fanned', sheet: '04', patterns: ['compass', 'fan', 'raster', 'leader', 'measure'], build: arcus },
-  { id: 'fenestra', title: 'Fenestra', subject: 'Two-light bar tracery traced inside the arch: lancets, mullion, and an oculus resting on both lancets, filled with a quatrefoil', sheet: '02', patterns: ['compass', 'fan', 'relay'], build: () => compose('fenestra', [0, 0, 600, 660], [arcus(), fenestra()]) },
+  { id: 'fenestra', title: 'Fenestra', subject: 'Two-light bar tracery traced inside the arch: lancets, mullion, and an oculus resting on both lancets, filled with a quatrefoil', sheet: '02', patterns: ['compass', 'fan', 'relay'], build: () => compose('fenestra', [0, 0, 600, 660], [still(arcus()), fenestra()]) },
   { id: 'systema', title: 'Systema Mundi', subject: 'Oblique heliocentric orrery, planets landing as the pen passes', sheet: '00', patterns: ['compass', 'fan', 'plot'], build: systema },
   { id: 'diramatio', title: 'Diramatio', subject: 'One line through a prism becomes one line per column: the experimentum crucis as a transition', sheet: '05', patterns: ['relay', 'fan'], build: () => diramatio({ w: 720, h: 420, from: [40, 40], split: [420, 220], lands: [[150, 400], [330, 400], [510, 400], [690, 400]], clearY: 120 }) },
   { id: 'cochlea', title: 'Cochlea', subject: 'Archimedean screw: depth from ink in front, dashes behind', sheet: '05', patterns: ['relay', 'measure'], build: cochlea },

@@ -34,7 +34,7 @@ export function ellipsis() {
   })
 
   s.pass('relay', 'ellipse')
-  s.path(ellipseArc(c, a, b, 0, Math.PI, Math.PI * 3, 160), 'ink', { nodes: ['start'] })
+  s.path(ellipseArc(c, a, b, 0, Math.PI, Math.PI * 3, 160), 'ink', { nodes: ['start'], flow: { mode: 'parallel', off: 9 } })
   s.label([c[0] + 18, c[1] - b - 22], '|PF₁| + |PF₂| = 2a', { kind: 'serif', size: 15 })
   dimension(s, [c[0] - a, c[1] + b], [c[0] + a, c[1] + b], 40, '2a')
   return s.build()

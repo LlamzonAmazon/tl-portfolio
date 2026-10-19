@@ -37,7 +37,8 @@ export function rota() {
   s.pass('fan', 'circles')
   s.circle(c, rf, 'construct', { arm: true })
   s.circle(c, rb, 'construct', { arm: true, dashed: true })
-  s.circle(c, rp, 'datum', { arm: true })
+  // The pitch circle is where two gears roll on each other: the one circle that turns.
+  s.circle(c, rp, 'datum', { arm: true, flow: { mode: 'replace', speed: 0.8 } })
   s.circle(c, ra, 'construct', { arm: true })
 
   // The unwound string, for the tooth at 12 o'clock-ish.

@@ -26,6 +26,32 @@ export const retract = (tl: gsap.core.Timeline, el: Targets, w: Window) =>
 export const pass = (tl: gsap.core.Timeline, el: Targets, w: Window) =>
   tl.fromTo(el, { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: w.dur, ease: w.ease, ...IR }, w.at)
 
+/** What a timeline drives on a flow line (components/ui/FlowPath.tsx). */
+export interface FlowTarget {
+  /** Rendered only while the line exists: display:none before its draw and after its retract. */
+  group: SVGGElement | null
+  /** The clip's pen: a mask stroke along the current's path. */
+  pen: SVGPathElement | null
+}
+
+/**
+ * A flow line on window `w`. Draw: its group is rendered at the window's
+ * start (until then it is display:none, so no animation exists), then the
+ * clip pen draws. Retract: the pen retracts, then the group goes back to
+ * display:none at the window's end, which removes the march with it. Both
+ * revert on scrub-back.
+ */
+export function drawFlow(tl: gsap.core.Timeline, f: FlowTarget, w: Window, mode: 'draw' | 'retract' = 'draw') {
+  if (!f.group || !f.pen) return
+  if (mode === 'draw') {
+    tl.set(f.group, { display: 'inline', ...IR }, w.at)
+    draw(tl, f.pen, w)
+  } else {
+    retract(tl, f.pen, w)
+    tl.set(f.group, { display: 'none', ...IR }, w.at + w.dur)
+  }
+}
+
 /** Node (plotted dot) radius in SVG user units. */
 export const NODE_R = 4.5
 

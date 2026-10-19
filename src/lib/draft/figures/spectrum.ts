@@ -43,9 +43,10 @@ export function spectrum() {
   // The angle of incidence, measured before the ray arrives.
   protractor(s, entry, 30, Math.atan2(-normal[1], -normal[0]), Math.atan2(330 - entry[1], 40 - entry[0]), 0.1, 3, 'construct')
 
+  // Light travels: a current runs under the white ray and on through the glass.
   s.pass('relay', 'white ray')
-  s.line([40, 330], entry, 'ink', { nodes: ['end'] })
-  s.line(entry, exit, 'ink', { nodes: ['end'] })
+  s.line([40, 330], entry, 'ink', { nodes: ['end'], flow: { mode: 'parallel', off: 7 } })
+  s.line(entry, exit, 'ink', { nodes: ['end'], flow: { mode: 'parallel', off: 7 } })
 
   s.pass('relay', 'screen')
   s.line([screenX, 60], [screenX, 420], 'ink')

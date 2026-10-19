@@ -28,6 +28,7 @@ export function place({ figure, k, dx, dy }: Placement): Figure {
     b: tv(s.b, k, dx, dy),
     nodes: s.nodes.map((nd) => ({ ...nd, at: tv(nd.at, k, dx, dy) })),
     arm: s.arm ? { ...s.arm, c: tv(s.arm.c, k, dx, dy), r: s.arm.r * k } : undefined,
+    flow: s.flow ? { ...s.flow, d: transformPath(s.flow.d, k, dx, dy), len: s.flow.len * k } : undefined,
   })
   return {
     ...figure,
@@ -47,6 +48,14 @@ export function tint(figure: Figure, color: string): Figure {
       ...p,
       strokes: p.strokes.map((s) => ({ ...s, nodes: s.nodes.map((nd) => ({ ...nd, color })) })),
     })),
+  }
+}
+
+/** A figure with its flow lines taken out: a study that must stay quiet where it is placed. */
+export function still(figure: Figure): Figure {
+  return {
+    ...figure,
+    passes: figure.passes.map((p) => ({ ...p, strokes: p.strokes.map((s) => ({ ...s, flow: undefined })) })),
   }
 }
 

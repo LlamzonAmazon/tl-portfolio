@@ -40,9 +40,11 @@ export function arcus() {
   const aOutL = angleOf(R, [300, outerApexY]) + Math.PI * 2
   const aOutR = angleOf(L, [300, outerApexY])
 
+  // The line of thrust: currents down the middle of the arch ring, crown to
+  // springing, carried on down the middle of each pier to the ground.
   s.pass('together', 'intrados')
-  s.arc(R, span, Math.PI, aApexL, 'ink')
-  s.arc(L, span, 0, aApexR, 'ink')
+  s.arc(R, span, Math.PI, aApexL, 'ink', { flow: { mode: 'parallel', off: -t / 2, dir: -1 } })
+  s.arc(L, span, 0, aApexR, 'ink', { flow: { mode: 'parallel', off: t / 2, dir: -1 } })
   s.pass('together', 'extrados')
   s.arc(R, span + t, Math.PI, aOutL, 'ink')
   s.arc(L, span + t, 0, aOutR, 'ink')
@@ -60,8 +62,8 @@ export function arcus() {
 
   // Piers and imposts.
   s.pass('together', 'piers')
-  s.line([L[0], sy], [L[0], ground], 'ink')
-  s.line([R[0], sy], [R[0], ground], 'ink')
+  s.line([L[0], sy], [L[0], ground], 'ink', { flow: { mode: 'parallel', off: t / 2 } })
+  s.line([R[0], sy], [R[0], ground], 'ink', { flow: { mode: 'parallel', off: -t / 2 } })
   s.line([L[0] - t, sy], [L[0] - t, ground], 'ink')
   s.line([R[0] + t, sy], [R[0] + t, ground], 'ink')
   s.pass('together', 'imposts')

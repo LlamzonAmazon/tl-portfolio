@@ -62,7 +62,8 @@ export function diramatio({ w, h, from, split, lands, side = 64, clearY }: Diram
   ])
 
   s.pass('relay', 'run to the prism')
-  s.path(run, 'ink', { nodes: ['start'], nodeKind: 'key', nodeR: 3.2 })
+  // The beam keeps coming: a current outside the run, level with the one above the datum.
+  s.path(run, 'ink', { nodes: ['start'], nodeKind: 'key', nodeR: 3.2, flow: { mode: 'parallel', off: -9 } })
 
   s.pass('relay', 'prism')
   s.line(bl, apex, 'ink', { over: 6 })

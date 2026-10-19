@@ -255,6 +255,34 @@ button.draft-sheet:hover, button.draft-sheet:focus-visible,
 .drawing--faint .ln-node--key { fill: var(--color-graphite-2h); }
 .drawing--faint .ln-label     { fill: var(--color-graphite-2h); }
 
+/* Flow line: a dashed current that marches for as long as it is drawn
+   (components/ui/FlowPath.tsx). The dash IS the motion, so the pen is a
+   clip: a mask stroke drawn along the same path, as for dashed construction.
+   The march is a per-element CSS animation, so it exists only while the
+   line does: a flow's group is display:none until its reveal starts and
+   again once its retract lands (lib/lines.ts drawFlow); a hidden scene
+   plane (data-flow="off") removes every flow in it; an off-screen plate
+   (data-offscreen) pauses in place. --flow-dur and --flow-dir are set per
+   line from theme/motion.ts flow. */
+.ln-flow {
+  stroke: var(--line-flow);
+  stroke-width: calc(var(--line-w-flow) / var(--draw-k, 1));
+  stroke-dasharray: calc(var(--dash-flow-on) / var(--draw-k, 1)) calc(var(--dash-flow-off) / var(--draw-k, 1));
+  fill: none;
+  animation: ln-flow var(--flow-dur, 0.625s) linear infinite;
+  animation-direction: var(--flow-dir, normal);
+}
+@keyframes ln-flow {
+  to { stroke-dashoffset: calc((var(--dash-flow-on) + var(--dash-flow-off)) / var(--draw-k, 1) * -1); }
+}
+[data-offscreen] .ln-flow { animation-play-state: paused; }
+[data-flow="off"] .ln-flow { display: none; }
+.drawing--ghost .ln-flow { stroke: var(--color-graphite-2h); }
+.drawing--faint .ln-flow { stroke: var(--color-graphite-6h); }
+@media (prefers-reduced-motion: reduce) {
+  .ln-flow { animation: none; }
+}
+
 /* Annotation type inside a drawing: wiped in once its leader lands. */
 .ln-label {
   font-family: var(--font-body);

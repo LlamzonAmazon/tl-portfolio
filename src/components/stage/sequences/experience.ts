@@ -8,9 +8,9 @@
  * one planet per role on the same clock.
  */
 
-import { draw, linesAlong, nodesAlong, retract } from '@/lib/lines'
+import { draw, drawFlow, linesAlong, nodesAlong, retract } from '@/lib/lines'
 import { figureGuide } from '@/lib/draft/choreo'
-import { gsapEase, stageSpan } from '@/theme/motion'
+import { flow, gsapEase, stageSpan } from '@/theme/motion'
 import type { Step, Window } from '@/theme/sequences'
 import { IR, setVisible, sheetSwap, type StageCtx } from './common'
 
@@ -48,6 +48,7 @@ export function experienceScroll({ projects, experience, titleBlock, camera }: S
           label: 'Datum draws; each node and leader as it passes', span: [0.45, 1],
           run: (tl, g) => {
             draw(tl, experience.datum, g)
+            if (experience.datumFlow) drawFlow(tl, experience.datumFlow, g.sub(flow.wake, 1))
             nodesAlong(tl, nodesAt(experience.nodes), g, stageSpan.node)
             linesAlong(tl, nodesAt(experience.leaders), g, LEADER_INK)
           },

@@ -101,7 +101,8 @@ export function sectioAurea() {
   const end: Vec = [last.c[0] + last.r * Math.cos(last.a1), last.c[1] + last.r * Math.sin(last.a1)]
   d += ` L${n(eye[0])} ${n(eye[1])}`
   len += dist(end, eye)
-  s.path({ d, len, a: start, b: eye }, 'ink', { nodes: ['start'] })
+  // A current wound just outside the spiral, running in to the eye (outside: the last quarters are tighter than any inside offset).
+  s.path({ d, len, a: start, b: eye }, 'ink', { nodes: ['start'], flow: { mode: 'parallel', off: -6 } })
   s.label([eye[0] + 12, eye[1] + 20], 'oculus', { kind: 'serif', size: 13 })
 
   dimension(s, [x0, y0 + H], [x0 + H, y0 + H], 34, '1')

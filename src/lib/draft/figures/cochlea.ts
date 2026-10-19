@@ -43,7 +43,8 @@ export function cochlea() {
         const along = (a - phase) / (turns * Math.PI * 2)
         return [x0 + L * along + ex * Math.sin(a), cy - r * Math.cos(a)]
       }
-      s.path(curve(f, 40), front ? 'ink' : 'construct', { dashed: !front })
+      // The far half marches left to right, so the screw seems to turn and lift.
+      s.path(curve(f, 40), front ? 'ink' : 'construct', { dashed: !front, flow: front ? undefined : { mode: 'replace' } })
     }
   }
 

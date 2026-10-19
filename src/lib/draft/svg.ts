@@ -9,6 +9,7 @@
  */
 
 import { n, polar } from './geometry'
+import { flow } from '@/theme/motion'
 import { schedule } from './schedule'
 import type { Figure, Stroke } from './sketch'
 
@@ -38,7 +39,16 @@ export function figureToSvg(fig: Figure, progress = 1, opts: { css?: string; wid
   for (const t of sch.strokes) {
     const s = t.stroke
     const f = local(t.draw[0], t.draw[1])
-    strokeEl(s, f)
+    if (s.flow?.mode !== 'replace') strokeEl(s, f)
+    // A flow line, still (a static render has no march): dashed, clipped to its pen.
+    if (s.flow) {
+      const lead = s.flow.mode === 'parallel' ? flow.wake : 0
+      const ff = local(t.draw[0] + (t.draw[1] - t.draw[0]) * lead, t.draw[1])
+      if (ff > 0) {
+        masks.push(`<mask id="mf-${s.id}" maskUnits="userSpaceOnUse" x="${bx}" y="${by}" width="${bw}" height="${bh}"><path d="${s.flow.d}" pathLength="1" stroke="#fff" stroke-width="6" fill="none" stroke-dasharray="1" stroke-dashoffset="${n(1 - ff)}"/></mask>`)
+        out.push(`<path class="ln-flow" d="${s.flow.d}" style="animation:none" mask="url(#mf-${s.id})"/>`)
+      }
+    }
     if (s.arm && t.open && t.close && progress > t.open[0] && progress < t.close[1]) {
       const opened = local(t.open[0], t.open[1])
       const closed = local(t.close[0], t.close[1])

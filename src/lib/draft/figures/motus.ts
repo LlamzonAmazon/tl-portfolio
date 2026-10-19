@@ -42,7 +42,7 @@ export function motus() {
     const u = (i + 1) / steps
     return { at: at(u), f: lengthFraction(at, u) }
   })
-  s.path(curve(at, 160), 'ink', { nodes: ['start', ...nodes, 'end'] })
+  s.path(curve(at, 160), 'ink', { nodes: ['start', ...nodes, 'end'], flow: { mode: 'parallel', off: 10 } })
 
   s.pass('fan', 'falls')
   for (let i = 1; i <= 4; i++) {
@@ -51,7 +51,8 @@ export function motus() {
     s.label([shot(u)[0] + 7, (shot(u)[1] + at(u)[1]) / 2 + 3], `${i * i}`, { kind: 'key', size: 9 })
   }
   s.pass('fan', 'verticals')
-  for (let i = 1; i < steps; i++) s.line(at(i / steps), [at(i / steps)[0], g], 'construct', { dashed: true })
+  // Gravity: alternate verticals fall from the path to the ground.
+  for (let i = 1; i < steps; i++) s.line(at(i / steps), [at(i / steps)[0], g], 'construct', { dashed: true, flow: i % 2 ? undefined : { mode: 'replace' } })
 
   s.label([50, 478], 'motus proiectorum', { kind: 'serif', size: 15 })
   return s.build()
@@ -72,6 +73,14 @@ export interface FlightOpts {
   impact?: boolean
   /** Monotone construction: the falls in graphite, no keyed nodes (pair with a ghost Drawing). */
   quiet?: boolean
+  /**
+   * Which side of the path its current runs: inside the arc (default), or
+   * outside, where it lines up with a datum the flight lands on. Flights
+   * here run left to right; the sides swap for one thrown the other way.
+   */
+  current?: 'inside' | 'outside'
+  /** The line of the shot streams outward as a current too. */
+  shotFlow?: boolean
 }
 
 /**
@@ -83,7 +92,7 @@ export interface FlightOpts {
  * Passes: ground chord · line of the shot · protractor arc · its ticks ·
  * equal-time ticks · trajectory (nodes at each instant) · falls (keyed).
  */
-export function motusFlight({ w, h, from, to, apexY, spectrum = false, impact: hit = false, quiet = false }: FlightOpts) {
+export function motusFlight({ w, h, from, to, apexY, spectrum = false, impact: hit = false, quiet = false, current = 'inside', shotFlow = false }: FlightOpts) {
   const s = sketch('flight', [0, 0, w, h])
   const steps = 8
   const H = Math.max(40, (from[1] + to[1]) / 2 - apexY)
@@ -97,7 +106,7 @@ export function motusFlight({ w, h, from, to, apexY, spectrum = false, impact: h
   s.pass('relay', 'ground')
   s.line(from, to, 'construct', { dashed: true })
   s.pass('relay', 'line of the shot')
-  s.line(from, shot(0.45), 'construct', { dashed: true, nodes: ['start'], nodeKind: quiet ? 'ink' : 'key' })
+  s.line(from, shot(0.45), 'construct', { dashed: true, nodes: ['start'], nodeKind: quiet ? 'ink' : 'key', flow: shotFlow ? { mode: 'replace' } : undefined })
   protractor(s, from, 46, chordAng, shotAng, (chordAng - shotAng) / 6, 3, 'construct')
 
   s.pass('fan', 'equal times')
@@ -114,7 +123,11 @@ export function motusFlight({ w, h, from, to, apexY, spectrum = false, impact: h
     const u = (i + 1) / steps
     return { at: at(u), f: lengthFraction(at, u), color: spectrum ? SPECTRUM[i % SPECTRUM.length].mark : undefined }
   })
-  s.path(curve(at, 160), 'ink', { nodes: ['start', ...nodes, ...(hit ? [] : ['end' as const])], nodeR: spectrum ? 3.4 : undefined })
+  s.path(curve(at, 160), 'ink', {
+    nodes: ['start', ...nodes, ...(hit ? [] : ['end' as const])],
+    nodeR: spectrum ? 3.4 : undefined,
+    flow: { mode: 'parallel', off: current === 'inside' ? 10 : -10 },
+  })
   if (hit) impact(s, to, 16)
 
   s.pass('fan', 'falls')

@@ -26,7 +26,8 @@ export function harmonia() {
   s.line([c[0] - A - 30, c[1]], [c[0] + A + 30, c[1]], 'construct')
   s.line([c[0], c[1] - A - 30], [c[0], c[1] + A + 30], 'construct')
   s.pass('relay', 'amplitude')
-  s.circle(c, A, 'construct', { dashed: true })
+  // The trace stays untouched; the amplitude ring drifts, as if still swinging.
+  s.circle(c, A, 'construct', { dashed: true, flow: { mode: 'replace', speed: 0.5 } })
 
   s.pass('relay', 'trace')
   s.path(curve(f, 2400), 'ink', { nodes: ['start', 'end'], nodeKind: 'key' })

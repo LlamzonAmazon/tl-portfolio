@@ -17,7 +17,8 @@ export function rosa() {
   s.pass('relay', 'generating circle')
   s.circle(c, R, 'construct', { arm: true, nodes: [0], nodeKind: 'key' })
 
-  s.pass('relay', 'compass swings')
+  // All six swings at once: each is planted on the circle independently.
+  s.pass('together', 'compass swings')
   for (let k = 0; k < 6; k++) {
     const pk = polar(c, R, TOP + (k * TAU) / 6)
     const back = TOP + (k * TAU) / 6 + Math.PI
@@ -38,7 +39,8 @@ export function rosa() {
   }
 
   s.pass('together', 'rings')
-  s.circle(c, R + 30, 'ink')
+  // One current turns, slowly, in the band between the window rings.
+  s.circle(c, R + 30, 'ink', { flow: { mode: 'parallel', off: -5, speed: 0.45 } })
   s.circle(c, R + 52, 'ink', { from: TOP + Math.PI })
 
   s.pass('fan', 'ticks')

@@ -207,3 +207,88 @@ export function intersect(a1: Vec, a2: Vec, b1: Vec, b2: Vec): Vec {
   const y = ((a1[0] * a2[1] - a1[1] * a2[0]) * (b1[1] - b2[1]) - (a1[1] - a2[1]) * (b1[0] * b2[1] - b1[1] * b2[0])) / d
   return [x, y]
 }
+
+/**
+ * Points along a circular SVG arc piece (the builders here never emit one
+ * over 180 degrees, so the large-arc flag is always 0), every 2 degrees,
+ * excluding the start. sweep 1 turns clockwise on screen.
+ */
+function arcPoints(p0: Vec, r: number, sweep: number, p1: Vec): Vec[] {
+  const u = unit(p0, p1)
+  const h = dist(p0, p1) / 2
+  // Centre: off the chord's midpoint, on the pen's right for a clockwise sweep.
+  const k = Math.sqrt(Math.max(0, r * r - h * h)) * (sweep ? 1 : -1)
+  const c = add(lerp(p0, p1, 0.5), mul([-u[1], u[0]], k))
+  const a0 = angleOf(c, p0)
+  let a1 = angleOf(c, p1)
+  if (sweep && a1 < a0) a1 += TAU
+  if (!sweep && a1 > a0) a1 -= TAU
+  const steps = Math.max(2, Math.ceil(Math.abs(a1 - a0) / (Math.PI / 90)))
+  return Array.from({ length: steps }, (_, i) => polar(c, r, a0 + ((a1 - a0) * (i + 1)) / steps))
+}
+
+/**
+ * A path written with the commands the builders here emit (M, L, H, V,
+ * circular A, C, Z), as points: lines keep only their ends, arcs are
+ * sampled every 2 degrees, cubics in 24 steps.
+ */
+export function samplePath(d: string): Vec[] {
+  const tokens = d.match(/[MLHVACZ]|-?\d*\.?\d+(?:e-?\d+)?/gi) ?? []
+  const pts: Vec[] = []
+  let cur: Vec = [0, 0]
+  let start: Vec = [0, 0]
+  let cmd = ''
+  let args: number[] = []
+  const push = (p: Vec) => {
+    if (!pts.length || !near(pts[pts.length - 1], p, 1e-6)) pts.push(p)
+    cur = p
+  }
+  const flush = () => {
+    const a = args
+    if (cmd === 'M' || cmd === 'L') {
+      for (let i = 0; i + 1 < a.length; i += 2) {
+        if (cmd === 'M' && i === 0) start = [a[0], a[1]]
+        push([a[i], a[i + 1]])
+      }
+    } else if (cmd === 'H') a.forEach((v) => push([v, cur[1]]))
+    else if (cmd === 'V') a.forEach((v) => push([cur[0], v]))
+    else if (cmd === 'C') {
+      for (let i = 0; i + 5 < a.length; i += 6) {
+        const p0 = cur
+        for (let s = 1; s <= 24; s++) push(bezierAt(p0, [a[i], a[i + 1]], [a[i + 2], a[i + 3]], [a[i + 4], a[i + 5]], s / 24))
+      }
+    } else if (cmd === 'A') {
+      for (let i = 0; i + 6 < a.length; i += 7) arcPoints(cur, a[i], a[i + 4], [a[i + 5], a[i + 6]]).forEach(push)
+    }
+    args = []
+  }
+  for (const t of tokens) {
+    if (/^[A-Za-z]$/.test(t)) {
+      flush()
+      cmd = t.toUpperCase()
+      if (cmd === 'Z') {
+        push(start)
+        cmd = ''
+      }
+    } else args.push(parseFloat(t))
+  }
+  flush()
+  return pts
+}
+
+/**
+ * The path run parallel to `shape`, `off` figure units to the pen's right:
+ * + is the clockwise side, so + lies INSIDE a clockwise arc. Each sample is
+ * pushed along the normal of its neighbours' chord, so arcs stay concentric
+ * and straight runs stay straight. Smooth paths only (a sharp corner would
+ * need a miter); the pen runs the same way as the parent's.
+ */
+export function offsetPath(shape: PathShape, off: number): PathShape {
+  const p = samplePath(shape.d)
+  if (p.length < 2 || !off) return shape
+  const out = p.map((q, i): Vec => {
+    const t = unit(p[Math.max(0, i - 1)], p[Math.min(p.length - 1, i + 1)])
+    return [q[0] - t[1] * off, q[1] + t[0] * off]
+  })
+  return polyline(out)
+}

@@ -11,12 +11,16 @@
  *            compass arms open, swing with their arc, fold back; labels
  *            wipe in once their stroke lands
  *   retract  the exact mirror: last drawn, first erased
+ *   flows    a replaced stroke's current draws on the stroke's own window;
+ *            a parallel one from flow.wake into it, in the pen's wake.
+ *            Each is rendered only from its draw's start to its retract's
+ *            end (lib/lines.ts drawFlow)
  */
 
 import { gsap } from 'gsap'
-import { draw, nodesAlong, retract } from '@/lib/lines'
+import { draw, drawFlow, nodesAlong, retract, type FlowTarget } from '@/lib/lines'
 import { win, type Guide, type Window } from '@/theme/sequences'
-import { gsapEase, pen } from '@/theme/motion'
+import { flow as flowMotion, gsapEase, pen } from '@/theme/motion'
 import { WIPE_HIDDEN, WIPE_SHOWN } from '@/components/hero/wipeConstants'
 import type { Schedule } from './schedule'
 import type { Figure } from './sketch'
@@ -28,6 +32,8 @@ export interface DrawingRefs {
   /** Per stroke, aligned with stroke.nodes. */
   node: Map<string, Array<SVGPathElement | null>>
   label: Map<string, SVGTextElement>
+  /** Flow lines, by the stroke they ride. */
+  flow: Map<string, FlowTarget>
 }
 
 export interface DrawingHandle {
@@ -80,6 +86,13 @@ export function drawFigure(tl: TL, h: DrawingHandle, w: Window, mode: 'draw' | '
     if (el) (mode === 'draw' ? draw : retract)(tl, el, sw)
     const nodes = (refs.node.get(s.id) ?? []).map((n, i) => ({ el: n, f: s.nodes[i].f }))
     if (nodes.length) nodesAlong(tl, nodes, sw, nd, mode)
+
+    const flow = refs.flow.get(s.id)
+    if (flow && s.flow) {
+      const [a, b] = t.draw
+      const lead = s.flow.mode === 'parallel' ? flowMotion.wake : 0
+      drawFlow(tl, flow, mirror(a + (b - a) * lead, b), mode)
+    }
 
     const arm = refs.arm.get(s.id)
     if (mode === 'draw' && arm && s.arm && t.open && t.close) {

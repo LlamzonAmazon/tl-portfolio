@@ -61,7 +61,7 @@ export function fenestra() {
   s.line(M, [M[0], ground], 'ink')
 
   s.pass('relay', 'oculus')
-  s.circle(c, rc, 'datum')
+  s.circle(c, rc, 'datum', { flow: { mode: 'replace', speed: 0.55 } })
 
   // Quatrefoil: foil centres at d from c, neighbours d*sqrt2 apart, so a
   // foil radius of d/sqrt2 makes them touch; d + f = rc keeps them inside.

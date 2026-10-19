@@ -86,7 +86,17 @@ export const sheetSwap = (tb: TitleBlockHandle, from: number, to: number) => (tl
   }
 }
 
-/** Scene plane visibility switch (reversible on scrub-back). */
+/**
+ * Scene plane visibility switch (reversible on scrub-back). A hidden plane
+ * also turns its flow lines off (texture.css [data-flow="off"]): a line the
+ * camera carried out stops marching rather than running unseen. The flag is
+ * a fromTo with both values explicit (as sheetSwap does): a set on an
+ * attribute that did not exist yet has nothing to revert to, so a
+ * ScrollTrigger refresh would leave it "off" from the first frame.
+ */
 export function setVisible(tl: TL, el: HTMLElement | null, visible: boolean, at: number) {
-  if (el) tl.set(el, { visibility: visible ? 'visible' : 'hidden' }, at)
+  if (!el) return
+  tl.set(el, { visibility: visible ? 'visible' : 'hidden' }, at)
+  const [from, to] = visible ? ['off', 'on'] : ['on', 'off']
+  tl.fromTo(el, { attr: { 'data-flow': from } }, { attr: { 'data-flow': to }, duration: 0.001, ...IR }, at)
 }
