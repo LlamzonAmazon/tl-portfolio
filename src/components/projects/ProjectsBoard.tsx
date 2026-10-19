@@ -37,9 +37,10 @@ export function ProjectsBoard() {
       className="relative overflow-x-clip"
       style={{ padding: 'var(--section-py) var(--section-px) var(--flow-py)' }}
     >
-      {/* Its top edge level with the title: the section's top padding plus half
-          the plate's height (min(170%, 72rem) wide, 600 x 660 box). */}
-      <SectionPlate figure={ARCUS} width="170%" x="72%" y="calc(var(--section-py) + min(170vw, 72rem) * 0.55)" />
+      {/* Half the plate's height (min(170%, 72rem) wide, 600 x 660 box) below the
+          section's top padding, then raised 13rem (208px): its top edge
+          reaches up past the title toward the hero. */}
+      <SectionPlate figure={ARCUS} width="170%" x="72%" y="calc(var(--section-py) + min(170vw, 72rem) * 0.55 - 13rem)" />
       <div className="relative mx-auto max-w-[var(--content-max)]">
         <div className="mb-10 sm:mb-14">
           <RulerDivider sheet="03" />
