@@ -101,7 +101,7 @@ _Aug 2026 - Present · Vancouver, BC_
 I'm building **Trellum**, an AI agent for each business that runs inference over its live sales, stock and supplier data and returns actionable answers. The operations agent is *live in beta* with its first business, and a second agent, for bringing in customers, is in development.
 
 #### What I do
-- Define the agent's analysis method: live figures dated on the POS business day, and an actionable next step in every answer.
+- Write the rules the agent follows for analysis, so each answer uses current figures and ends with a suggested next step.
 - Build and deploy the platform, a **5-service Docker Compose stack**, through a CI pipeline that must pass before an image is deployed.
 - Set up the first business on its own instance and connect its point-of-sale data through the 6 tool handlers I wrote for a **read-only Toast POS MCP server**.
 - Run security and infrastructure: per-user sign-in with a mandatory **TOTP** second factor, an audit row on every action, Cloudflare Access in front of the admin console, and age-encrypted backups restored by a drill in CI.
