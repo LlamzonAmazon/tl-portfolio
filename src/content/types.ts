@@ -1,6 +1,6 @@
 /** Content model: the typed shape of everything the site renders. */
 
-export type ProjectCategory = 'research' | 'pro bono' | 'websites' | 'personal' | 'solutions'
+export type ProjectCategory = 'product' | 'research' | 'pro bono' | 'websites' | 'personal' | 'solutions'
 
 /** Editorial bento-grid sizing for the projects board. */
 export type ProjectSize = 'lg' | 'md' | 'sm'

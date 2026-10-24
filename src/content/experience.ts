@@ -1,7 +1,7 @@
 import type { ExperienceEntry } from './types'
 
 /**
- * Reverse chronological. Synced 2026-10-19.
+ * Reverse chronological. Synced 2026-10-23.
  * Descriptions use the modal's inline markup: **bold**, *italic*, [label](url),
  * "- " bullet blocks and "### " section headers, blocks split on blank lines.
  */
@@ -18,7 +18,7 @@ export const experiences: ExperienceEntry[] = [
         "href": "https://trellum.ca"
       }
     ],
-    "description": "I build and deploy **Trellum**, an agent platform for restaurants that covers two areas: restaurant operations and growth through go-to-market. The operations side is *live in beta*; the go-to-market agent is planned.\n\n### What it does\nEach restaurant gets its own isolated agent, which reads the business's live sales, orders, menu and labor data. The agent drafts the work and a person approves it. Nothing is sent or written to an outside system without that approval.\n\n### What I built\n- A **5-service Docker Compose stack**: a Node backend-for-frontend serving a React client over an authenticated WebSocket, a Cloudflare tunnel, and 2 PostgreSQL databases.\n- The 6 tool handlers of a **read-only Toast POS MCP server**, which give the agent live point-of-sale data.\n- Per-user sign-in with a mandatory **TOTP** second factor and an audit row on every action.\n- Cloudflare Access in front of the admin console, age-encrypted backups verified by a round-trip test in CI, and deploys through scoped credentials.",
+    "description": "I'm building **Trellum**, an AI agent for each business that runs inference over its live sales, stock and supplier data and returns actionable answers. The operations agent is *live in beta* with its first business, and a second agent, for bringing in customers, is in development.\n\n### What I do\n- Define the agent's analysis method: live figures dated on the POS business day, and an actionable next step in every answer.\n- Build and deploy the platform, a **5-service Docker Compose stack**, through a CI pipeline that must pass before an image is deployed.\n- Set up the first business on its own instance and connect its point-of-sale data through the 6 tool handlers I wrote for a **read-only Toast POS MCP server**.\n- Run security and infrastructure: per-user sign-in with a mandatory **TOTP** second factor, an audit row on every action, Cloudflare Access in front of the admin console, and age-encrypted backups restored by a drill in CI.\n- Restrict the agent with a least-privilege tool policy that denies write, edit, messaging and runtime tools. Its one write tool records a proposed change, which takes effect only after a person accepts it.",
     "tags": [
       "TypeScript",
       "React",

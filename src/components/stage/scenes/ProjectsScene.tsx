@@ -11,7 +11,6 @@ import { SheetIndex } from '@/components/ui/SheetIndex'
 import type { DrawingHandle } from '@/lib/draft/choreo'
 import type { Figure } from '@/lib/draft/sketch'
 import { curva } from '@/lib/draft/figures/curva'
-import { rota } from '@/lib/draft/figures/rota'
 import { ellipsePath, nodePath, rectPathFrom } from '@/lib/lines'
 import { elBox, setD, textBox, type Box } from './geometry'
 import { BOARD_ORIGIN_X, BOARD_ORIGIN_Y, COLLAGE_LAYOUT, HEADING_RECT } from './projectsLayout'
@@ -38,11 +37,10 @@ export interface DraftSheet {
 }
 
 /**
- * Sheet III's plates live on the two unissued sheets: future work, still on
- * the drawing board. The gear takes the square sheet above the heading, the
- * curve construction the wide one at lower right.
+ * Sheet III's plate lives on the unissued sheet: future work, still on the
+ * drawing board. The curve construction takes the wide one at lower right.
  */
-const STUDIES: Record<string, Figure> = { 'ph-top': rota(), 'ph-right': curva() }
+const STUDIES: Record<string, Figure> = { 'ph-right': curva() }
 
 export interface ProjectsSceneHandle {
   plane: HTMLDivElement | null

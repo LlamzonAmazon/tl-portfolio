@@ -68,7 +68,7 @@ export function projectsScroll({ hero, projects, titleBlock, camera }: StageCtx,
       { label: 'Frame from the node, clockwise, back to it', span: [0.35, 0.75], run: (tl, g) => draw(tl, sheet.frame, g) },
     ],
   }))
-  // Studies on the unissued sheets: each plate is drafted on the sheet once
+  // Studies on the unissued sheet: its plate is drafted on the sheet once
   // its paper is down, construction first, the figure inked over it.
   const studies: Step[] = projects.sheets.flatMap((sheet, i) =>
     sheet.plate

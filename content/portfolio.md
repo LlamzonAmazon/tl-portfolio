@@ -21,7 +21,19 @@
 
 ## Projects
 
-Category order: research · pro bono · websites · personal.
+Category order: product · research · pro bono · websites · personal.
+
+### Trellum (product)
+An AI agent for each business that runs inference over its live sales, stock and supplier data and returns actionable answers.
+
+- The agent pulls live figures, infers what the POS does not report (such as daily ingredient usage), and ends every answer with an actionable next step it proposes proactively.
+- The agent reads live sales, orders, menu and labor data through a **read-only Toast POS MCP server** with 6 tools. The two Toast scopes that return customer names, contact details and delivery addresses are never requested.
+- A tool policy denies the agent write, edit, messaging and runtime tools. Its one write tool records a proposed change, and the change takes effect only after a person accepts it.
+- Each person signs in with a password and a mandatory **TOTP** code that cannot be reused, and every change writes an audit row naming that person. Cloudflare Access protects the admin console, and CI restores the age-encrypted backups in a drill.
+- The operations agent is **live in beta** with its first business. A second agent, for bringing in customers, is in development.
+
+- Tags: TypeScript, React, Node.js, PostgreSQL, Docker, MCP, Cloudflare
+- Live: https://trellum.ca
 
 ### Asynchronous Layer-Wise Federated Learning (research)
 
@@ -86,16 +98,14 @@ A threat intelligence agent that matches one business's dependencies against pub
 ### Forward Deployed Engineer, Trellum
 _Aug 2026 - Present · Vancouver, BC_
 
-I build and deploy **Trellum**, an agent platform for restaurants that covers two areas: restaurant operations and growth through go-to-market. The operations side is *live in beta*; the go-to-market agent is planned.
+I'm building **Trellum**, an AI agent for each business that runs inference over its live sales, stock and supplier data and returns actionable answers. The operations agent is *live in beta* with its first business, and a second agent, for bringing in customers, is in development.
 
-#### What it does
-Each restaurant gets its own isolated agent, which reads the business's live sales, orders, menu and labor data. The agent drafts the work and a person approves it. Nothing is sent or written to an outside system without that approval.
-
-#### What I built
-- A **5-service Docker Compose stack**: a Node backend-for-frontend serving a React client over an authenticated WebSocket, a Cloudflare tunnel, and 2 PostgreSQL databases.
-- The 6 tool handlers of a **read-only Toast POS MCP server**, which give the agent live point-of-sale data.
-- Per-user sign-in with a mandatory **TOTP** second factor and an audit row on every action.
-- Cloudflare Access in front of the admin console, age-encrypted backups verified by a round-trip test in CI, and deploys through scoped credentials.
+#### What I do
+- Define the agent's analysis method: live figures dated on the POS business day, and an actionable next step in every answer.
+- Build and deploy the platform, a **5-service Docker Compose stack**, through a CI pipeline that must pass before an image is deployed.
+- Set up the first business on its own instance and connect its point-of-sale data through the 6 tool handlers I wrote for a **read-only Toast POS MCP server**.
+- Run security and infrastructure: per-user sign-in with a mandatory **TOTP** second factor, an audit row on every action, Cloudflare Access in front of the admin console, and age-encrypted backups restored by a drill in CI.
+- Restrict the agent with a least-privilege tool policy that denies write, edit, messaging and runtime tools. Its one write tool records a proposed change, which takes effect only after a person accepts it.
 
 - Tags: TypeScript, React, Node.js, PostgreSQL, Docker, MCP, Cloudflare, GitHub Actions
 - Link: TRELLUM.CA https://trellum.ca
