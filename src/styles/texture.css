@@ -518,6 +518,16 @@ button.draft-sheet:hover, button.draft-sheet:focus-visible,
    Always under the scene's type, never hit-testable. */
 .stage-plate { position: absolute; pointer-events: none; }
 .stage-plate .drawing { width: 100%; height: 100%; display: block; }
+/* Ground plate: a viewport-sized ghost under a scene's content. Its own
+   layer, so its per-frame redraw (scroll-drawn strokes, a marching flow)
+   re-rasterizes only itself, not the cards and type over it. */
+.stage-plate--ground { contain: layout paint; will-change: transform; }
+
+/* Pen masks (a dashed stroke's draw, a flow's draw): the pen is solid white,
+   so alpha masks the same as luminance, without the per-pixel luminance pass
+   that made every scroll frame of a stage-sized plate re-render slowly. */
+.drawing mask,
+.flow mask { mask-type: alpha; }
 
 /* Section plates: one oversized ghost figure behind each document-flow
    section (SectionPlate.tsx), centred on --plate-x / --plate-y, so the flow

@@ -65,7 +65,7 @@ export const FlowPath = forwardRef<FlowHandle, FlowPathProps>(function FlowPath(
 
   return (
     <g ref={group} className="flow" style={animated ? { display: 'none' } : undefined}>
-      {/* The mask stroke is luminance only (white = visible), not a drawn colour. */}
+      {/* The mask stroke is coverage only (opaque white = visible, alpha mask), not a drawn colour. */}
       <mask id={id} maskUnits="userSpaceOnUse" x={region[0]} y={region[1]} width={region[2]} height={region[3]}>
         <path ref={pen} d={d} pathLength={1} stroke="#fff" strokeWidth={6} fill="none" style={animated ? { strokeDashoffset: 1 } : undefined} />
       </mask>

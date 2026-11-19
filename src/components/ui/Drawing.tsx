@@ -115,6 +115,28 @@ export const Drawing = forwardRef<DrawingHandle, DrawingProps>(function Drawing(
     return () => io.disconnect()
   }, [hasFlows])
 
+  // A dashed stroke's mask re-renders every frame its pen moves, at the size
+  // of its region: fit each region to its pen (inside the box) instead of the
+  // whole box, so a long line on a stage-sized plate costs only its own area.
+  useLayoutEffect(() => {
+    const [x0, y0, w, h] = figure.box
+    for (const s of figure.passes.flatMap((p) => p.strokes)) {
+      const pen = s.dashed ? refs.current.stroke.get(s.id) : undefined
+      const mask = pen?.parentElement
+      if (!pen || !(mask instanceof SVGMaskElement)) continue
+      const b = pen.getBBox()
+      const pad = 4
+      const x = Math.max(x0, b.x - pad)
+      const y = Math.max(y0, b.y - pad)
+      const right = Math.min(x0 + w, b.x + b.width + pad)
+      const bottom = Math.min(y0 + h, b.y + b.height + pad)
+      mask.setAttribute('x', String(x))
+      mask.setAttribute('y', String(y))
+      mask.setAttribute('width', String(Math.max(0, right - x)))
+      mask.setAttribute('height', String(Math.max(0, bottom - y)))
+    }
+  }, [figure])
+
   const undrawn: CSSProperties | undefined = animated ? { strokeDashoffset: 1 } : undefined
   const setStroke = (id: string) => (el: SVGPathElement | null) => {
     if (el) refs.current.stroke.set(id, el)
@@ -128,7 +150,7 @@ export const Drawing = forwardRef<DrawingHandle, DrawingProps>(function Drawing(
       return <path key={s.id} ref={setStroke(s.id)} className={`ln-${s.layer}`} d={s.d} pathLength={1} style={{ ...undrawn, ...color }} />
     }
     // Dashed: the dash pattern is the look (.ln-dashed, the --dash-construct tokens), so the pen is a solid stroke drawn in a mask.
-    // The mask stroke is luminance only (white = visible), not a drawn colour.
+    // The mask stroke is coverage only (opaque white = visible, alpha mask), not a drawn colour.
     const [bx, by, bw, bh] = figure.box
     const mid = `${uid}-${s.id}`
     return (
