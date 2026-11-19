@@ -33,6 +33,8 @@ export function skillsScroll({ experience, skills, titleBlock, camera }: StageCt
         },
         figureGuide('Flight retracts to its launch', experience.flight, [0, 0.32], 'retract'),
         figureGuide('Orrery retracts, outer orbit first', experience.systema, [0.04, 0.36], 'retract'),
+        figureGuide('Gear retracts, last drawn first', experience.rota, [0, 0.34], 'retract'),
+        figureGuide('Curve construction set out under the board', skills.curva, [0.4, 0.98]),
         figureGuide('Screw set out: axis, ends, silhouette', skills.cochlea, [0.3, 0.6], 'draw', { passes: [0, 3] }),
         figureGuide('Two flights wound turn by turn across the columns', skills.cochlea, [0.5, 0.95], 'draw', { passes: [3, 5] }),
         figureGuide('Pitch dimensioned', skills.cochlea, [0.82, 1], 'draw', { passes: [5, 8] }),

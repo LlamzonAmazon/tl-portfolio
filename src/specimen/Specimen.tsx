@@ -92,7 +92,7 @@ const LINES: Array<{ layer: Layer | 'flow'; grade: string; w: string; use: strin
 
 /** Drawing tones: the same figure stepped back for what sits in front of it. */
 const TONES: Array<{ tone: 'ink' | 'ghost' | 'pale' | 'faint'; use: string }> = [
-  { tone: 'ink', use: 'The plate on its own sheet: the folio, a colophon, a placeholder study.' },
+  { tone: 'ink', use: 'The plate on its own sheet: the folio, a colophon.' },
   { tone: 'ghost', use: 'Behind type. Every role two grades lighter; keyed marks keep their hue.' },
   { tone: 'pale', use: 'Behind controls. Ghost, with ink and mark lifted to 2H so buttons stay the darkest thing.' },
   { tone: 'faint', use: 'A dense backdrop. Wholly grey, keys included: 4H ink, 9H construction.' },
@@ -156,12 +156,13 @@ const STAGE: Array<{ sheet: SheetKey; plate: string; place: string; sync: string
   { sheet: '01', plate: 'Iactus Iridis', place: 'Thrown over the name: launched beyond the left edge, apex just above the type, landing top right in an impact mark.', sync: 'Starts with the first tape stretch and runs across all four tape phases; the impact rings begin when the trajectory lands. Retracts at the start of the dive.' },
   { sheet: '01', plate: 'De Pictura', place: 'Full-bleed under the name; the centric point sits on the board origin.', sync: 'Horizon, ground, orthogonals and transversals ride the four tape phases; the near rows hatch in their own step after. Retracts with Iactus on the dive (its lines run through the origin, so the camera cannot carry them out).' },
   { sheet: '02', plate: 'Arcus + Fenestra + Sectio Aurea', place: 'One plate: the arch (orange nodes) bleeding bottom left behind the thesis line, Fenestra traced inside it, the golden rectangle (yellow) top right with the pillars hung centred below it; a datum runs along the springing line and turns up to the spiral.', sync: 'Arch and rectangle set out as the dive lands; the arch inks while each pillar cuts a square; the spiral ends on the eye; in the hold the arch is finished, the rectangle dimensioned and the window traced. Retracts on the pull-out to Projects.' },
-  { sheet: '03', plate: 'Rota Dentata, Curva', place: 'On the two unissued placeholder sheets: future work, still on the board.', sync: 'Each study is drafted on its sheet once the paper is down.' },
   { sheet: '04', plate: 'Motus Proiectorum', place: 'Across the gap between Projects and Experience.', sync: 'Launched from the Projects heading rule, flown on the pan, landing where the datum starts. Retracts on the pan to Skills.' },
   { sheet: '04', plate: 'Systema', place: 'Experience margin, top right: one planet per role.', sync: 'Set out as the pan lands; the orbits share the datum window. Retracts on the pan up.' },
+  { sheet: '04', plate: 'Rota Dentata', place: 'Ghosted ground under the Experience row, about a screen tall, bleeding off the bottom left.', sync: 'Drawn on the pan in, after the flight takes off. Retracts first on the pan up.' },
   { sheet: '04', plate: 'Arcus', place: 'Colophon at the foot of every role detail sheet.', sync: 'Drawn after the sheet opens; retracts before it closes.' },
   { sheet: '05', plate: 'Diramatio', place: 'From the right end of the Experience timeline to a prism on the seam above Skills.', sync: 'The line runs down the margin and under the cards into the prism; four rays leave its base, one landing on each column as the pan arrives.' },
   { sheet: '05', plate: 'Cochlea', place: 'The open band above the skills board, right-aligned.', sync: 'Begins just before the column rules; the flights wind as the columns draw; unwinds first on exit.' },
+  { sheet: '05', plate: 'Curva', place: 'Ghosted ground under the skills board, wider than the board, bleeding off the bottom right.', sync: 'Drawn on the pan up as the rays land. Retracts on the pan to Contact.' },
   { sheet: '06', plate: 'Rosa', place: 'Behind the closing name, ghosted, oversized, bleeding bottom right.', sync: 'Circle, compass swings, petals and the window ring, one per tape phase.' },
   { sheet: '06', plate: 'Ellipsis', place: 'Contact margin, lower left.', sync: 'Strung between its two pins as the two links ink in.' },
   { sheet: '06', plate: 'Harmonia', place: 'Contact margin, upper left.', sync: 'The last and longest line on the board, before the pin releases.' },
@@ -538,16 +539,20 @@ export function Specimen() {
             <span className="text-label-sm">.text-display--hero · 17.5vw, as large as the name fits across a phone</span>
           </div>
           <div className="type-row">
-            <span className="text-label">Heading</span>
-            <span className="text-heading">My projects.</span>
+            <span className="text-label">Display, stage hero</span>
+            <span className="text-label-sm">.text-display--stage · --type-stage-name, min(19vw, 36vh): LLAMZON spans about 86vw</span>
+          </div>
+          <div className="type-row">
+            <span className="text-label">Heading (flow sections; Experience and Skills on the stage)</span>
+            <span className="text-heading">Experience.</span>
           </div>
           <div className="type-row">
             <span className="text-label">Thesis line</span>
             <span className="text-heading text-heading--thesis">Security-first software engineer</span>
           </div>
           <div className="type-row">
-            <span className="text-label">Stage heading</span>
-            <span className="stage-heading">Experience.</span>
+            <span className="text-label">Stage heading (Projects board)</span>
+            <span className="stage-heading">My projects.</span>
           </div>
           <div className="type-row">
             <span className="text-label">Latin title</span>

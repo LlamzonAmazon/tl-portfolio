@@ -3,9 +3,8 @@
  * heading at the exact center of the screen. Sheets vary in size and none
  * share an edge line, so the board reads as pinned up by a person, not
  * snapped to a grid; there is open paper around the heading, and the
- * bottom-right stays clear for the title block. Projects take the larger,
- * nearer positions (hierarchy); a hatched placeholder fills the gap at
- * lower right.
+ * bottom-right stays clear for the title block. The larger, nearer
+ * positions go to the lead projects (hierarchy).
  *
  * The board zoom-out (one camera value `z`, D-06) scales only the paper's
  * grid tile. Sheets never ride it: each one is DRAFTED in place once its
@@ -37,20 +36,20 @@ export const HEADING_RECT: Rect = { left: 35, top: 38, width: 30, height: 24 }
 
 export interface CollageSlot {
   key: string
-  kind: 'project' | 'placeholder'
-  projectId?: number
+  projectId: number
   rect: Rect // % of stage
 }
 
 /**
- * Draft order: projects first, swept clockwise from top-left, then the
- * placeholder. Each sheet is drafted on its own step in this order.
+ * Draft order: swept clockwise from top-left. Each sheet is drafted on its
+ * own step in this order. EDwaRd's right edge stops at 78% to keep clear of
+ * the title block, so its sheet grows downward instead.
  */
 export const COLLAGE_LAYOUT: CollageSlot[] = [
-  { key: 'async-fl', kind: 'project',     projectId: 1, rect: { left: 7,  top: 8,  width: 27, height: 30 } },
-  { key: 'trellum',  kind: 'project',     projectId: 5, rect: { left: 38, top: 4,  width: 29, height: 27 } },
-  { key: 'wsc',      kind: 'project',     projectId: 3, rect: { left: 70, top: 24, width: 25, height: 27 } },
-  { key: 'agentops', kind: 'project',     projectId: 4, rect: { left: 35, top: 70, width: 23, height: 22 } },
-  { key: 'dash',     kind: 'project',     projectId: 2, rect: { left: 4,  top: 56, width: 24, height: 26 } },
-  { key: 'ph-right', kind: 'placeholder',               rect: { left: 60, top: 63, width: 18, height: 21 } },
+  { key: 'async-fl', projectId: 1, rect: { left: 7,  top: 8,  width: 27, height: 30 } },
+  { key: 'trellum',  projectId: 5, rect: { left: 38, top: 4,  width: 29, height: 27 } },
+  { key: 'wsc',      projectId: 3, rect: { left: 70, top: 24, width: 25, height: 27 } },
+  { key: 'edward',   projectId: 6, rect: { left: 60, top: 64, width: 18, height: 26 } },
+  { key: 'agentops', projectId: 4, rect: { left: 35, top: 70, width: 23, height: 22 } },
+  { key: 'dash',     projectId: 2, rect: { left: 4,  top: 56, width: 24, height: 26 } },
 ]

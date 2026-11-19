@@ -1,6 +1,6 @@
 import type { Project, ProjectCategory } from './types'
 
-/** Synced 2026-10-23. Strings use the modal's inline markup (**bold**, *italic*, [label](url)). Display order for category groups. */
+/** Synced 2026-11-18. Strings use the modal's inline markup (**bold**, *italic*, [label](url)). Display order for category groups. */
 export const projectCategoryOrder: ProjectCategory[] = ['product', 'research', 'pro bono', 'websites', 'personal']
 
 export const projects: Project[] = [
@@ -125,6 +125,29 @@ export const projects: Project[] = [
       "GitHub Actions"
     ],
     "githubUrl": "https://github.com/LlamzonAmazon/StackWatch",
+    "size": "md"
+  },
+  {
+    "id": 6,
+    "title": "EDwaRd",
+    "category": "personal",
+    "summary": "A macOS security monitor that raises findings from running programs, network ports, apps and login items, and lets a coding agent answer questions about them.",
+    "points": [
+      "Runs in the background as the user with no sudo. It polls processes every 5 seconds, sockets every 15 seconds, and apps, code signatures and login items every 10 minutes, and writes every finding to one local JSON file that only the user can read.",
+      "Checks installed software and running programs against a **121-rule catalog** built from CISA KEV, NVD, MITRE ATT&CK and published Mac malware research. Each rule carries its source link and its own match and no-match tests, 338 in total, which run in CI.",
+      "Seven coding agents, including Claude Code, Codex and Cursor, read the findings through a skill file that EDwaRd installs. **11 secret formats**, such as API keys, tokens and passwords in command lines, are redacted before anything is stored.",
+      "Every request to the localhost API passes 4 checks (Host allowlist, Origin, Sec-Fetch-Site and JSON-only POSTs), which block DNS rebinding and cross-site writes from websites open in the browser.",
+      "Ships as one static Go binary for Apple Silicon and Intel with one third-party dependency, and runs in about 22 MB of memory at under 2% CPU. The one-command installer checks the release's SHA-256 before installing, and the code is open source under Apache-2.0."
+    ],
+    "image": "/preview-edward.png",
+    "tags": [
+      "Go",
+      "TypeScript",
+      "React",
+      "MITRE ATT&CK",
+      "GitHub Actions"
+    ],
+    "githubUrl": "https://github.com/LlamzonAmazon/edward",
     "size": "md"
   }
 ]

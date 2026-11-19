@@ -44,6 +44,7 @@ export function contactScroll({ skills, contact, titleBlock }: StageCtx, t0: num
         }),
         { label: 'Header rules retract', span: [0.5, 1], run: (tl, g) => retract(tl, cols.map((c) => c.headerRule), g) },
         figureGuide('The screw unwinds, last drawn first', skills.cochlea, [0, 0.7], 'retract'),
+        figureGuide('Curve construction retracts, last drawn first', skills.curva, [0, 0.6], 'retract'),
         figureGuide('Rays, prism and run retract, last drawn first', skills.split, [0.3, 1], 'retract'),
       ],
     },

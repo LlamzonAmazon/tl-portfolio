@@ -42,6 +42,7 @@ export function experienceScroll({ projects, experience, titleBlock, camera }: S
         })),
         { label: 'Heading ring retracts', span: [0.24, 0.5], run: (tl, g) => retract(tl, projects.ring, g) },
         figureGuide('Motus: launched from the heading, flown over the gap, landing on the datum', experience.flight, [0, 0.52]),
+        figureGuide('Gear set out under the row: construction, then the teeth', experience.rota, [0.3, 0.95]),
         figureGuide('Orrery set out: axes, meridian, the sun and its rays', experience.systema, [0.18, 0.5], 'draw', { passes: [0, 4] }),
         figureGuide('Orbits drawn as the datum passes, a planet per role', experience.systema, [0.45, 1], 'draw', { passes: [4, 99] }),
         {

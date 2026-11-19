@@ -6,11 +6,14 @@ import { Drawing } from '@/components/ui/Drawing'
 import { SheetIndex } from '@/components/ui/SheetIndex'
 import type { DrawingHandle } from '@/lib/draft/choreo'
 import { cochlea } from '@/lib/draft/figures/cochlea'
+import { curva } from '@/lib/draft/figures/curva'
 import { diramatio, type DiramatioOpts } from '@/lib/draft/figures/diramatio'
 import { elBox, setD } from './geometry'
 
 /** Sheet V's plate: Archimedes' screw, a tool, set in the open band above the board. */
 const COCHLEA = cochlea()
+/** Sheet V's ground: the curve construction, oversized and ghosted, bleeding off the bottom right under the board. */
+const CURVA = curva()
 /** The transition from Experience before the first layout (same stroke count as every measured one). */
 const SPLIT_DEFAULT: DiramatioOpts = {
   w: 1440,
@@ -37,6 +40,8 @@ export interface SkillsSceneHandle {
   columns: SkillsColumn[]
   /** Cochlea, top right above the kanban. */
   cochlea: () => DrawingHandle | null
+  /** Curva (ground plate, bottom right): drawn on the pan in, retracted as Contact arrives. */
+  curva: () => DrawingHandle | null
   /**
    * Measure and write the linework. `from` is the Experience datum's right
    * end and `splitX` the card gap nearest its centre, already converted into
@@ -67,6 +72,7 @@ export const SkillsScene = forwardRef<SkillsSceneHandle>(function SkillsScene(_p
   const headerRules = useRef<Array<SVGPathElement | null>>([])
   const datums = useRef<Array<SVGPathElement | null>>([])
   const cochleaRef = useRef<DrawingHandle>(null)
+  const curvaRef = useRef<DrawingHandle>(null)
   const splitRef = useRef<DrawingHandle>(null)
   const [split, setSplit] = useState(() => diramatio(SPLIT_DEFAULT))
 
@@ -118,6 +124,7 @@ export const SkillsScene = forwardRef<SkillsSceneHandle>(function SkillsScene(_p
       headText: headTextRef.current,
       columns,
       cochlea: () => cochleaRef.current,
+      curva: () => curvaRef.current,
       split: () => splitRef.current,
       layout,
     }
@@ -126,13 +133,18 @@ export const SkillsScene = forwardRef<SkillsSceneHandle>(function SkillsScene(_p
   return (
     <div ref={planeRef} data-sheet="05" className="pointer-events-none absolute inset-0" style={{ visibility: 'hidden' }}>
 
+      {/* Ground plate: the deepest layer, wider than the board, cropped by the stage's right and bottom edges. */}
+      <div className="stage-plate stage-plate--ground" style={{ right: '-22vw', bottom: '-30vh', height: '95vh', aspectRatio: '720 / 480' }}>
+        <Drawing ref={curvaRef} figure={CURVA} animated tone="ghost" />
+      </div>
+
       {/* The band between the heading and the board, right-aligned with the board's edge. */}
       <div
         className="stage-plate"
         style={{
           right: 'var(--section-px)',
           top: 'calc(var(--section-px) * 0.35)',
-          height: 'calc(clamp(11rem, 27vh, 15rem) - var(--section-px) * 0.35 - 1.25rem)',
+          height: 'calc(max(clamp(11rem, 27vh, 15rem), var(--sheet-body-top)) - var(--section-px) * 0.35 - 1.25rem)',
           aspectRatio: '780 / 440',
         }}
       >
@@ -173,14 +185,14 @@ export const SkillsScene = forwardRef<SkillsSceneHandle>(function SkillsScene(_p
         <WipeText as="span" className="text-label text-label--key inline-block" ref={headLabelRef} plate={false} style={{ clipPath: 'none' }}>
           <SheetIndex sheet="05" />
         </WipeText>
-        <WipeText as="h2" className="stage-heading mt-2 block" ref={headTextRef} plate={false} style={{ clipPath: 'none' }}>
+        <WipeText as="h2" className="text-heading mt-2 block" ref={headTextRef} plate={false} style={{ clipPath: 'none' }}>
           Skills.
         </WipeText>
       </div>
 
       <div
         className="kanban pointer-events-auto absolute"
-        style={{ left: 'var(--section-px)', right: 'var(--section-px)', top: 'clamp(11rem, 27vh, 15rem)' }}
+        style={{ left: 'var(--section-px)', right: 'var(--section-px)', top: 'max(clamp(11rem, 27vh, 15rem), var(--sheet-body-top))' }}
       >
         {skillGroups.map((g, c) => (
           <div

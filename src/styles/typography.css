@@ -14,6 +14,11 @@
   color: var(--color-ink);
 }
 
+/* Stage hero name (desktop): as large as LLAMZON fits across the screen. */
+.text-display--stage {
+  font-size: var(--type-stage-name);
+}
+
 /* Mobile hero name: as large as LLAMZON fits across a phone at 17.5vw */
 .text-display--hero {
   font-size: clamp(3.5rem, 17.5vw, 15rem);
@@ -23,17 +28,19 @@
 .text-heading {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2.25rem, 7vw, 6.5rem);
+  font-size: var(--type-sheet-heading);
   line-height: 0.98;
   letter-spacing: -0.03em;
   color: var(--color-ink);
 }
 
 /* Sub-heading / large serif callouts */
-/* Thesis line on Sheet II, top left: a heading set smaller and wide, so the
-   sentence balances onto two lines across the sheet. */
+/* Thesis line on Sheet II, top left: oversized, four lines across the
+   sheet's left side, stopping at the golden rectangle so the pillars hung
+   below it stay clear. */
 .text-heading--thesis {
-  font-size: clamp(1.75rem, 3.8vw, 4rem);
+  font-size: var(--type-thesis);
+  max-width: 58vw;
   text-wrap: balance;
 }
 
@@ -119,8 +126,9 @@
   color: var(--color-ink);
 }
 
-/* Stage section headings ("My projects.", "Experience.", "Skills."): one
-   size down from .text-heading so they share a sheet with their content. */
+/* The Projects stage heading ("My projects."): one size down from
+   .text-heading so it shares the board with its sheets. Experience and
+   Skills use .text-heading, oversized over their content. */
 .stage-heading {
   font-family: var(--font-display);
   font-weight: 600;

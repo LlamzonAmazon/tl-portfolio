@@ -3,14 +3,9 @@ import { AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
 import { projects } from '@/content/projects'
 import { ProjectCard } from '@/components/projects/ProjectCard'
-import { PlaceholderCard } from '@/components/projects/PlaceholderCard'
 import { ProjectDetailModal } from '@/components/projects/ProjectDetailModal'
 import { WipeText } from '@/components/hero/WipeText'
-import { Drawing } from '@/components/ui/Drawing'
 import { SheetIndex } from '@/components/ui/SheetIndex'
-import type { DrawingHandle } from '@/lib/draft/choreo'
-import type { Figure } from '@/lib/draft/sketch'
-import { curva } from '@/lib/draft/figures/curva'
 import { ellipsePath, nodePath, rectPathFrom } from '@/lib/lines'
 import { elBox, setD, textBox, type Box } from './geometry'
 import { BOARD_ORIGIN_X, BOARD_ORIGIN_Y, COLLAGE_LAYOUT, HEADING_RECT } from './projectsLayout'
@@ -32,15 +27,7 @@ export interface DraftSheet {
   ringNode: SVGPathElement | null
   /** Where the radial lands, as fractions of the sheet. Written by layout. */
   anchor: { fx: number; fy: number }
-  /** A placeholder's study plate, drafted once its sheet is issued. */
-  plate: (() => DrawingHandle | null) | null
 }
-
-/**
- * Sheet III's plate lives on the unissued sheet: future work, still on the
- * drawing board. The curve construction takes the wide one at lower right.
- */
-const STUDIES: Record<string, Figure> = { 'ph-right': curva() }
 
 export interface ProjectsSceneHandle {
   plane: HTMLDivElement | null
@@ -73,7 +60,6 @@ export const ProjectsScene = forwardRef<ProjectsSceneHandle>(function ProjectsSc
   const radials = useRef<Array<SVGPathElement | null>>([])
   const ringNodes = useRef<Array<SVGPathElement | null>>([])
   const headRules = useRef<Array<SVGPathElement | null>>([])
-  const plateRefs = useRef<Record<string, DrawingHandle | null>>({})
 
   const [activeProjectId, setActiveProjectId] = useState<number | null>(null)
   const activeProject = useMemo(() => projects.find((p) => p.id === activeProjectId) ?? null, [activeProjectId])
@@ -92,7 +78,6 @@ export const ProjectsScene = forwardRef<ProjectsSceneHandle>(function ProjectsSc
         radial: radials.current[i] ?? null,
         ringNode: ringNodes.current[i] ?? null,
         anchor: { fx: 0, fy: 0 },
-        plate: STUDIES[COLLAGE_LAYOUT[i].key] ? () => plateRefs.current[COLLAGE_LAYOUT[i].key] ?? null : null,
       })
     })
 
@@ -246,23 +231,7 @@ export const ProjectsScene = forwardRef<ProjectsSceneHandle>(function ProjectsSc
                 visibility: 'hidden',
               }}
             >
-              {slot.kind === 'project' && project ? (
-                <ProjectCard project={project} index={i} pinned onOpen={setActiveProjectId} />
-              ) : (
-                <PlaceholderCard
-                  plate={
-                    STUDIES[slot.key] && (
-                      <Drawing
-                        ref={(h) => {
-                          plateRefs.current[slot.key] = h
-                        }}
-                        figure={STUDIES[slot.key]}
-                        animated
-                      />
-                    )
-                  }
-                />
-              )}
+              {project && <ProjectCard project={project} index={i} pinned onOpen={setActiveProjectId} />}
             </div>
           )
         })}

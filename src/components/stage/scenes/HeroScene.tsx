@@ -222,7 +222,7 @@ export const HeroScene = forwardRef<HeroSceneHandle>(function HeroScene(_props, 
           className="absolute inset-0 flex flex-col items-center justify-center text-center"
           style={{ padding: 'var(--section-px)' }}
         >
-          <h1 ref={nameRef} className="text-display">
+          <h1 ref={nameRef} className="text-display text-display--stage">
             {site.displayName.map((line, i) => {
               const isLast = i === site.displayName.length - 1
               return (

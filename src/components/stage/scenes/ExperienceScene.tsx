@@ -9,6 +9,7 @@ import { FlowPath, type FlowHandle } from '@/components/ui/FlowPath'
 import { SheetIndex } from '@/components/ui/SheetIndex'
 import type { DrawingHandle } from '@/lib/draft/choreo'
 import { motusFlight, type FlightOpts } from '@/lib/draft/figures/motus'
+import { rota } from '@/lib/draft/figures/rota'
 import { systema } from '@/lib/draft/figures/systema'
 import { elBox, setD } from './geometry'
 
@@ -18,6 +19,8 @@ import { elBox, setD } from './geometry'
  * lands as the datum passes its role.
  */
 const SYSTEMA = systema({ planets: experiences.length, key: 0 })
+/** Sheet IV's ground: the gear, oversized and ghosted, bleeding off the bottom left under the row. */
+const ROTA = rota()
 /** Flight before the first layout: same stroke count as every measured one. */
 const FLIGHT_DEFAULT: FlightOpts = { w: 1440, h: 810, from: [-900, 450], to: [80, 200], apexY: 90, current: 'outside' }
 /** The datum's current runs this far above it: level with the flight's (outside) and Diramatio's run, so the three read as one line. */
@@ -33,6 +36,8 @@ export interface ExperienceSceneHandle {
   flight: () => DrawingHandle | null
   /** Systema (margin study, top right): one orbit per role. */
   systema: () => DrawingHandle | null
+  /** Rota Dentata (ground plate, bottom left): drawn on the pan in, retracted on the pan out. */
+  rota: () => DrawingHandle | null
   /** The horizontal datum every role hangs from, drawn left to right. */
   datum: SVGPathElement | null
   /** The current above the datum, from the flight's landing to where the Skills line leaves. */
@@ -73,6 +78,7 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
   const cardRefs = useRef<Array<HTMLDivElement | null>>([])
   const flightRef = useRef<DrawingHandle>(null)
   const systemaRef = useRef<DrawingHandle>(null)
+  const rotaRef = useRef<DrawingHandle>(null)
   const [flight, setFlight] = useState(() => motusFlight(FLIGHT_DEFAULT))
   const datum = useRef<SVGPathElement>(null)
   const datumFlow = useRef<FlowHandle>(null)
@@ -138,6 +144,7 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
       plane: planeRef.current,
       flight: () => flightRef.current,
       systema: () => systemaRef.current,
+      rota: () => rotaRef.current,
       datum: datum.current,
       datumFlow: datumFlow.current,
       leaders: leaders.current,
@@ -153,13 +160,18 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
   return (
     <div ref={planeRef} data-sheet="04" className="pointer-events-none absolute inset-0" style={{ visibility: 'hidden' }}>
 
+      {/* Ground plate: the deepest layer, about twice the row's height, cropped by the stage's left and bottom edges. */}
+      <div className="stage-plate stage-plate--ground" style={{ left: '-16vh', bottom: '-44vh', height: '100vh', aspectRatio: '1' }}>
+        <Drawing ref={rotaRef} figure={ROTA} animated tone="ghost" />
+      </div>
+
       {/* Margin study, top right: clear of the heading, above the datum. */}
       <div
         className="stage-plate"
         style={{
           right: 'var(--section-px)',
           top: 'calc(var(--section-px) * 0.3)',
-          height: 'calc(clamp(13rem, 30%, 18rem) - 40px - var(--section-px) * 0.3 - 1rem)',
+          height: 'calc(max(clamp(13rem, 30%, 18rem), var(--sheet-body-top)) - 40px - var(--section-px) * 0.3 - 1rem)',
           aspectRatio: '1',
         }}
       >
@@ -201,14 +213,14 @@ export const ExperienceScene = forwardRef<ExperienceSceneHandle>(function Experi
         <span className="text-label text-label--key">
           <SheetIndex sheet="04" />
         </span>
-        <h2 className="stage-heading mt-2">Experience.</h2>
+        <h2 className="text-heading mt-2">Experience.</h2>
       </div>
 
       <div
         ref={rowRef}
         className="experience-row pointer-events-auto absolute"
         style={{
-          ['--roles' as string]: experiences.length, left: 'var(--section-px)', right: 'var(--section-px)', top: 'clamp(13rem, 30%, 18rem)' }}
+          ['--roles' as string]: experiences.length, left: 'var(--section-px)', right: 'var(--section-px)', top: 'max(clamp(13rem, 30%, 18rem), var(--sheet-body-top))' }}
       >
         {experiences.map((entry, i) => (
           <div

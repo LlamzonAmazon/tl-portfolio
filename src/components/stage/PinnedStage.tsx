@@ -34,6 +34,8 @@ interface PinnedStageProps {
 const SCROLL_T0 = 0.1
 /** Scroll length per timeline unit, in viewport heights. */
 const VH_PER_UNIT = 1.05
+/** Intro speed once the visitor starts scrolling during it. */
+const INTRO_HURRY = 4
 
 /** Lay the scene sequences end to end; each starts where the previous one's last step ends. */
 function chain(ctx: StageCtx, scenes: Array<(ctx: StageCtx, t0: number) => Step[]>): Step[] {
@@ -94,6 +96,7 @@ export function PinnedStage({ ready, onIntroComplete }: PinnedStageProps) {
     const introTlRef: { current: gsap.core.Timeline | null } = { current: null }
     const scrollTlRef: { current: gsap.core.Timeline | null } = { current: null }
     let cleanupResize: (() => void) | null = null
+    let cleanupHurry: (() => void) | null = null
 
     const mm = gsap.matchMedia()
 
@@ -213,7 +216,15 @@ export function PinnedStage({ ready, onIntroComplete }: PinnedStageProps) {
         /* ── SEQ-01: the intro, on time ─────────────────────────────────── */
         const introTl = build(heroIntro(ctx), gsap.timeline({ paused: true }))
         introTlRef.current = introTl
+        // Scroll input during the intro runs the rest of it at INTRO_HURRY x
+        // speed: every line is still drawn (never popped), and scroll unlocks
+        // within a fraction of a second.
+        const hurryEvents = ['wheel', 'touchstart', 'keydown'] as const
+        const hurry = () => gsap.to(introTl, { timeScale: INTRO_HURRY, duration: 0.2, ease: 'power1.in', overwrite: true })
+        hurryEvents.forEach((e) => window.addEventListener(e, hurry, { passive: true }))
+        cleanupHurry = () => hurryEvents.forEach((e) => window.removeEventListener(e, hurry))
         introTl.eventCallback('onComplete', () => {
+          cleanupHurry?.()
           // Scroll unlocks now: re-measure once more so the pin end and
           // Lenis's scroll limit agree before the first wheel event.
           ScrollTrigger.refresh()
@@ -226,6 +237,7 @@ export function PinnedStage({ ready, onIntroComplete }: PinnedStageProps) {
 
     return () => {
       cleanupResize?.()
+      cleanupHurry?.()
       scrollTlRef.current?.scrollTrigger?.kill()
       scrollTlRef.current?.kill()
       introTlRef.current?.kill()

@@ -38,9 +38,6 @@ const DRAFT_AT = ZOOM_AT + ZOOM_DUR - 0.3
 const DRAFT_STAGGER = 0.18
 const DRAFT_DUR = 1.0
 const HOLD = 0.6
-/** A placeholder's study plate: starts just before its sheet's face has inked, and its length. */
-const PLATE_LAG = 0.85
-const PLATE_DUR = 1.2
 
 export function projectsScroll({ hero, projects, titleBlock, camera }: StageCtx, t0: number): Step[] {
   const d = hero.lines
@@ -68,22 +65,7 @@ export function projectsScroll({ hero, projects, titleBlock, camera }: StageCtx,
       { label: 'Frame from the node, clockwise, back to it', span: [0.35, 0.75], run: (tl, g) => draw(tl, sheet.frame, g) },
     ],
   }))
-  // Studies on the unissued sheet: its plate is drafted on the sheet once
-  // its paper is down, construction first, the figure inked over it.
-  const studies: Step[] = projects.sheets.flatMap((sheet, i) =>
-    sheet.plate
-      ? [{
-          label: `Study plate drafted on sheet ${i + 1}`, phase: 'ink' as const,
-          at: t0 + DRAFT_AT + i * DRAFT_STAGGER + PLATE_LAG, dur: PLATE_DUR, ease: pen,
-          run: () => {},
-          guides: [figureGuide('Construction, then the figure, then its lettering', sheet.plate, [0, 1])],
-        }]
-      : [],
-  )
-  const draftEnd = Math.max(
-    t0 + DRAFT_AT + (projects.sheets.length - 1) * DRAFT_STAGGER + DRAFT_DUR,
-    ...studies.map((s) => s.at + s.dur),
-  )
+  const draftEnd = t0 + DRAFT_AT + (projects.sheets.length - 1) * DRAFT_STAGGER + DRAFT_DUR
 
   return [
     {
@@ -126,7 +108,6 @@ export function projectsScroll({ hero, projects, titleBlock, camera }: StageCtx,
     // Value change once the thesis is gone.
     { label: 'Sheet 02 → 03', phase: 'text', at: t0 + ZOOM_AT + ZOOM_DUR * 0.4, dur: stageSpan.swap, ease: gsapEase.linear, run: sheetSwap(titleBlock, 1, 2), guides: [] },
     ...drafts,
-    ...studies,
     { label: 'Hold', phase: 'settle', at: draftEnd, dur: HOLD, ease: gsapEase.linear, run: () => {}, guides: [] },
   ]
 }

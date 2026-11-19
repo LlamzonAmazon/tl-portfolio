@@ -29,45 +29,51 @@ const PAVE = {
 } as const
 
 
+/**
+ * The intro runs its parts together: both lines of the name are taped
+ * almost at once, the flight and the pavement are set out under them, and
+ * the title block draws while the name is still inking. About 2.6s in all,
+ * and scroll input during it runs the rest at 4x speed (PinnedStage).
+ */
 export function heroIntro({ hero, titleBlock, furniture }: StageCtx): Step[] {
   const pave = (label: string, passes: readonly [number, number], span: readonly [number, number] = [0, 1]) =>
     figureGuide(label, hero.pictura, span, 'draw', { passes })
   return [
     {
-      label: 'THOMAS · tape stretches', phase: 'ink', at: 0.2, dur: nameTape.stretch, ease: gsapEase.pen,
+      label: 'THOMAS · tape stretches', phase: 'ink', at: 0.1, dur: nameTape.stretch, ease: gsapEase.pen,
       run: tape(hero.nameLines[0], '--lead'),
       guides: [pave('Horizon; the centric point lands on the board origin', PAVE.horizon)],
     },
     {
-      label: 'LLAMZON · tape stretches', phase: 'ink', at: 0.65, dur: nameTape.stretch * nameTape.lag, ease: gsapEase.pen,
+      label: 'LLAMZON · tape stretches', phase: 'ink', at: 0.3, dur: nameTape.stretch * nameTape.lag, ease: gsapEase.pen,
       run: tape(hero.nameLines[1], '--lead'),
       guides: [pave('Ground line, ticked into braccia', PAVE.ground)],
     },
     {
-      label: 'THOMAS · tape releases', phase: 'ink', at: 1.3, dur: nameTape.release, ease: gsapEase.ink,
+      label: 'THOMAS · tape releases', phase: 'ink', at: 1.15, dur: nameTape.release, ease: gsapEase.ink,
       run: tape(hero.nameLines[0], '--trail'),
       guides: [pave('Orthogonals fan to the centric point', PAVE.orthogonals)],
     },
     {
-      label: 'LLAMZON · tape releases', phase: 'ink', at: 1.95, dur: nameTape.release * nameTape.lag, ease: gsapEase.ink,
+      label: 'LLAMZON · tape releases', phase: 'ink', at: 1.5, dur: nameTape.release * nameTape.lag, ease: gsapEase.ink,
       run: tape(hero.nameLines[1], '--trail'),
       guides: [pave('Distance diagonal, transversals, pavement edges', PAVE.transversals)],
     },
     {
       // Starts with the pavement's horizon: the two studies are set out together.
-      label: 'A trajectory is computed over the name', phase: 'ink', at: 0.2, dur: duration.construct * 1.3, ease: gsapEase.pen,
+      label: 'A trajectory is computed over the name', phase: 'ink', at: 0.1, dur: duration.construct, ease: gsapEase.pen,
       run: () => {},
       guides: [figureGuide('Launch, line of the shot, equal times, the path, its falls', hero.flight, [0, 1])],
     },
     {
-      label: 'Pavement hatched', phase: 'ink', at: 2.85, dur: duration.reveal, ease: gsapEase.ink,
+      label: 'Pavement hatched', phase: 'ink', at: 1.7, dur: duration.base, ease: gsapEase.ink,
       run: () => {},
       guides: [
         pave('Nearest rows hatched, front to back', PAVE.hatch),
       ],
     },
     {
-      label: 'Dimension value + title block text', phase: 'ink', at: 3.7, dur: duration.base, ease: gsapEase.settle,
+      label: 'Dimension value + title block text', phase: 'ink', at: 0.4, dur: duration.base, ease: gsapEase.settle,
       run: (tl, w) => {
         // Ground first, then each row's key and value, top down.
         const [ground, ...cells] = titleBlock.ink

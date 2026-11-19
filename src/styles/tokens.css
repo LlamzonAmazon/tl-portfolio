@@ -149,6 +149,20 @@
   --flow-py:     clamp(2.5rem, 6vh, 4.5rem); /* document-flow sections: half of --section-py, so the gap between two is one --section-py */
   --content-max: 1440px;
 
+  /* ── Display sizes the stage lays out around (typography.css sets the
+     type; scenes read these to clear it). Desktop stage only: scale
+     contrast is the hierarchy, so the name, the thesis and the sheet
+     headings are oversized against small body and label type.
+       stage-name     the hero name. LLAMZON is 4.53em wide, so 19vw spans
+                      about 86vw; the vh cap keeps both lines on a short screen.
+       thesis         Sheet II's line, four lines across the sheet's left 58vw
+       sheet-heading  "Experience.", "Skills." (and every flow heading) */
+  --type-stage-name:    min(19vw, 36vh);
+  --type-thesis:        clamp(2.5rem, min(5.6vw, 10.5vh), 8rem);
+  --type-sheet-heading: clamp(2.25rem, 7vw, 6.5rem);
+  /* Top of a stage sheet's body: below its label and heading. */
+  --sheet-body-top:     calc(var(--section-px) + var(--type-sheet-heading) + 4.5rem);
+
   /* ── Drafting-board texture geometry ────────────────────── */
   --grid-major:  140px;  /* ruled-grid TEXTURE tile (see texture-grid.svg); never a layout unit */
   --hatch-gap:   6px;    /* crosshatch spacing    */
